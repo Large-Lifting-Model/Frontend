@@ -4,56 +4,63 @@ import { useState } from "react";
 
 import styles from "./Form.module.css";
 
-export function convertToEmoji(countryCode) {
-  const codePoints = countryCode
-    .toUpperCase()
-    .split("")
-    .map((char) => 127397 + char.charCodeAt());
-  return String.fromCodePoint(...codePoints);
-}
-
 function Form() {
-  const [cityName, setCityName] = useState("");
-  const [country, setCountry] = useState("");
-  const [date, setDate] = useState(new Date());
-  const [notes, setNotes] = useState("");
+	const [firstName, setFirstName] = useState("");
+	const [lastName, setLastName] = useState("");
+	const [dob, setDob] = useState("");
+	const [email, setEmail] = useState("");
+	const [password, setPassword] = useState("");
 
-  return (
-    <form className={styles.form}>
-      <div className={styles.row}>
-        <label htmlFor="cityName">City name</label>
-        <input
-          id="cityName"
-          onChange={(e) => setCityName(e.target.value)}
-          value={cityName}
-        />
-        {/* <span className={styles.flag}>{emoji}</span> */}
-      </div>
+	return (
+		<form className={styles.form}>
+			<div className={styles.row}>
+				<label htmlFor="firstName">First Name</label>
+				<input
+					id="firstName"
+					onChange={(e) => setFirstName(e.target.value)}
+					value={firstName}
+				/>
+			</div>
+			<div className={styles.row}>
+				<label htmlFor="lastName">Last Name</label>
+				<input
+					id="lastName"
+					onChange={(e) => setLastName(e.target.value)}
+					value={lastName}
+				/>
+			</div>
+			<div className={styles.row}>
+				<label htmlFor="dob">Birth Date</label>
+				<input
+					id="dob"
+					onChange={(e) => setDob(e.target.value)}
+					value={dob}
+				/>
+			</div>
+			<div className={styles.row}>
+				<label htmlFor="email">Email</label>
+				<input
+					id="email"
+					onChange={(e) => setEmail(e.target.value)}
+					value={email}
+				/>
+			</div>
+			<div className={styles.row}>
+				<label htmlFor="password">Password</label>
+				<input
+					type="password"
+					id="password"
+					onChange={(e) => setPassword(e.target.value)}
+					value={password}
+				/>
+			</div>
 
-      <div className={styles.row}>
-        <label htmlFor="date">When did you go to {cityName}?</label>
-        <input
-          id="date"
-          onChange={(e) => setDate(e.target.value)}
-          value={date}
-        />
-      </div>
-
-      <div className={styles.row}>
-        <label htmlFor="notes">Notes about your trip to {cityName}</label>
-        <textarea
-          id="notes"
-          onChange={(e) => setNotes(e.target.value)}
-          value={notes}
-        />
-      </div>
-
-      <div className={styles.buttons}>
-        <button>Add</button>
-        <button>&larr; Back</button>
-      </div>
-    </form>
-  );
+			<div className={styles.buttons}>
+				<button className={styles.btn}>Register</button>
+				<button className={styles.btn}>&larr; Back</button>
+			</div>
+		</form>
+	);
 }
 
 export default Form;
