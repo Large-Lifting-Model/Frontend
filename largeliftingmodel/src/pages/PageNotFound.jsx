@@ -7,7 +7,7 @@ function PageNotFound() {
 		<main className={styles.pagenotfound}>
 			<PageNav />
 			<section>
-				<img src="/sorry.jpeg" alt="Sorry" className={styles.pagenotfound2.img} />
+				<img src="/sorry.jpeg" alt="Sorry" className={styles.pagenotfound} data-style="sorryImage" />
 				<h2>
 					<br />
 					Sorry, that page does not exist...

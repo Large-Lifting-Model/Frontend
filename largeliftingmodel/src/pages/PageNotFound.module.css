@@ -20,7 +20,7 @@
 	margin-bottom: 2.5rem;
 }
 
-.pagenotfound2 img {
+.pagenotfound [data-style="sorryImage"] {
 	margin-top: 10.0rem;
 }
 
@@ -46,3 +46,5 @@
 	color: var(--color-light--1);
 	margin-bottom: 2.5rem;
 }
+
+
