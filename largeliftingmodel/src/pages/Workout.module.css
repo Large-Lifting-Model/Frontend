@@ -1,0 +1,30 @@
+.workout section {
+	display: flex;
+	flex-direction: column;
+	height: 85%;
+	align-items: center;
+	justify-content: center;
+	gap: 2.5rem;
+	text-align: center;
+}
+
+.workout h1 {
+	font-size: 4.5rem;
+	line-height: 1.3;
+	justify-content: center;
+}
+
+.workout h2 {
+	width: 90%;
+	font-size: 1.9rem;
+	color: var(--color-light--1);
+}
+
+.scrollview {
+    height: 20.0rem;              /* Set a fixed height */
+    overflow-y: scroll;           /* Enable vertical scrolling */
+    border: 0.5rem solid var(--color-light--1);  /* Border color and width */
+    border-radius: 2.0rem;         /* Optional: rounded corners */
+    padding: 1.0rem;              /* Optional padding */
+    background-color: var(--color-dark--1);  /* Light background */
+}
