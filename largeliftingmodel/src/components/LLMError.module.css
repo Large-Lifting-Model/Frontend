@@ -1,0 +1,13 @@
+.llmErrorContainer {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.errormsg {
+  width: 90%;
+	font-size: 1.9rem;
+	color: var(--color-light--1);
+	margin-bottom: 2.5rem;
+}
