@@ -1,10 +1,11 @@
+import Form from "../components/Form";
 import PageNav from "../components/PageNav";
 
 function Register() {
 	return (
 		<div>
 			<PageNav />
-			<div>Register</div>
+			<Form />
 		</div>
 	);
 }
