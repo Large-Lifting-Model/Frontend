@@ -1,10 +1,11 @@
 import PageNav from "../components/PageNav";
+import FormLogin from "../components/FormLogin";
 
 function Login() {
 	return (
 		<div>
 			<PageNav />
-			<div>Login</div>
+			<FormLogin />
 		</div>
 	);
 }
