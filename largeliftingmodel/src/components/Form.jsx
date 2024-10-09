@@ -84,7 +84,7 @@ function Form() {
 			<p className={styles.paragraph}>
 				Already Registered? <br />
 				<Link to="/login" className={styles.link}>
-					Sign In
+					Login
 				</Link>
 			</p>
 		</>

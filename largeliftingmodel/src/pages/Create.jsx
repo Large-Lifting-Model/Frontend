@@ -9,6 +9,7 @@ function Create() {
 	const [length, setLength] = useState("");
 	const [difficulty, setDifficuty] = useState("");
 	const [workoutType, setWorkoutType] = useState("");
+	const [equipementAccess, setEquipmentAccess] = useState("");
 	const [targetMuscle, setMuscleTarget] = useState("");
 	const [includeExercise, setIncludeExercise] = useState("");
 	const [excludeExercise, setExcludeExercise] = useState("");
@@ -26,7 +27,15 @@ function Create() {
 		{value: "circuit", label: "Circuit"},
 		{value: "crossfit", label: "Crossfit"},
 		{value: "yoga", label: "Yoga"},
-		{value: "any", label: "Any"},
+		{value: "other", label: "Other"},
+	]
+
+	const equipementAccessOptions = [
+		{value: "full gym", label: "Full Gym"},
+		{value: "limited gym", label: "Limited Gym"},
+		{value: "dumbbells", label: "Dumbbells only"},
+		{value: "no equipment", label: "No equipment"},
+		{value: "other", label: "Other"}
 	]
 
 	const handleCreate = (event) => {
@@ -72,6 +81,16 @@ function Create() {
 						/>
 					</div>
 					<div className={styles.row}>
+						<label htmlFor="equipmentAccess">What access to workout equipment do you have? </label>
+						<Select
+							className={styles.dropdown}
+							placeholder="Select Equipment Access..."
+							options={equipementAccessOptions}
+							onChange={setEquipmentAccess}
+							value={equipementAccess}
+						/>
+					</div>
+					<div className={styles.row}>
 						<label htmlFor="targetMuscle">Enter muscles you would like to target: </label>
 						<input
 							id="targetMuscle"
@@ -97,7 +116,8 @@ function Create() {
 							onChange={(e) => setExcludeExercise(e.target.value)}
 							value={excludeExercise}
 						/>
-					</div>					<div className={styles.row}>
+					</div>					
+					<div className={styles.row}>
 						<label htmlFor="considerations">Enter any other considerations for this workout: </label>
 						<input
 							id="considerations"
