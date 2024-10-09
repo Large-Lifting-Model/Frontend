@@ -26,11 +26,6 @@ function Form() {
 				Enter your details to get started
 			</div>
 			<form className={styles.form}>
-				<div className={styles.buttons_top}>
-					<Link to="/">
-						<button className={styles.btn}>&larr; Home</button>
-					</Link>
-				</div>
 				<div className={styles.row}>
 					<label htmlFor="firstName">First Name</label>
 					<input

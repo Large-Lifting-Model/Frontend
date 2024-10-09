@@ -19,14 +19,9 @@ function LoginForm() {
   return (
     <>
       <div className={styles.form_description}>
-        Sign in to your account
+        Login to your account
       </div>
       <form className={styles.form}>
-        <div className={styles.buttons_top}>
-          <Link to="/">
-            <button className={styles.btn}>&larr; Home</button>
-          </Link>
-        </div>
         <div className={styles.row}>
           <label htmlFor="email">Email</label>
           <input
