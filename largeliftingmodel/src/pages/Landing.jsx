@@ -14,6 +14,12 @@ function Landing() {
 				<Link to="/Register" className="cta">
 					Start Tracking Now
 				</Link>
+				<p className={styles.paragraph}>
+				Already Registered? <br />
+				<Link to="/login" className={styles.link}>
+					Login
+				</Link>
+			</p>
 			</section>
 		</main>
 	);

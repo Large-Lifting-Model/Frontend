@@ -1,0 +1,49 @@
+.form_description {
+  margin: 10px;
+  font-size: 2.5rem;
+	text-align: center;
+}
+
+.form {
+	background-color: var(--color-dark--2);
+	border-radius: 7px;
+	padding: 2rem 3rem;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	gap: 2rem;
+}
+
+.row {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+	position: relative;
+}
+
+.dropdown {
+	color: black;
+	font-size: 1.5rem;
+}
+
+.btn_bottom {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.btn_create {
+	background-color: var(--color-brand--2);
+	border: none;
+	padding: 10px 30px;
+	font-size: 2rem;
+	font-weight: bold;
+	border-radius: 50px;
+	cursor: pointer;
+	outline: none;
+	transition: background-color 0.3s ease;
+}
+
+.btn_create:hover {
+	background-color: #00c469a5;
+}
