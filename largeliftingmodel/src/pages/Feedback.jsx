@@ -9,6 +9,7 @@ function Feedback() {
 
 	const [workout, setWorkout] = useState('');
 	const [feedback, setFeedback] = useState('');
+	const [howlong, setHowlong] = useState('');
 
 	useEffect(() => {
 		setWorkout(dummyText); // replace with API data
@@ -16,8 +17,9 @@ function Feedback() {
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
-		alert(`Submitting refinement:  "${feedback}". This is a placeholder for API call`);
+		alert(`Submitting feedback:  "${feedback}", and howlong: "${howlong}", This is a placeholder for API call`);
 		setFeedback(''); // Clear the input after submission
+		setHowlong('');
 	};
 
 	return (
@@ -34,21 +36,31 @@ function Feedback() {
 				</div>
 				<form className={styles.form} method="post" onSubmit={handleSubmit}>
 					<label>
+						Star Rating Component to go here
+					</label>
+					<label>
 						What did you think about this workout?
 					</label>
-					<div className={styles.container}>
-						<input
-							name="feedbackText"
-							onChange={(e) => setFeedback(e.target.value)}
-							value={feedback}
-						/>
-						<button type="submit" className={buttonStyles.primary}>Submit</button>
-					</div>
+					<input
+						name="feedbackText"
+						onChange={(e) => setFeedback(e.target.value)}
+						value={feedback}
+					/>
+					<label>
+						How long did it take?
+					</label>
+					<input
+						name="howlongText"
+						onChange={(e) => setHowlong(e.target.value)}
+						value={howlong}
+					/>
+					<button type="submit" className={buttonStyles.primary}>Submit</button>
 				</form>
 			</section>
 		</main>
 	);
 
 }
+
 
 export default Feedback;
