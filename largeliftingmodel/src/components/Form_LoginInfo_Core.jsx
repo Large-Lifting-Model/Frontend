@@ -1,5 +1,7 @@
 import styles from "./Form.module.css";
 
+
+
 const Form_LoginInfo_Core = ({loginInfo, setLoginInfo}) => {
 
 	const changeElement = (name, value) => {
