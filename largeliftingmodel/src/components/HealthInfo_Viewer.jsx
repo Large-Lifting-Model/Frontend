@@ -10,6 +10,10 @@ const HealthInfo_Viewer = (props) => {
 				Here is your Health Info
 			</div>
 			<div className={styles.row}>
+			<div className={styles.container}>
+					<label> Date of Birth </label>
+					<h2 className={styles.h2}> {props.healthInfo.dob} </h2>
+				</div>
 				<div className={styles.container}>
 					<label> Gender </label>
 					<h2 className={styles.h2}> {props.healthInfo.gender} </h2>

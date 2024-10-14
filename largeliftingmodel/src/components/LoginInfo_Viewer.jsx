@@ -19,16 +19,8 @@ const LoginInfo_Viewer = (props) => {
 					<h2 className={styles.h2}> {props.loginInfo.lastName} </h2>
 				</div>
 				<div className={styles.container}>
-					<label> Date of Birth </label>
-					<h2 className={styles.h2}> {props.loginInfo.dob} </h2>
-				</div>
-				<div className={styles.container}>
 					<label> Email </label>
 					<h2 className={styles.h2}> {props.loginInfo.email} </h2>
-				</div>
-				<div className={styles.container}>
-					<label> Password </label>
-					<h2 className={styles.h2}> {props.loginInfo.password} </h2>
 				</div>
 			</div>
 		</div>

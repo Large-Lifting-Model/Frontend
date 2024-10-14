@@ -12,12 +12,11 @@ import {useNavigate} from "react-router-dom"
 const dummyLoginInfo = {
 	firstName: "",
 	lastName: "",
-	dob: "",
-	email: "",
-	password: ""
+	email: ""
 };
 
 const dummyHealthInfo = {
+	dob: "",
 	gender: "",
 	height: 0,
 	weight: 0,
@@ -54,13 +53,13 @@ function Profile() {
 		const formName = event.target.name;
 		switch(formName) {
 		case "loginInfo":
+			alert(`Saving loginInfo:  "${JSON.stringify(wipLoginInfo)}". This is a placeholder for API call`);
 			setLoginInfo(wipLoginInfo)
-			alert(`Saving loginInfo:  "${loginInfo}". This is a placeholder for API call`);
 			setIsEditingLoginInfo(false)
 			break;
 		case "healthInfo":
+			alert(`Saving healthInfo:  "${JSON.stringify(wipHealthInfo)}". This is a placeholder for API call`);
 			setHealthInfo(wipHealthInfo)
-			alert(`Saving healthInfo:  "${healthInfo}". This is a placeholder for API call`);
 			setIsEditingHealthInfo(false)
 			break;
 		default:

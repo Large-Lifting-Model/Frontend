@@ -11,9 +11,7 @@ import {useNavigate} from "react-router-dom"
 const dummyLoginInfo = {
 	firstName: "",
 	lastName: "",
-	dob: "",
-	email: "",
-	password: ""
+	email: ""
 };
 
 function Form_LoginInfo() {
@@ -26,7 +24,7 @@ function Form_LoginInfo() {
 		// prevents page refresh
 		event.preventDefault();
 		alert(
-			`Register button was clicked! User info:\nFirst Name: ${loginInfo.firstName}\nLast Name: ${loginInfo.lastName}\nBirth Date: ${loginInfo.dob}\nEmail: ${loginInfo.email}\nPassword: ${loginInfo.password}`
+			`Register button was clicked! User info:\nFirst Name: ${loginInfo.firstName}\nLast Name: ${loginInfo.lastName}\nEmail: ${loginInfo.email}\n`
 		);
 		navigate('../HealthInfo');
 		setLoginInfo(dummyLoginInfo)
