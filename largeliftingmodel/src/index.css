@@ -78,6 +78,12 @@ input:focus {
 	border-radius: 5px;
 }
 
+@media (max-width: 660px) {
+	body {
+		padding: 2.5rem 1rem;
+	}
+}
+
 /*
 "importCSSModule": {
     "prefix": "csm",
