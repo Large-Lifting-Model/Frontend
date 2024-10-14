@@ -3,7 +3,7 @@ import Landing from "./pages/Landing";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import Info from "./pages/Info";
+import HealthInfo from "./pages/HealthInfo";
 import Profile from "./pages/Profile";
 import Create from "./pages/Create";
 import Workout from "./pages/Workout";
@@ -19,7 +19,7 @@ function App() {
 				<Route path="home" element={<Home />} />
 				<Route path="login" element={<Login />} />
 				<Route path="register" element={<Register />} />
-				<Route path="info" element={<Info />} />
+				<Route path="healthInfo" element={<HealthInfo />} />
 				<Route path="profile" element={<Profile />} />
 				<Route path="create" element={<Create />} />
 				<Route path="workout" element={<Workout />} />

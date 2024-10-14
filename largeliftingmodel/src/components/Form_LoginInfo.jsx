@@ -5,24 +5,28 @@ import { useState } from "react";
 import styles from "./Form.module.css";
 import { Link } from "react-router-dom";
 import Form_LoginInfo_Core from "./Form_LoginInfo_Core";
+import {useNavigate} from "react-router-dom"
+
 
 const dummyLoginInfo = {
 	firstName: "",
 	lastName: "",
-	dob: "",
-	email: "",
-	password: ""
+	email: ""
 };
 
 function Form_LoginInfo() {
+
+	const navigate = useNavigate();
+
 	const [loginInfo, setLoginInfo] = useState(dummyLoginInfo);
 
 	const handleSubmit = (event) => {
 		// prevents page refresh
 		event.preventDefault();
 		alert(
-			`Register button was clicked! User info:\nFirst Name: ${loginInfo.firstName}\nLast Name: ${loginInfo.lastName}\nBirth Date: ${loginInfo.dob}\nEmail: ${loginInfo.email}\nPassword: ${loginInfo.password}`
+			`Register button was clicked! User info:\nFirst Name: ${loginInfo.firstName}\nLast Name: ${loginInfo.lastName}\nEmail: ${loginInfo.email}\n`
 		);
+		navigate('../HealthInfo');
 		setLoginInfo(dummyLoginInfo)
 	};
 

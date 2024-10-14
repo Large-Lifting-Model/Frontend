@@ -32,30 +32,12 @@ const Form_LoginInfo_Core = ({loginInfo, setLoginInfo}) => {
 				/>
 			</div>
 			<div className={styles.row}>
-				<label htmlFor="dob">Birth Date</label>
-				<input
-					type="date"
-					id="dob"
-					onChange={(e) => changeElement('dob', e.target.value)}
-					value={loginInfo.dob}
-				/>
-			</div>
-			<div className={styles.row}>
 				<label htmlFor="email">Email</label>
 				<input
 					id="email"
 					type="email"
 					onChange={(e) => changeElement('email', e.target.value)}
 					value={loginInfo.email}
-				/>
-			</div>
-			<div className={styles.row}>
-				<label htmlFor="password">Password</label>
-				<input
-					type="password"
-					id="password"
-					onChange={(e) => changeElement('password', e.target.value)}
-					value={loginInfo.password}
 				/>
 			</div>
 		</>

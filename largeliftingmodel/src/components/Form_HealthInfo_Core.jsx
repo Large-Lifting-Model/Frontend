@@ -11,6 +11,15 @@ const Form_HealthInfo_Core = ({healthInfo, setHealthInfo}) => {
 	return (
 		<>
 			<div className={styles.row}>
+				<label htmlFor="dob">Birth Date</label>
+				<input
+					type="date"
+					id="dob"
+					onChange={(e) => changeElement('dob', e.target.value)}
+					value={healthInfo.dob}
+				/>
+			</div>
+			<div className={styles.row}>
 				<label htmlFor="gender">Gender</label>
 				<input
 					id="gender"
