@@ -1,0 +1,22 @@
+.home section
+{
+	display: flex;
+	flex-direction: column;
+	height: 85%;
+	align-items: center;
+	justify-content: center;
+	gap: 2.5rem;
+	text-align: center;
+}
+
+.links {
+    display: flex;
+    flex-direction: column;
+
+
+}
+
+.cta {
+    display: inline-block; /* Keep this if you prefer */
+    margin-bottom: 1rem; /* Adds space between links */
+}
