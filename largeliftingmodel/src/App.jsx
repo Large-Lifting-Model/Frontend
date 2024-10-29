@@ -20,7 +20,7 @@ function App() {
 				<Route path="login" element={<Login />} />
 				<Route path="register" element={<Register />} />
 				<Route path="healthInfo" element={<HealthInfo />} />
-				<Route path="profile" element={<Profile />} />
+				<Route path="profile" element={<Profile onLoginInfoSubmit={()=>{}} onHealthInfoSubmit={()=>{}}/>} />
 				<Route path="create" element={<Create />} />
 				<Route path="workout" element={<Workout />} />
 				<Route path="feedback" element={<Feedback />} />

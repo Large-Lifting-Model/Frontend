@@ -8,6 +8,7 @@ import Form_HealthInfo_Core from "../components/Form_HealthInfo_Core";
 import buttonStyles from "../components/Button.module.css"
 import formStyles from "../components/Form.module.css"
 import {useNavigate} from "react-router-dom"
+import React from 'react'
 
 const dummyLoginInfo = {
 	firstName: "",
@@ -30,7 +31,7 @@ const dummyHealthInfo = {
 
 
 
-function Profile() {
+function Profile({ onLoginInfoSubmit, onHealthInfoSubmit }) {
 	
 	const [loginInfo, setLoginInfo] = useState(dummyLoginInfo);
 	const [wipLoginInfo, setWIPLoginInfo] = useState(dummyLoginInfo);
@@ -55,11 +56,13 @@ function Profile() {
 		case "loginInfo":
 			alert(`Saving loginInfo:  "${JSON.stringify(wipLoginInfo)}". This is a placeholder for API call`);
 			setLoginInfo(wipLoginInfo)
+			onLoginInfoSubmit()
 			setIsEditingLoginInfo(false)
 			break;
 		case "healthInfo":
 			alert(`Saving healthInfo:  "${JSON.stringify(wipHealthInfo)}". This is a placeholder for API call`);
 			setHealthInfo(wipHealthInfo)
+			onHealthInfoSubmit()
 			setIsEditingHealthInfo(false)
 			break;
 		default:
@@ -93,12 +96,12 @@ function Profile() {
 			<AppNav />
 			{isEditingLoginInfo ?
 				<div>
-					<form name="loginInfo" className={formStyles.form} onSubmit={handleSubmit}>
+					<form name="loginInfo" htmlFor="loginInfo" className={formStyles.form} onSubmit={handleSubmit}>
 						<Form_LoginInfo_Core loginInfo = {wipLoginInfo} setLoginInfo = {setWIPLoginInfo}/>
 						<div className={formStyles.buttons_bottom}>
-							<button type="submit" className={formStyles.btn}>Save</button>
-							<button type="button" className={formStyles.btn} onClick={()=>cancelEditingLoginInfo()}>Cancel</button>
-							<button type="button" className={formStyles.btn} onClick={()=>deleteProfile()}>Delete Profile</button>
+							<button type="submit" data-testid="saveLoginInfo" className={formStyles.btn}>Save</button>
+							<button type="button" data-testid="cancelLoginInfo" className={formStyles.btn} onClick={()=>cancelEditingLoginInfo()}>Cancel</button>
+							<button type="button" data-testid="deleteProfile" className={formStyles.btn} onClick={()=>deleteProfile()}>Delete Profile</button>
 						</div>
 					</form>
 				</div>
@@ -106,25 +109,25 @@ function Profile() {
 				<div>
 					<LoginInfo_Viewer loginInfo = {loginInfo} />
 					<div className={styles.container}>
-						<button type="button" className={buttonStyles.primary} onClick={() => setIsEditingLoginInfo(true)}>Edit Login Info</button>
+						<button type="button" data-testid="editLoginInfo" className={buttonStyles.primary} onClick={() => setIsEditingLoginInfo(true)}>Edit Login Info</button>
 					</div>
 				</div>
 			}
 			{isEditingHealthInfo ?
 				<div>
-					<form name="healthInfo" className={formStyles.form} onSubmit={handleSubmit}>
+					<form name="healthInfo"  htmlFor="healthInfo" className={formStyles.form} onSubmit={handleSubmit}>
 						<Form_HealthInfo_Core healthInfo = {wipHealthInfo} setHealthInfo = {setWIPHealthInfo}/>
 						<div className={formStyles.buttons_bottom}>
-							<button type="submit" className={formStyles.btn}>Save</button>
-							<button type="button" className={formStyles.btn} onClick={()=>cancelEditingHealthInfo()}>Cancel</button>
+							<button type="submit" data-testid="saveHealthInfo" className={formStyles.btn}>Save</button>
+							<button type="button" data-testid="cancelHealthInfo" className={formStyles.btn} onClick={()=>cancelEditingHealthInfo()}>Cancel</button>
 						</div>
 					</form>
 				</div>
 				:
 				<div>
-					<HealthInfo_Viewer healthInfo = {healthInfo} />
+					<HealthInfo_Viewer healthInfo = {healthInfo} htmlFor="healthInfo" />
 					<div className={styles.container}>
-						<button type="button" className={buttonStyles.primary} onClick={() => setIsEditingHealthInfo(true)}>Edit Health Info</button>
+						<button type="button" data-testid="editHealthInfo" className={buttonStyles.primary} onClick={() => setIsEditingHealthInfo(true)}>Edit Health Info</button>
 					</div>
 				</div>
 			}

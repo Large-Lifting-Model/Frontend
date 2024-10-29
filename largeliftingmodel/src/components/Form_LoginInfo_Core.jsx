@@ -1,4 +1,5 @@
 import styles from "./Form.module.css";
+import React from 'react'
 
 
 
@@ -20,6 +21,7 @@ const Form_LoginInfo_Core = ({loginInfo, setLoginInfo}) => {
 					type="text"
 					onChange={(e) => changeElement('firstName', e.target.value)}
 					value={loginInfo.firstName}
+					data-testid="firstNameForm"
 				/>
 			</div>
 			<div className={styles.row}>
@@ -29,6 +31,7 @@ const Form_LoginInfo_Core = ({loginInfo, setLoginInfo}) => {
 					type="text"
 					onChange={(e) => changeElement('lastName', e.target.value)}
 					value={loginInfo.lastName}
+					data-testid="lastNameForm"
 				/>
 			</div>
 			<div className={styles.row}>
@@ -38,6 +41,7 @@ const Form_LoginInfo_Core = ({loginInfo, setLoginInfo}) => {
 					type="email"
 					onChange={(e) => changeElement('email', e.target.value)}
 					value={loginInfo.email}
+					data-testid="emailForm"
 				/>
 			</div>
 		</>

@@ -1,4 +1,5 @@
 import styles from "./Form.module.css";
+import React from 'react'
 
 const Form_HealthInfo_Core = ({healthInfo, setHealthInfo}) => {
 
@@ -17,6 +18,7 @@ const Form_HealthInfo_Core = ({healthInfo, setHealthInfo}) => {
 					id="dob"
 					onChange={(e) => changeElement('dob', e.target.value)}
 					value={healthInfo.dob}
+					data-testid="dobForm"
 				/>
 			</div>
 			<div className={styles.row}>
@@ -26,6 +28,7 @@ const Form_HealthInfo_Core = ({healthInfo, setHealthInfo}) => {
 					type="text"
 					onChange={(e) => changeElement('gender', e.target.value)}
 					value={healthInfo.gender}
+					data-testid="genderForm"
 				/>
 			</div>
 			<div className={styles.row}>
@@ -35,6 +38,7 @@ const Form_HealthInfo_Core = ({healthInfo, setHealthInfo}) => {
 					type="number"
 					onChange={(e) => changeElement('height', e.target.value)}
 					value={healthInfo.height}
+					data-testid="heightForm"
 				/>
 			</div>
 			<div className={styles.row}>
@@ -44,6 +48,7 @@ const Form_HealthInfo_Core = ({healthInfo, setHealthInfo}) => {
 					type="number"
 					onChange={(e) => changeElement('weight', e.target.value)}
 					value={healthInfo.weight}
+					data-testid="weightForm"
 				/>
 			</div>
 			<div className={styles.row}>
@@ -53,6 +58,7 @@ const Form_HealthInfo_Core = ({healthInfo, setHealthInfo}) => {
 					type="text"
 					onChange={(e) => changeElement('favoriteWorkoutType', e.target.value)}
 					value={healthInfo.favoriteWorkoutType}
+					data-testid="favoriteWorkoutTypeForm"
 				/>
 			</div>
 			<div className={styles.row}>
@@ -62,6 +68,7 @@ const Form_HealthInfo_Core = ({healthInfo, setHealthInfo}) => {
 					type="text"
 					onChange={(e) => changeElement('workoutExperience', e.target.value)}
 					value={healthInfo.workoutExperience}
+					data-testid="workoutExperienceForm"
 				/>
 			</div>
 			<div className={styles.row}>
@@ -71,6 +78,7 @@ const Form_HealthInfo_Core = ({healthInfo, setHealthInfo}) => {
 					type="text"
 					onChange={(e) => changeElement('fitnessGoal', e.target.value)}
 					value={healthInfo.fitnessGoal}
+					data-testid="fitnessGoalForm"
 				/>
 			</div>
 			<div className={styles.row}>
@@ -80,6 +88,7 @@ const Form_HealthInfo_Core = ({healthInfo, setHealthInfo}) => {
 					type="text"
 					onChange={(e) => changeElement('injuries', e.target.value)}
 					value={healthInfo.injuries}
+					data-testid="injuriesForm"
 				/>
 			</div>
 			<div className={styles.row}>
@@ -89,6 +98,7 @@ const Form_HealthInfo_Core = ({healthInfo, setHealthInfo}) => {
 					type="text"
 					onChange={(e) => changeElement('otherConsiderations', e.target.value)}
 					value={healthInfo.otherConsiderations}
+					data-testid="otherConsiderationsForm"
 				/>
 			</div>
 		</>
