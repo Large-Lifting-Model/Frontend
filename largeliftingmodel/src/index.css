@@ -92,3 +92,17 @@ input:focus {
     "description": "Import CSS Module as `styles`"
   },
 */
+
+/* customized react calendar */
+
+.react-calendar__month-view__weekdays__weekday {
+	color: var(--color-dark--0);
+	font-size: 1.5rem;
+};
+
+/* NAVIGATION BAR NOT WORKING TO CHANGE STYLES */
+/* .react-calendar__navigation {
+	background-color: #00c46a !important;
+	color: var !important;
+	font-size: 3rem !important;
+}; */

@@ -1,0 +1,77 @@
+.form_description {
+	margin: 5px;
+	font-size: 3.5rem;
+	text-align: center;
+}
+
+.form_sub_description {
+  margin: 5px;
+	font-size: 1.5rem;
+	text-align: center;
+  padding-bottom: 5px;
+}
+
+.historyPage {
+  display: flex;
+	flex-direction: column;
+  align-items: center;
+	justify-content: center;
+  margin-top: 5rem;
+}
+
+.description {
+  margin: 5px;
+	font-size: 2.5rem;
+	text-align: center;
+}
+
+.calendar {
+  width: 900px !important;
+  max-width: 100%;
+  background: white;
+  border: 1px solid #a0a096;
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.125em;
+}
+
+.current-day {
+  background-color: var(--color-brand--1) !important;
+  color: white !important;
+  border: 1px solid white !important;
+  height: 70px !important;
+  font-size: 2.5rem !important;
+}
+
+.workout-day {
+  background-color: var(--color-brand--2) !important;
+  color: white !important;
+  border: 1px solid white !important;
+  height: 70px !important;
+  font-size: 2.5rem !important;
+}
+
+/* ADD HOVER COLOR */
+/* .workout-day:hover {
+  background-color: var();
+} */
+
+.past-day {
+  background-color: var(--color-light--1) !important;
+  color: black !important;
+  border: 1px solid white !important;
+  height: 70px !important;
+  font-size: 2.5rem !important;
+}
+
+.future-day {
+  background-color: var(--color-light--3) !important;
+  color: black !important;
+  border: 1px solid white !important;
+  height: 70px !important;
+  font-size: 2.5rem !important;
+}
+
+
+
+
+

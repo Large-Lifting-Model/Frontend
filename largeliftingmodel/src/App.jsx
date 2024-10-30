@@ -10,6 +10,7 @@ import Workout from "./pages/Workout";
 import Feedback from "./pages/Feedback";
 import History from "./pages/History";
 import PageNotFound from "./pages/PageNotFound";
+import HistoryDay from "./pages/HistoryDay";
 
 function App() {
 	return (
@@ -25,6 +26,7 @@ function App() {
 				<Route path="workout" element={<Workout />} />
 				<Route path="feedback" element={<Feedback />} />
 				<Route path="history" element={<History />} />
+				<Route path="historyDay" element={<HistoryDay />} />
 				<Route path="*" element={<PageNotFound />} />
 			</Routes>
 		</BrowserRouter>
