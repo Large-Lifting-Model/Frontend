@@ -11,23 +11,20 @@ import {useNavigate} from "react-router-dom"
 
 const testUserID = "12903781273"
 
-const testProfile = {
-	id: testUserID.toString(),
+const testUser = {
 	first_name: "testUser_fName",
 	last_name: "testUser_lname",
 	email: "testUser_e@mail"
 };
 
-const emptyProfile = {
-	id: "",
+const emptyUser = {
 	first_name: "",
 	last_name: "",
 	email: ""
 };
 
 const testHealth = {
-	id: testUserID.toString(),
-	dob: "November 20 2004",
+	dob: "2002-11-20",
 	gender: "Male",
 	height: 172,
 	weight: 90,
@@ -39,7 +36,6 @@ const testHealth = {
 }
 
 const emptyHealth = {
-	id: "",
 	dob: "",
 	gender: "",
 	height: 0,
@@ -51,48 +47,27 @@ const emptyHealth = {
 	other_considerations: ""
 }
 
-/*
-{
-  "user": {
-    "first_name": "Updated First Name",
-    "last_name": "Updated Last Name",
-    "email": "updated.email@example.com"
-  },
-  "health_data": {
-    "dob": "2000-01-01",
-    "gender": "Male",
-    "height": 6.1,
-    "weight": 170,
-    "favourite_workout_type": "Weights",
-    "workout_experience": "Intermediate",
-    "fitness_goal": "Improve endurance",
-    "injuries": "None",
-    "other_considerations": "Focus on cardio"
-  }
+const testProfile = {
+	id: testUserID.toString(),
+	"user": testUser,
+	"health_data": testHealth
 }
-*/
 
-// const testProfile = {
-// 	"user": testUser,
-// 	"health_data": testHealth
-// }
-
-// const emptyProfile = {
-// 	"user": emptyUser,
-// 	"health_data": emptyHealth
-// }
+const emptyProfile = {
+	id: "",
+	"user": emptyUser,
+	"health_data": emptyHealth
+}
 
 
 
 
 function Profile() {
 	
-	const [loginInfo, setLoginInfo] = useState(emptyProfile);
-	const [wipLoginInfo, setWIPLoginInfo] = useState(emptyProfile);
-	const [healthInfo, setHealthInfo] = useState(emptyHealth);
-	const [wipHealthInfo, setWIPHealthInfo] = useState(emptyHealth);
 	const [isEditingLoginInfo, setIsEditingLoginInfo] = useState(false);
 	const [isEditingHealthInfo, setIsEditingHealthInfo] = useState(false);
+	const [profile, setProfile] = useState(emptyProfile)
+	const [wipProfile, setWIPProfile] = useState(emptyProfile)
 
 	const [error, setError] = useState(null);
 	const [loading, setLoading] = useState(true)
@@ -101,14 +76,17 @@ function Profile() {
 
 	const getOrCreateProfile = async () => {
 		try {
-			const profileResponse = await fetch('http://localhost:8000/profile/' + testUserID.toString());
+			const profileResponse = await fetch('http://localhost:3000/profile/' + testUserID.toString());
 			if (!profileResponse.ok) throw new Error('Profile fetch failed');
-			const profile = await profileResponse.json();
-			setLoginInfo(profile);
-			setWIPLoginInfo(profile);
+			const response = await profileResponse.json();
+
+			console.info("SET - GET PROFILE")
+			console.info(JSON.stringify(response))
+			setProfile(response);
+			setWIPProfile(response);
 		} catch (error) { // If it has been deleted, re-create it.
 			console.info("CREATING test profile")
-			const testCreateResponse = await fetch('http://localhost:8000/profile/', {
+			const testCreateResponse = await fetch('http://localhost:3000/profile/', {
 				method: 'POST', // Specify PUT method
 				headers: {
 				  'Content-Type': 'application/json', // Indicate JSON content
@@ -116,30 +94,9 @@ function Profile() {
 				body: JSON.stringify(testProfile)
 			})
 			if (!testCreateResponse.ok) throw new Error('Creating new test profile failed');
-			setLoginInfo(testProfile);
-			setWIPLoginInfo(testProfile)
-		}
-	}
-
-	const getOrCreateHealth = async () => {
-		try {
-			const response = await fetch('http://localhost:8000/health/' + testUserID.toString());
-			if (!response.ok) throw new Error('Health fetch failed');
-			const health = await response.json();
-			setHealthInfo(health);
-			setWIPHealthInfo(health);
-		} catch (error) { // If it has been deleted, re-create it.
-			console.info("CREATING test health")
-			const testCreateResponse = await fetch('http://localhost:8000/health/', {
-				method: 'POST', // Specify PUT method
-				headers: {
-				  'Content-Type': 'application/json', // Indicate JSON content
-				},
-				body: JSON.stringify(testHealth)
-			})
-			if (!testCreateResponse.ok) throw new Error('Creating new test health failed');
-			setHealthInfo(testHealth);
-			setWIPHealthInfo(testHealth);
+			console.info("SET - CREATE TEST PROFILE")
+			setProfile(testProfile);
+			setWIPProfile(testProfile)
 		}
 	}
 
@@ -147,7 +104,6 @@ function Profile() {
 		try {
 			setLoading(true);
 			await getOrCreateProfile()
-			await getOrCreateHealth()
 
 		} catch (err) {
 			console.error("GetOrCREATE - " + err.message)
@@ -161,7 +117,7 @@ function Profile() {
 	const putProfile = async (profileData) => {
 		try {
 			setLoading(true);
-			const profileResponse = await fetch('http://localhost:8000/profile/' + testUserID.toString(), {
+			const profileResponse = await fetch('http://localhost:3000/profile/' + testUserID.toString(), {
 				method: 'PUT', // Specify PUT method
 				headers: {
 				  'Content-Type': 'application/json', // Indicate JSON content
@@ -176,64 +132,40 @@ function Profile() {
 			setError(err.message);
 		} finally {
 			setLoading(false); // Ensure loading is stopped after fetch completes
-			setLoginInfo(profileData)
-			setWIPLoginInfo(profileData)
+			console.info("SET - PUT FINALLY")
+			setProfile(profileData)
+			setWIPProfile(profileData)
 			setIsEditingLoginInfo(false)
-		}
-	}
-
-	const putHealth = async (healthData) => {
-		try {
-			setLoading(true);
-			const healthResponse = await fetch('http://localhost:8000/health/' + testUserID.toString(), {
-				method: 'PUT', // Specify PUT method
-				headers: {
-				  'Content-Type': 'application/json', // Indicate JSON content
-				},
-				body: JSON.stringify(healthData)
-			})
-			if (!healthResponse.ok) throw new Error('Health PUT failed');
-
-		} catch (err) {
-			console.error(err)
-			setError(err.message);
-		} finally {
-			setLoading(false); // Ensure loading is stopped after fetch completes
-			setHealthInfo(healthData)
-			setWIPHealthInfo(healthData)
-			setIsEditingHealthInfo(false)
 		}
 	}
 
 	const delProfile = async () => {
 		try {
 			setLoading(true);
-			const profileResponse = await fetch('http://localhost:8000/profile/' + testUserID.toString(), {
+			const profileResponse = await fetch('http://localhost:3000/profile/' + testUserID.toString(), {
 				method: 'DELETE', // Specify PUT method
 			})
 			if (!profileResponse.ok) throw new Error('Profile DELETE failed');
-			const healthResponse = await fetch('http://localhost:8000/health/' + testUserID.toString(), {
-				method: 'DELETE', // Specify PUT method
-			})
-			if (!healthResponse.ok) throw new Error('Health DELETE failed');
 		} catch (err) {
 			console.error(err)
 			setError(err.message);
 		} finally {
 			setLoading(false); // Ensure loading is stopped after fetch completes
-			setLoginInfo(emptyProfile);
-			setWIPLoginInfo(emptyProfile);
-			setHealthInfo(emptyHealth);
-			setWIPHealthInfo(emptyHealth);
+			console.info("SET - DELETE PROFILE")
+			setProfile(emptyProfile);
+			setWIPProfile(emptyProfile);
 			setIsEditingLoginInfo(false);
 			setIsEditingHealthInfo(false);
 			navigate('..');
 		}
 	}
-
-	
-
 	useEffect(() => {
+		// console.info("CATCH")
+		// console.info(JSON.stringify(testProfile))
+		// console.info(JSON.stringify(emptyProfile))
+		// console.info(JSON.stringify(profile))
+		// console.info(JSON.stringify(wipProfile))
+		// console.info("/CATCH")
 		getAllData();
     }, []);
 
@@ -244,27 +176,39 @@ function Profile() {
 		const formName = event.target.name;
 		switch(formName) {
 		case "loginInfo":
-			putProfile(wipLoginInfo)
+			putProfile(wipProfile)
 			break;
 		case "healthInfo":
-			putHealth(wipHealthInfo)
+			putProfile(wipProfile)
 			break;
 		default:
 
 		}
 	};
 
+	const handleUserSubmit = (value) => {
+		setWIPProfile({...profile,
+			"user" : value,
+		});
+	}
+
+	const handleHealthDataSubmit = (value) => {
+		setWIPProfile({...profile,
+			"health_data" : value,
+		});
+	}
+
 	const deleteProfile = () => {
 		delProfile()
 	}
 
 	const cancelEditingLoginInfo = () => {
-		setWIPLoginInfo(loginInfo)
+		setWIPProfile(profile)
 		setIsEditingLoginInfo(false)
 	}
 
 	const cancelEditingHealthInfo = () => {
-		setWIPHealthInfo(healthInfo)
+		setWIPProfile(profile)
 		setIsEditingHealthInfo(false)
 	}
 
@@ -274,7 +218,7 @@ function Profile() {
 			{isEditingLoginInfo ?
 				<div>
 					<form name="loginInfo" className={formStyles.form} onSubmit={handleSubmit}>
-						<Form_LoginInfo_Core loginInfo = {wipLoginInfo} setLoginInfo = {setWIPLoginInfo}/>
+						<Form_LoginInfo_Core user = {wipProfile.user} setUser= {handleUserSubmit}/>
 						<div className={formStyles.buttons_bottom}>
 							<button type="submit" className={formStyles.btn}>Save</button>
 							<button type="button" className={formStyles.btn} onClick={()=>cancelEditingLoginInfo()}>Cancel</button>
@@ -284,7 +228,7 @@ function Profile() {
 				</div>
 				:
 				<div>
-					<LoginInfo_Viewer loginInfo = {loginInfo} />
+					<LoginInfo_Viewer user = {profile.user} />
 					<div className={styles.container}>
 						<button type="button" className={buttonStyles.primary} onClick={() => setIsEditingLoginInfo(true)}>Edit Login Info</button>
 					</div>
@@ -293,7 +237,7 @@ function Profile() {
 			{isEditingHealthInfo ?
 				<div>
 					<form name="healthInfo" className={formStyles.form} onSubmit={handleSubmit}>
-						<Form_HealthInfo_Core healthInfo = {wipHealthInfo} setHealthInfo = {setWIPHealthInfo}/>
+						<Form_HealthInfo_Core health_data = {wipProfile.health_data} setHealthData = {handleHealthDataSubmit}/>
 						<div className={formStyles.buttons_bottom}>
 							<button type="submit" className={formStyles.btn}>Save</button>
 							<button type="button" className={formStyles.btn} onClick={()=>cancelEditingHealthInfo()}>Cancel</button>
@@ -302,7 +246,7 @@ function Profile() {
 				</div>
 				:
 				<div>
-					<HealthInfo_Viewer healthInfo = {healthInfo} />
+					<HealthInfo_Viewer health_data = {profile.health_data} />
 					<div className={styles.container}>
 						<button type="button" className={buttonStyles.primary} onClick={() => setIsEditingHealthInfo(true)}>Edit Health Info</button>
 					</div>

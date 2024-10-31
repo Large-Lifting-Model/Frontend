@@ -1,60 +1,42 @@
 {
   "profile": [
     {
-      "id": "1",
-      "firstName": "testUser_fName",
-      "lastName": "testUser_lname",
-      "email": "testUser_e@mail"
+      "id": "seed",
+      "user": {
+        "first_name": "",
+        "last_name": "",
+        "email": ""
+      },
+      "health_data": {
+        "dob": "",
+        "gender": "",
+        "height": 0,
+        "weight": 0,
+        "favourite_workout_type": "",
+        "workout_experience": "",
+        "fitness_goal": "",
+        "injuries": "",
+        "other_considerations": ""
+      }
     },
     {
       "id": "12903781273",
-      "first_name": "testUser_fName",
-      "last_name": "testUser_lname",
-      "email": "testUser_e@mail"
-    },
-    {
-      "id": "12903781273",
-      "first_name": "testUser_fName",
-      "last_name": "testUser_lname",
-      "email": "testUser_e@mail"
-    }
-  ],
-  "health": [
-    {
-      "id": "1",
-      "dob": "November 20, 2004",
-      "gender": "Male",
-      "height": "172",
-      "weight": "92",
-      "favoriteWorkoutType": "weights",
-      "workoutExperience": "medium",
-      "fitnessGoal": "get huge",
-      "injuries": "bad knees",
-      "otherConsiderations": "none"
-    },
-    {
-      "id": "12903781273",
-      "dob": "November 20 2004",
-      "gender": "Male",
-      "height": 172,
-      "weight": 90,
-      "favourite_workout_type": "weights",
-      "workout_experience": "medium",
-      "fitness_goal": "hypertrophy",
-      "injuries": "bad left knee",
-      "other_considerations": "none"
-    },
-    {
-      "id": "12903781273",
-      "dob": "November 20 2004",
-      "gender": "Male",
-      "height": 172,
-      "weight": 90,
-      "favourite_workout_type": "weights",
-      "workout_experience": "medium",
-      "fitness_goal": "hypertrophy",
-      "injuries": "bad left knee",
-      "other_considerations": "none"
+      "user": {
+        "first_name": "testUser_fName222222222",
+        "last_name": "testUser_lname",
+        "email": "testUser_e@mail"
+      },
+      "health_data": {
+        "dob": "November 20 2004",
+        "gender": "Maleish",
+        "height": 172,
+        "weight": 90,
+        "favourite_workout_type": "weights",
+        "workout_experience": "medium",
+        "fitness_goal": "hypertrophy",
+        "injuries": "bad left knee",
+        "other_considerations": "none"
+      }
     }
   ]
 }

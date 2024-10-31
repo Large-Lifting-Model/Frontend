@@ -1,5 +1,5 @@
-// "https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=0&longitude=0"
 
+//import { useEffect } from "react";
 import styles from "./Form.module.css";
 
 const HealthInfo_Viewer = (props) => {
@@ -11,40 +11,40 @@ const HealthInfo_Viewer = (props) => {
 			</div>
 			<div className={styles.row}>
 			<div className={styles.container}>
-					<label> Date of Birth </label>
-					<h2 className={styles.h2}> {props.healthInfo.dob} </h2>
+				<label> Date of Birth </label>
+					<h2 className={styles.h2}> {props.health_data.dob} </h2>
 				</div>
 				<div className={styles.container}>
 					<label> Gender </label>
-					<h2 className={styles.h2}> {props.healthInfo.gender} </h2>
+					<h2 className={styles.h2}> {props.health_data.gender} </h2>
 				</div>
 				<div className={styles.container}>
 					<label> Height </label>
-					<h2 className={styles.h2}> {props.healthInfo.height} </h2>
+					<h2 className={styles.h2}> {props.health_data.height} </h2>
 				</div>
 				<div className={styles.container}>
 					<label> Weight </label>
-					<h2 className={styles.h2}> {props.healthInfo.weight} </h2>
+					<h2 className={styles.h2}> {props.health_data.weight} </h2>
 				</div>
 				<div className={styles.container}>
 					<label> Favorite Workout Type </label>
-					<h2 className={styles.h2}> {props.healthInfo.favourite_workout_type} </h2>
+					<h2 className={styles.h2}> {props.health_data.favourite_workout_type} </h2>
 				</div>
 				<div className={styles.container}>
 					<label> Workout Experience </label>
-					<h2 className={styles.h2}> {props.healthInfo.workout_experience} </h2>
+					<h2 className={styles.h2}> {props.health_data.workout_experience} </h2>
 				</div>
 				<div className={styles.container}>
 					<label> Fitness Goal </label>
-					<h2 className={styles.h2}> {props.healthInfo.fitness_goal} </h2>
+					<h2 className={styles.h2}> {props.health_data.fitness_goal} </h2>
 				</div>
 				<div className={styles.container}>
 					<label> Injuries </label>
-					<h2 className={styles.h2}> {props.healthInfo.injuries} </h2>
+					<h2 className={styles.h2}> {props.health_data.injuries} </h2>
 				</div>
 				<div className={styles.container}>
 					<label> Other Considerations </label>
-					<h2 className={styles.h2}> {props.healthInfo.other_considerations} </h2>
+					<h2 className={styles.h2}> {props.health_data.other_considerations} </h2>
 				</div>
 			</div>
 		</div>
