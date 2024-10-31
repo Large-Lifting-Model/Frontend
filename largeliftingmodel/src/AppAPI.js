@@ -1,0 +1,124 @@
+class AppAPI {
+  
+  static test = true // REPLACE WITH ENVIRONMENT VARIABLE
+  static testUserID = "12903781273"
+  static testServer = 'http://localhost:3000/'
+  static prodServer = 'http://34.65.243.247/api/'
+  static server = AppAPI.test ? AppAPI.testServer : AppAPI.prodServer
+
+  static TestRoutes = {
+    'PROFILE': 'profile/'
+  }
+
+  static ProdRoutes = {
+    'PROFILE': 'users/profile/'
+  }
+
+  static getProfileID(id) {
+    return AppAPI.test ? AppAPI.testUserID : id
+  }
+
+  static getRoute(pageName) {
+    return AppAPI.test ? AppAPI.TestRoutes[pageName] : AppAPI.ProdRoutes[pageName]
+  }
+
+  static testUser = {
+    first_name: "testUser_fName",
+    last_name: "testUser_lname",
+    email: "testUser_e@mail"
+  };
+
+  static emptyUser = {
+    first_name: "",
+    last_name: "",
+    email: ""
+  };
+
+  static testHealth = {
+    dob: "2002-11-20",
+    gender: "Male",
+    height: 172,
+    weight: 90,
+    favourite_workout_type: "weights",
+    workout_experience: "medium",
+    fitness_goal: "hypertrophy",
+    injuries: "bad left knee",
+    other_considerations: "none"
+  }
+
+  static emptyHealth = {
+    dob: "",
+    gender: "",
+    height: 0,
+    weight: 0,
+    favourite_workout_type: "",
+    workout_experience: "",
+    fitness_goal: "",
+    injuries: "",
+    other_considerations: ""
+  }
+
+  static testProfile = {
+    id: AppAPI.testUserID.toString(),
+    "user": AppAPI.testUser,
+    "health_data": AppAPI.testHealth
+  }
+
+  static emptyProfile = {
+    id: "",
+    "user": AppAPI.emptyUser,
+    "health_data": AppAPI.emptyHealth
+  }
+
+  static getOrCreateProfile = async (profileID) => {
+		try {
+			return await AppAPI.get("PROFILE", profileID)
+		} catch (error) { // If it has been deleted, re-create it.
+      if (AppAPI.test) {
+			  return await AppAPI.post("PROFILE", AppAPI.testProfile)
+      }
+		}
+	}
+
+  static post = async (pageName, data) => {
+    const postResponse = await fetch(AppAPI.server + AppAPI.getRoute(pageName), {
+      method: 'POST', // Specify PUT method
+      headers: {
+        'Content-Type': 'application/json', // Indicate JSON content
+      },
+      body: JSON.stringify(data)
+    })
+    if (!postResponse.ok) throw new Error( AppAPI.getRoute(pageName) + 'POST failed');
+    return data
+  }
+
+  static get = async (pageName, profileID) => {
+    const response = await fetch(AppAPI.server + AppAPI.getRoute(pageName) + AppAPI.getProfileID(profileID));
+		if (!response.ok) throw new Error( pageName + ' GET failed');
+		const data = await response.json();
+     return data
+  }
+
+  static put = async (pageName, data, profileID) => {
+    const response = await fetch(AppAPI.server + AppAPI.getRoute(pageName) + AppAPI.getProfileID(profileID), {
+      method: 'PUT', // Specify PUT method
+      headers: {
+        'Content-Type': 'application/json', // Indicate JSON content
+      },
+      body: JSON.stringify(data)
+    })
+    if (!response.ok) throw new Error( pageName + ' PUT failed');
+    return data
+  }
+
+  static delete = async (pageName, profileID) => {
+    const response = await fetch(AppAPI.server + AppAPI.getRoute(pageName) + AppAPI.getProfileID(profileID), {
+      method: 'DELETE', // Specify DELETE method
+    })
+    if (!response.ok) throw new Error( AppAPI.getRoute(pageName) + ' DELETE failed');
+  }
+
+  constructor() {
+  }
+}
+export default AppAPI;

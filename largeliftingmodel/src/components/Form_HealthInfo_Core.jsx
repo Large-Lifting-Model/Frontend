@@ -4,7 +4,7 @@ import { useEffect } from "react";
 const Form_HealthInfo_Core = ({health_data, setHealthData}) => {
 
 	useEffect(() => {
-		console.info(JSON.stringify(health_data))
+		//console.info(JSON.stringify(health_data))
     }, []);
 
 	const changeElement = (name, value) => {

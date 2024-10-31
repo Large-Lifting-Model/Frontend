@@ -8,25 +8,27 @@ import Form_HealthInfo_Core from "../components/Form_HealthInfo_Core";
 import buttonStyles from "../components/Button.module.css"
 import formStyles from "../components/Form.module.css"
 import {useNavigate} from "react-router-dom"
-import TestAPI from "../TestAPI";
+import AppAPI from "../AppAPI";
 
 function Profile() {
+
+	const profileID = 712894162 // REPLACE THIS WITH PROFILE ID FROM USERDATA
 	
 	const [isEditingLoginInfo, setIsEditingLoginInfo] = useState(false);
 	const [isEditingHealthInfo, setIsEditingHealthInfo] = useState(false);
-	const [profile, setProfile] = useState(TestAPI.emptyProfile)
-	const [wipProfile, setWIPProfile] = useState(TestAPI.emptyProfile)
+	const [profile, setProfile] = useState(AppAPI.emptyProfile)
+	const [wipProfile, setWIPProfile] = useState(AppAPI.emptyProfile)
 
 	const navigate = useNavigate();
 
 	const getOrCreateProfile = async () => {
-		const returnedProfile = await TestAPI.getOrCreateProfile()
+		const returnedProfile = await AppAPI.getOrCreateProfile(profileID)
 		setProfile(returnedProfile)
 		setWIPProfile(returnedProfile)
 	}
 
 	const putProfile = async (profileData) => {
-		await TestAPI.put("profile/", profileData)
+		await AppAPI.put("PROFILE", profileData, profileID)
 		setProfile(profileData)
 		setWIPProfile(profileData)
 		setIsEditingLoginInfo(false)
@@ -34,9 +36,9 @@ function Profile() {
 	}
 
 	const deleteProfile = async () => {
-		await TestAPI.delete("profile/")
-		setProfile(TestAPI.emptyProfile);
-		setWIPProfile(TestAPI.emptyProfile);
+		await AppAPI.delete("PROFILE", profileID)
+		setProfile(AppAPI.emptyProfile);
+		setWIPProfile(AppAPI.emptyProfile);
 		setIsEditingLoginInfo(false);
 		setIsEditingHealthInfo(false);
 		navigate('..');
