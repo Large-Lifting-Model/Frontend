@@ -8,14 +8,14 @@
     },
     {
       "id": "12903781273",
-      "firstName": "testUser_fName",
-      "lastName": "testUser_lname",
+      "first_name": "testUser_fName",
+      "last_name": "testUser_lname",
       "email": "testUser_e@mail"
     },
     {
       "id": "12903781273",
-      "firstName": "testUser_fName",
-      "lastName": "testUser_lname",
+      "first_name": "testUser_fName",
+      "last_name": "testUser_lname",
       "email": "testUser_e@mail"
     }
   ],
@@ -38,11 +38,11 @@
       "gender": "Male",
       "height": 172,
       "weight": 90,
-      "favoriteWorkoutType": "weights",
-      "workoutExperience": "medium",
-      "fitnessGoal": "hypertrophy",
+      "favourite_workout_type": "weights",
+      "workout_experience": "medium",
+      "fitness_goal": "hypertrophy",
       "injuries": "bad left knee",
-      "otherConsiderations": "none"
+      "other_considerations": "none"
     },
     {
       "id": "12903781273",
@@ -50,11 +50,11 @@
       "gender": "Male",
       "height": 172,
       "weight": 90,
-      "favoriteWorkoutType": "weights",
-      "workoutExperience": "medium",
-      "fitnessGoal": "hypertrophy",
+      "favourite_workout_type": "weights",
+      "workout_experience": "medium",
+      "fitness_goal": "hypertrophy",
       "injuries": "bad left knee",
-      "otherConsiderations": "none"
+      "other_considerations": "none"
     }
   ]
 }

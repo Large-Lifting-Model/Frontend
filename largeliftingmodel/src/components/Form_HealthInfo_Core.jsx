@@ -47,30 +47,30 @@ const Form_HealthInfo_Core = ({healthInfo, setHealthInfo}) => {
 				/>
 			</div>
 			<div className={styles.row}>
-				<label htmlFor="favoriteWorkoutType">Favorite Workout Type</label>
+				<label htmlFor="favourite_workout_type">Favorite Workout Type</label>
 				<input
-					id="favoriteWorkoutType"
+					id="favourite_workout_type"
 					type="text"
-					onChange={(e) => changeElement('favoriteWorkoutType', e.target.value)}
-					value={healthInfo.favoriteWorkoutType}
+					onChange={(e) => changeElement('favourite_workout_type', e.target.value)}
+					value={healthInfo.favourite_workout_type}
 				/>
 			</div>
 			<div className={styles.row}>
-				<label htmlFor="workoutExperience">Workout Experience</label>
+				<label htmlFor="workout_experience">Workout Experience</label>
 				<input
-					id="workoutExperience"
+					id="workout_experience"
 					type="text"
-					onChange={(e) => changeElement('workoutExperience', e.target.value)}
-					value={healthInfo.workoutExperience}
+					onChange={(e) => changeElement('workout_experience', e.target.value)}
+					value={healthInfo.workout_experience}
 				/>
 			</div>
 			<div className={styles.row}>
-				<label htmlFor="fitnessGoal">Fitness Goal</label>
+				<label htmlFor="fitness_goal">Fitness Goal</label>
 				<input
-					id="fitnessGoal"
+					id="fitness_goal"
 					type="text"
-					onChange={(e) => changeElement('fitnessGoal', e.target.value)}
-					value={healthInfo.fitnessGoal}
+					onChange={(e) => changeElement('fitness_goal', e.target.value)}
+					value={healthInfo.fitness_goal}
 				/>
 			</div>
 			<div className={styles.row}>
@@ -83,12 +83,12 @@ const Form_HealthInfo_Core = ({healthInfo, setHealthInfo}) => {
 				/>
 			</div>
 			<div className={styles.row}>
-				<label htmlFor="otherConsiderations">Other Considerations</label>
+				<label htmlFor="other_considerations">Other Considerations</label>
 				<input
-					id="otherConsiderations"
+					id="other_considerations"
 					type="text"
-					onChange={(e) => changeElement('otherConsiderations', e.target.value)}
-					value={healthInfo.otherConsiderations}
+					onChange={(e) => changeElement('other_considerations', e.target.value)}
+					value={healthInfo.other_considerations}
 				/>
 			</div>
 		</>

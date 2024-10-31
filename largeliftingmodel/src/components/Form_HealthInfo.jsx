@@ -11,11 +11,11 @@ const dummyHealthInfo = {
 	gender: "",
 	height: 0,
 	weight: 0,
-	favoriteWorkoutType: "",
-	workoutExperience: "",
-	fitnessGoal: "",
+	favourite_workout_type: "",
+	workout_experience: "",
+	fitness_goal: "",
 	injuries: "",
-	otherConsiderations: ""
+	other_considerations: ""
 }
 
 

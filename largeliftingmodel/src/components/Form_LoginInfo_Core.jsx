@@ -14,21 +14,21 @@ const Form_LoginInfo_Core = ({loginInfo, setLoginInfo}) => {
 		<>
 
 			<div className={styles.row}>
-				<label htmlFor="firstName">First Name</label>
+				<label htmlFor="first_name">First Name</label>
 				<input
-					id="firstName"
+					id="first_name"
 					type="text"
-					onChange={(e) => changeElement('firstName', e.target.value)}
-					value={loginInfo.firstName}
+					onChange={(e) => changeElement('first_name', e.target.value)}
+					value={loginInfo.first_name}
 				/>
 			</div>
 			<div className={styles.row}>
-				<label htmlFor="lastName">Last Name</label>
+				<label htmlFor="last_name">Last Name</label>
 				<input
-					id="lastName"
+					id="last_name"
 					type="text"
-					onChange={(e) => changeElement('lastName', e.target.value)}
-					value={loginInfo.lastName}
+					onChange={(e) => changeElement('last_name', e.target.value)}
+					value={loginInfo.last_name}
 				/>
 			</div>
 			<div className={styles.row}>

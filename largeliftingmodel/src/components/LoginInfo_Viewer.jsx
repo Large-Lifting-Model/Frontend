@@ -12,11 +12,11 @@ const LoginInfo_Viewer = (props) => {
 			<div className={styles.row}>
 				<div className={styles.container}>
 					<label> First Name </label>
-					<h2 className={styles.h2}> {props.loginInfo.firstName} </h2>
+					<h2 className={styles.h2}> {props.loginInfo.first_name} </h2>
 				</div>
 				<div className={styles.container}>
 					<label> Last Name </label>
-					<h2 className={styles.h2}> {props.loginInfo.lastName} </h2>
+					<h2 className={styles.h2}> {props.loginInfo.last_name} </h2>
 				</div>
 				<div className={styles.container}>
 					<label> Email </label>

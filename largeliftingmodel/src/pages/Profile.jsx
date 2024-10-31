@@ -13,15 +13,15 @@ const testUserID = "12903781273"
 
 const testProfile = {
 	id: testUserID.toString(),
-	firstName: "testUser_fName",
-	lastName: "testUser_lname",
+	first_name: "testUser_fName",
+	last_name: "testUser_lname",
 	email: "testUser_e@mail"
 };
 
 const emptyProfile = {
 	id: "",
-	firstName: "",
-	lastName: "",
+	first_name: "",
+	last_name: "",
 	email: ""
 };
 
@@ -31,11 +31,11 @@ const testHealth = {
 	gender: "Male",
 	height: 172,
 	weight: 90,
-	favoriteWorkoutType: "weights",
-	workoutExperience: "medium",
-	fitnessGoal: "hypertrophy",
+	favourite_workout_type: "weights",
+	workout_experience: "medium",
+	fitness_goal: "hypertrophy",
 	injuries: "bad left knee",
-	otherConsiderations: "none"
+	other_considerations: "none"
 }
 
 const emptyHealth = {
@@ -44,12 +44,43 @@ const emptyHealth = {
 	gender: "",
 	height: 0,
 	weight: 0,
-	favoriteWorkoutType: "",
-	workoutExperience: "",
-	fitnessGoal: "",
+	favourite_workout_type: "",
+	workout_experience: "",
+	fitness_goal: "",
 	injuries: "",
-	otherConsiderations: ""
+	other_considerations: ""
 }
+
+/*
+{
+  "user": {
+    "first_name": "Updated First Name",
+    "last_name": "Updated Last Name",
+    "email": "updated.email@example.com"
+  },
+  "health_data": {
+    "dob": "2000-01-01",
+    "gender": "Male",
+    "height": 6.1,
+    "weight": 170,
+    "favourite_workout_type": "Weights",
+    "workout_experience": "Intermediate",
+    "fitness_goal": "Improve endurance",
+    "injuries": "None",
+    "other_considerations": "Focus on cardio"
+  }
+}
+*/
+
+// const testProfile = {
+// 	"user": testUser,
+// 	"health_data": testHealth
+// }
+
+// const emptyProfile = {
+// 	"user": emptyUser,
+// 	"health_data": emptyHealth
+// }
 
 
 
