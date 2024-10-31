@@ -1,6 +1,10 @@
+import React from "react";
+
+const isDevelopmentMode = process.env.NODE_ENV === 'development';
+
 class AppAPI {
   
-  static test = true // REPLACE WITH ENVIRONMENT VARIABLE
+  static test = true;
   static testUserID = "12903781273"
   static testServer = 'http://localhost:3000/'
   static prodServer = 'http://34.65.243.247/api/'
@@ -82,7 +86,7 @@ class AppAPI {
 
   static post = async (pageName, data) => {
     const postResponse = await fetch(AppAPI.server + AppAPI.getRoute(pageName), {
-      method: 'POST', // Specify PUT method
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json', // Indicate JSON content
       },
@@ -101,9 +105,9 @@ class AppAPI {
 
   static put = async (pageName, data, profileID) => {
     const response = await fetch(AppAPI.server + AppAPI.getRoute(pageName) + AppAPI.getProfileID(profileID), {
-      method: 'PUT', // Specify PUT method
+      method: 'PUT',
       headers: {
-        'Content-Type': 'application/json', // Indicate JSON content
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify(data)
     })
@@ -113,7 +117,9 @@ class AppAPI {
 
   static delete = async (pageName, profileID) => {
     const response = await fetch(AppAPI.server + AppAPI.getRoute(pageName) + AppAPI.getProfileID(profileID), {
-      method: 'DELETE', // Specify DELETE method
+      method: 'DELETE',
+      headers: {
+      },
     })
     if (!response.ok) throw new Error( AppAPI.getRoute(pageName) + ' DELETE failed');
   }
