@@ -41,7 +41,7 @@ function Form_HealthInfo() {
 			</div>
 			<form className={styles.form}>
 				
-				<Form_HealthInfo_Core healthInfo = {healthInfo} setHealthInfo = {setHealthInfo}/>
+				<Form_HealthInfo_Core health_data = {healthInfo} setHealthData = {setHealthInfo}/>
 				<div className={styles.buttons_bottom}>
 					<button type='submit' className={styles.btn} onClick={(e) => handleSubmit(e)}>Save</button>
 				</div>

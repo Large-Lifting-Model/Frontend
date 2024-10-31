@@ -37,7 +37,7 @@ function Form_LoginInfo() {
 			</div>
 			<form className={styles.form}>
 				
-				<Form_LoginInfo_Core loginInfo = {loginInfo} setLoginInfo = {setLoginInfo}/>
+				<Form_LoginInfo_Core user = {loginInfo} setUser = {setLoginInfo}/>
 				<div className={styles.buttons_bottom}>
 					<button className={styles.btn} onClick={(e) => handleSubmit(e)}>
 						Register
