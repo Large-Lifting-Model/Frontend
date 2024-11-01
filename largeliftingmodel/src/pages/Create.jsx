@@ -38,7 +38,7 @@ function Create() {
 		{ value: "other", label: "Other" },
 	];
 
-	const handleCreate = (event) => {
+	const handleCreate = () => {
 		alert(
 			`Create button was clicked! Workout info:\nLength: ${length}\nDifficulty: ${difficulty}\nWorkout Type: ${workoutType}\nTarget Muscle: ${targetMuscle}\nExercise to Include: ${includeExercise}\nExercise to Exclude: ${excludeExercise}\nConsiderations: ${considerations}`
 		);
