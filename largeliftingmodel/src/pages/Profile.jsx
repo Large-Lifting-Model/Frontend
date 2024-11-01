@@ -12,7 +12,7 @@ import AppAPI from "../AppAPI";
 
 function Profile() {
 
-	const profileID = 712894162 // REPLACE THIS WITH PROFILE ID FROM USERDATA
+	const profileID = AppAPI.djangoTestUserID // REPLACE THIS WITH PROFILE ID FROM USERDATA
 	
 	const [isEditingLoginInfo, setIsEditingLoginInfo] = useState(false);
 	const [isEditingHealthInfo, setIsEditingHealthInfo] = useState(false);

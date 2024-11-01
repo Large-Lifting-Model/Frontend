@@ -4,11 +4,12 @@ const isDevelopmentMode = process.env.NODE_ENV === 'development';
 
 class AppAPI {
   
-  static test = true;
+  static useTestServer = import.meta.env.VITE_USE_TEST_SERVER == "1";
   static testUserID = "12903781273"
-  static testServer = 'http://localhost:3000/'
+  static testServer = 'http://localhost:3885/'
   static prodServer = 'http://34.65.243.247/api/'
-  static server = AppAPI.test ? AppAPI.testServer : AppAPI.prodServer
+  static djangoTestUserID = "1"
+  static server = AppAPI.useTestServer ? AppAPI.testServer : AppAPI.prodServer
 
   static TestRoutes = {
     'PROFILE': 'profile/'
@@ -19,11 +20,11 @@ class AppAPI {
   }
 
   static getProfileID(id) {
-    return AppAPI.test ? AppAPI.testUserID : id
+    return AppAPI.useTestServer ? AppAPI.testUserID : id
   }
 
   static getRoute(pageName) {
-    return AppAPI.test ? AppAPI.TestRoutes[pageName] : AppAPI.ProdRoutes[pageName]
+    return AppAPI.useTestServer ? AppAPI.TestRoutes[pageName] : AppAPI.ProdRoutes[pageName]
   }
 
   static testUser = {
