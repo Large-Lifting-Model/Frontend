@@ -1,28 +1,25 @@
-
-import { useState } from "react";
-import styles from "./Form.module.css"
+// import { useState } from "react";
+import styles from "./Form.module.css";
 import { Link } from "react-router-dom";
+import SocialLogin from "./SocialLogin";
 
 function LoginForm() {
+	// const [email, setEmail] = useState("");
+	// const [password, setPassword] = useState("");
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+	// const handleSubmit = (event) => {
+	// 	// prevents page refresh
+	// 	event.preventDefault();
+	// 	alert(
+	// 		`Login button was clicked! User info:\nEmail: ${email}\nPassword: ${password}`
+	// 	);
+	// };
 
-  const handleSubmit = (event) => {
-		// prevents page refresh
-		event.preventDefault();
-		alert(
-			`Login button was clicked! User info:\nEmail: ${email}\nPassword: ${password}`
-		);
-	};
-
-  return (
-    <>
-      <div className={styles.form_description}>
-        Login to your account
-      </div>
-      <form className={styles.form}>
-        <div className={styles.row}>
+	return (
+		<>
+			<div className={styles.form_description}>Login to your account</div>
+			<form className={styles.form}>
+				{/* <div className={styles.row}>
           <label htmlFor="email">Email</label>
           <input
             id="email"
@@ -47,16 +44,17 @@ function LoginForm() {
 					<Link to="/">
 						<button className={styles.btn}>&larr; Home</button>
 					</Link>
-				</div>
-      </form>
-      <p className={styles.paragraph}>
+				</div> */}
+				<SocialLogin />
+			</form>
+			<p className={styles.paragraph}>
 				Not registered yet? <br />
 				<Link to="/register" className={styles.link}>
 					Register
 				</Link>
 			</p>
-    </>
-  )
+		</>
+	);
 }
 
 export default LoginForm;
