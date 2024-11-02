@@ -22,9 +22,9 @@
     {
       "id": "12903781273",
       "user": {
-        "first_name": "vitest_fName",
-        "last_name": "vitest_lname",
-        "email": "vitest_e@mail"
+        "first_name": "testUser_fName",
+        "last_name": "testUser_lname",
+        "email": "testUser_e@mail"
       },
       "health_data": {
         "dob": "2002-11-20",

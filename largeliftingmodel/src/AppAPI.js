@@ -83,9 +83,10 @@ class AppAPI {
 
   static getOrCreateProfileIfTesting = async (profileID) => {
 		try {
-			return await AppAPI.get("PROFILE", profileID)
+			const gotProfile = await AppAPI.get("PROFILE", profileID)
+      return gotProfile
 		} catch (error) { // If it has been deleted, re-create it.
-      if (AppAPI.test) {
+      if (AppAPI.useTestServer) {
 			  return await AppAPI.post("PROFILE", AppAPI.testProfile)
       }
 		}
