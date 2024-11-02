@@ -1,8 +1,15 @@
 // "https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=0&longitude=0"
-
 import styles from "./Form.module.css";
+import { useEffect } from "react";
+import React from "react";
 
 const LoginInfo_Viewer = (props) => {
+
+	useEffect(() => {
+		// console.info("LOGININFO_VIEWER")
+		// console.info(JSON.stringify(props))
+		// console.info(JSON.stringify(props.user.first_name))
+    }, []);
 
 	return (
 		<div>
@@ -12,15 +19,15 @@ const LoginInfo_Viewer = (props) => {
 			<div className={styles.row}>
 				<div className={styles.container}>
 					<label> First Name </label>
-					<h2 className={styles.h2}> {props.loginInfo.firstName} </h2>
+					<h2 className={styles.h2} data-testid='profileUserFirstNameForm'> {props.user.first_name} </h2>
 				</div>
 				<div className={styles.container}>
 					<label> Last Name </label>
-					<h2 className={styles.h2}> {props.loginInfo.lastName} </h2>
+					<h2 className={styles.h2} data-testid='profileUserLastNameForm'> {props.user.last_name} </h2>
 				</div>
 				<div className={styles.container}>
 					<label> Email </label>
-					<h2 className={styles.h2}> {props.loginInfo.email} </h2>
+					<h2 className={styles.h2} data-testid='profileUserEmailForm'> {props.user.email} </h2>
 				</div>
 			</div>
 		</div>

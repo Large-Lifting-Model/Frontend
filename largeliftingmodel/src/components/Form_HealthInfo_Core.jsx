@@ -1,9 +1,15 @@
 import styles from "./Form.module.css";
+import { useEffect } from "react";
+import React from "react";
 
-const Form_HealthInfo_Core = ({healthInfo, setHealthInfo}) => {
+const Form_HealthInfo_Core = ({health_data, setHealthData}) => {
+
+	useEffect(() => {
+		//console.info(JSON.stringify(health_data))
+    }, []);
 
 	const changeElement = (name, value) => {
-		setHealthInfo({...healthInfo,
+		setHealthData({...health_data,
 			[name]: value,
 		});
 	};
@@ -16,7 +22,7 @@ const Form_HealthInfo_Core = ({healthInfo, setHealthInfo}) => {
 					type="date"
 					id="dob"
 					onChange={(e) => changeElement('dob', e.target.value)}
-					value={healthInfo.dob}
+					value={health_data.dob}
 				/>
 			</div>
 			<div className={styles.row}>
@@ -25,7 +31,7 @@ const Form_HealthInfo_Core = ({healthInfo, setHealthInfo}) => {
 					id="gender"
 					type="text"
 					onChange={(e) => changeElement('gender', e.target.value)}
-					value={healthInfo.gender}
+					value={health_data.gender}
 				/>
 			</div>
 			<div className={styles.row}>
@@ -34,7 +40,7 @@ const Form_HealthInfo_Core = ({healthInfo, setHealthInfo}) => {
 					id="height"
 					type="number"
 					onChange={(e) => changeElement('height', e.target.value)}
-					value={healthInfo.height}
+					value={health_data.height}
 				/>
 			</div>
 			<div className={styles.row}>
@@ -43,34 +49,34 @@ const Form_HealthInfo_Core = ({healthInfo, setHealthInfo}) => {
 					id="weight"
 					type="number"
 					onChange={(e) => changeElement('weight', e.target.value)}
-					value={healthInfo.weight}
+					value={health_data.weight}
 				/>
 			</div>
 			<div className={styles.row}>
-				<label htmlFor="favoriteWorkoutType">Favorite Workout Type</label>
+				<label htmlFor="favourite_workout_type">Favorite Workout Type</label>
 				<input
-					id="favoriteWorkoutType"
+					id="favourite_workout_type"
 					type="text"
-					onChange={(e) => changeElement('favoriteWorkoutType', e.target.value)}
-					value={healthInfo.favoriteWorkoutType}
+					onChange={(e) => changeElement('favourite_workout_type', e.target.value)}
+					value={health_data.favourite_workout_type}
 				/>
 			</div>
 			<div className={styles.row}>
-				<label htmlFor="workoutExperience">Workout Experience</label>
+				<label htmlFor="workout_experience">Workout Experience</label>
 				<input
-					id="workoutExperience"
+					id="workout_experience"
 					type="text"
-					onChange={(e) => changeElement('workoutExperience', e.target.value)}
-					value={healthInfo.workoutExperience}
+					onChange={(e) => changeElement('workout_experience', e.target.value)}
+					value={health_data.workout_experience}
 				/>
 			</div>
 			<div className={styles.row}>
-				<label htmlFor="fitnessGoal">Fitness Goal</label>
+				<label htmlFor="fitness_goal">Fitness Goal</label>
 				<input
-					id="fitnessGoal"
+					id="fitness_goal"
 					type="text"
-					onChange={(e) => changeElement('fitnessGoal', e.target.value)}
-					value={healthInfo.fitnessGoal}
+					onChange={(e) => changeElement('fitness_goal', e.target.value)}
+					value={health_data.fitness_goal}
 				/>
 			</div>
 			<div className={styles.row}>
@@ -79,16 +85,16 @@ const Form_HealthInfo_Core = ({healthInfo, setHealthInfo}) => {
 					id="injuries"
 					type="text"
 					onChange={(e) => changeElement('injuries', e.target.value)}
-					value={healthInfo.injuries}
+					value={health_data.injuries}
 				/>
 			</div>
 			<div className={styles.row}>
-				<label htmlFor="otherConsiderations">Other Considerations</label>
+				<label htmlFor="other_considerations">Other Considerations</label>
 				<input
-					id="otherConsiderations"
+					id="other_considerations"
 					type="text"
-					onChange={(e) => changeElement('otherConsiderations', e.target.value)}
-					value={healthInfo.otherConsiderations}
+					onChange={(e) => changeElement('other_considerations', e.target.value)}
+					value={health_data.other_considerations}
 				/>
 			</div>
 		</>

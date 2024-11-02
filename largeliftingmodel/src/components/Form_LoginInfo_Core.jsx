@@ -1,11 +1,16 @@
 import styles from "./Form.module.css";
+import { useEffect } from "react";
+import React from "react";
 
 
+const Form_LoginInfo_Core = ({user, setUser}) => {
 
-const Form_LoginInfo_Core = ({loginInfo, setLoginInfo}) => {
+	useEffect(() => {
+		//console.info(JSON.stringify(user))
+    }, []);
 
 	const changeElement = (name, value) => {
-		setLoginInfo({...loginInfo,
+		setUser({...user,
 			[name]: value,
 		});
 	};
@@ -14,21 +19,23 @@ const Form_LoginInfo_Core = ({loginInfo, setLoginInfo}) => {
 		<>
 
 			<div className={styles.row}>
-				<label htmlFor="firstName">First Name</label>
+				<label htmlFor="first_name">First Name</label>
 				<input
-					id="firstName"
+					id="first_name"
 					type="text"
-					onChange={(e) => changeElement('firstName', e.target.value)}
-					value={loginInfo.firstName}
+					onChange={(e) => changeElement('first_name', e.target.value)}
+					value={user.first_name}
+					data-testid='profileUserFirstNameForm' 
 				/>
 			</div>
 			<div className={styles.row}>
-				<label htmlFor="lastName">Last Name</label>
+				<label htmlFor="last_name">Last Name</label>
 				<input
-					id="lastName"
+					id="last_name"
 					type="text"
-					onChange={(e) => changeElement('lastName', e.target.value)}
-					value={loginInfo.lastName}
+					onChange={(e) => changeElement('last_name', e.target.value)}
+					value={user.last_name}
+					data-testid='profileUserLastNameForm' 
 				/>
 			</div>
 			<div className={styles.row}>
@@ -37,7 +44,8 @@ const Form_LoginInfo_Core = ({loginInfo, setLoginInfo}) => {
 					id="email"
 					type="email"
 					onChange={(e) => changeElement('email', e.target.value)}
-					value={loginInfo.email}
+					value={user.email}
+					data-testid='profileUserEmailForm' 
 				/>
 			</div>
 		</>
