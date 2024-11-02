@@ -63,6 +63,12 @@ class AppAPI {
     other_considerations: ""
   }
 
+  static vitestUser = {
+    first_name: "vitest_fName",
+    last_name: "vitest_lname",
+    email: "vitest_e@mail"
+  }
+
   static testProfile = {
     id: AppAPI.testUserID.toString(),
     "user": AppAPI.testUser,
@@ -75,7 +81,7 @@ class AppAPI {
     "health_data": AppAPI.emptyHealth
   }
 
-  static getOrCreateProfile = async (profileID) => {
+  static getOrCreateProfileIfTesting = async (profileID) => {
 		try {
 			return await AppAPI.get("PROFILE", profileID)
 		} catch (error) { // If it has been deleted, re-create it.

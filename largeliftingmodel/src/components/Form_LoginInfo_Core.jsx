@@ -1,5 +1,6 @@
 import styles from "./Form.module.css";
 import { useEffect } from "react";
+import React from "react";
 
 
 const Form_LoginInfo_Core = ({user, setUser}) => {
@@ -24,6 +25,7 @@ const Form_LoginInfo_Core = ({user, setUser}) => {
 					type="text"
 					onChange={(e) => changeElement('first_name', e.target.value)}
 					value={user.first_name}
+					data-testid='profileUserFirstNameForm' 
 				/>
 			</div>
 			<div className={styles.row}>
@@ -33,6 +35,7 @@ const Form_LoginInfo_Core = ({user, setUser}) => {
 					type="text"
 					onChange={(e) => changeElement('last_name', e.target.value)}
 					value={user.last_name}
+					data-testid='profileUserLastNameForm' 
 				/>
 			</div>
 			<div className={styles.row}>
@@ -42,6 +45,7 @@ const Form_LoginInfo_Core = ({user, setUser}) => {
 					type="email"
 					onChange={(e) => changeElement('email', e.target.value)}
 					value={user.email}
+					data-testid='profileUserEmailForm' 
 				/>
 			</div>
 		</>

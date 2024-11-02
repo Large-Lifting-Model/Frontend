@@ -1,5 +1,6 @@
 import styles from "./Form.module.css";
 import { useEffect } from "react";
+import React from "react";
 
 const Form_HealthInfo_Core = ({health_data, setHealthData}) => {
 

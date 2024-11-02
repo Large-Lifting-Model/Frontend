@@ -6,6 +6,7 @@ import styles from "./Form.module.css";
 import Form_HealthInfo_Core from "./Form_HealthInfo_Core";
 import {useNavigate} from "react-router-dom"
 
+
 const dummyHealthInfo = {
 	dob: "",
 	gender: "",
