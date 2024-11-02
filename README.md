@@ -22,8 +22,7 @@ This is a frontend application which connects to a backend that stores user info
 - Should show "JSON Server started on PORT :3885" to reflect the server is up (it will show you which endpoints are accessible to the code or through manually entering in browser)
 - in a SEPARATE terminal window, navigate to largeliftingmodel directory and do command 'npm run dev2testserver'
 - This will look equivalent to 'npm run dev' mode except that it uses the testserver instead of the live production backend.
-
-JSON Server started on PORT :3885
+- To add another endpoint to the testserver, close the server and edit the testdb.json file (you may need to manually change it to writable with something like sudo chmod 777 testdb.json first) to add another top level object type in the form that was used for 'profile', with id = "seed".  This will create the new endpoint in the server.  Then edit the APPAPI.js code to add another 'pageName' to 'TestRoutes' and 'ProdRoutes' in the same form that was used for the PROFILE pageName.
 
 **(If Using ESLint) Configure ESLint**
 
