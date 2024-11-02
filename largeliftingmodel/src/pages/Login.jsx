@@ -1,11 +1,11 @@
 import PageNav from "../components/PageNav";
 import FormLogin from "../components/FormLogin";
 
-function Login() {
+function Login({ token, setToken }) {
 	return (
 		<div>
 			<PageNav />
-			<FormLogin />
+			<FormLogin token={token} setToken={setToken} />
 		</div>
 	);
 }

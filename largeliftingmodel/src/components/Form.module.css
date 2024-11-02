@@ -103,6 +103,14 @@
 	color: var(--color-brand--2);
 }
 
+.container {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 1rem;
+	justify-content: center;
+	padding: 0.5rem 0rem;
+}
+
 @media (max-width: 460px) {
 	.buttons_bottom,
 	.buttons_top {
@@ -113,9 +121,9 @@
 
 .container {
 	display: flex;
-	gap: 5.0rem;
+	gap: 5rem;
 	justify-content: space-between;
-	padding: 0.5rem 1.0rem;
+	padding: 0.5rem 1rem;
 }
 
 .h1 {
