@@ -21,7 +21,7 @@ function Profile() {
 
 	const navigate = useNavigate();
 
-	const getOrCreateProfile = async () => {
+	const getOrCreateProfileIfTesting = async () => {
 		const returnedProfile = await AppAPI.getOrCreateProfile(profileID)
 		setProfile(returnedProfile)
 		setWIPProfile(returnedProfile)
@@ -45,7 +45,7 @@ function Profile() {
 	}
 
 	useEffect(() => {
-		getOrCreateProfile();
+		getOrCreateProfileIfTesting();
     }, []);
 
 
