@@ -1,9 +1,9 @@
 import AppNav from "../components/AppNav";
 
-function Home() {
+function Home({ token, setToken }) {
 	return (
 		<div>
-			<AppNav />
+			<AppNav token={token} setToken={setToken} />
 			<div>Home</div>
 		</div>
 	);

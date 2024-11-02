@@ -1,19 +1,38 @@
-import AppNav from "../components/AppNav";
-import { useState } from "react";
 import styles from "./Create.module.css";
 import buttonStyles from "../components/Button.module.css";
-import { Link } from "react-router-dom";
 import Select from "react-select";
+import { useLocalStorageState } from "../hooks/useLocalStorageState";
 
-function Create() {
-	const [length, setLength] = useState("");
-	const [difficulty, setDifficuty] = useState("");
-	const [workoutType, setWorkoutType] = useState("");
-	const [equipementAccess, setEquipmentAccess] = useState("");
-	const [targetMuscle, setMuscleTarget] = useState("");
-	const [includeExercise, setIncludeExercise] = useState("");
-	const [excludeExercise, setExcludeExercise] = useState("");
-	const [considerations, setConsiderations] = useState("");
+function Create({ setWorkoutState, workoutExists, setWorkoutExists }) {
+	const [length, setLength] = useLocalStorageState("", "workoutLength");
+	const [difficulty, setDifficuty] = useLocalStorageState(
+		"",
+		"workoutDifficulty"
+	);
+	const [workoutType, setWorkoutType] = useLocalStorageState(
+		"",
+		"workoutType"
+	);
+	const [equipmentAccess, setEquipmentAccess] = useLocalStorageState(
+		"",
+		"workoutEquipmentAccess"
+	);
+	const [targetMuscle, setMuscleTarget] = useLocalStorageState(
+		"",
+		"workoutTargetMuscle"
+	);
+	const [includeExercise, setIncludeExercise] = useLocalStorageState(
+		"",
+		"workoutIncludeExercise"
+	);
+	const [excludeExercise, setExcludeExercise] = useLocalStorageState(
+		"",
+		"workoutExcludeExercise"
+	);
+	const [considerations, setConsiderations] = useLocalStorageState(
+		"",
+		"workoutConsiderations"
+	);
 
 	const difficultyOptions = [
 		{ value: "easy", label: "Easy" },
@@ -38,16 +57,18 @@ function Create() {
 		{ value: "other", label: "Other" },
 	];
 
-	const handleCreate = (event) => {
-		alert(
-			`Create button was clicked! Workout info:\nLength: ${length}\nDifficulty: ${difficulty}\nWorkout Type: ${workoutType}\nTarget Muscle: ${targetMuscle}\nExercise to Include: ${includeExercise}\nExercise to Exclude: ${excludeExercise}\nConsiderations: ${considerations}`
-		);
+	const handleCreate = () => {
+		setWorkoutExists(true);
+		setWorkoutState(1);
+	};
+
+	const handleModify = () => {
+		window.confirm("Are you sure you want to erase the current workout?") &&
+			setWorkoutExists(false);
 	};
 
 	return (
 		<>
-			<AppNav />
-			<div className={styles.form_description}>Create Daily Workout</div>
 			<form className={styles.form}>
 				<div className={styles.row}>
 					<label htmlFor="length">Length (minutes): </label>
@@ -56,6 +77,7 @@ function Create() {
 						type="text"
 						onChange={(e) => setLength(e.target.value)}
 						value={length}
+						disabled={workoutExists}
 					/>
 				</div>
 				<div className={styles.row}>
@@ -66,6 +88,7 @@ function Create() {
 						options={difficultyOptions}
 						onChange={setDifficuty}
 						value={difficulty}
+						isDisabled={workoutExists}
 					/>
 				</div>
 				<div className={styles.row}>
@@ -76,6 +99,7 @@ function Create() {
 						options={workoutTypeOptions}
 						onChange={setWorkoutType}
 						value={workoutType}
+						isDisabled={workoutExists}
 					/>
 				</div>
 				<div className={styles.row}>
@@ -87,7 +111,8 @@ function Create() {
 						placeholder="Select Equipment Access..."
 						options={equipementAccessOptions}
 						onChange={setEquipmentAccess}
-						value={equipementAccess}
+						value={equipmentAccess}
+						isDisabled={workoutExists}
 					/>
 				</div>
 				<div className={styles.row}>
@@ -99,6 +124,7 @@ function Create() {
 						type="text"
 						onChange={(e) => setMuscleTarget(e.target.value)}
 						value={targetMuscle}
+						disabled={workoutExists}
 					/>
 				</div>
 				<div className={styles.row}>
@@ -110,6 +136,7 @@ function Create() {
 						type="text"
 						onChange={(e) => setIncludeExercise(e.target.value)}
 						value={includeExercise}
+						disabled={workoutExists}
 					/>
 				</div>
 				<div className={styles.row}>
@@ -121,6 +148,7 @@ function Create() {
 						type="text"
 						onChange={(e) => setExcludeExercise(e.target.value)}
 						value={excludeExercise}
+						disabled={workoutExists}
 					/>
 				</div>
 				<div className={styles.row}>
@@ -132,18 +160,25 @@ function Create() {
 						type="text"
 						onChange={(e) => setConsiderations(e.target.value)}
 						value={considerations}
+						disabled={workoutExists}
 					/>
 				</div>
-				<div className={styles.btn_bottom}>
-					<Link to="/workout">
-						<button
-							className={buttonStyles.primary}
-							onClick={(e) => handleCreate(e)}>
-							CREATE WORKOUT
-						</button>
-					</Link>
-				</div>
 			</form>
+			{workoutExists === true ? (
+				<button
+					className={`${buttonStyles.primary} ${styles.container}`}
+					onClick={() => handleModify()}>
+					Modify
+				</button>
+			) : (
+				<>
+					<button
+						className={`${buttonStyles.primary} ${styles.container}`}
+						onClick={() => handleCreate()}>
+						CREATE WORKOUT
+					</button>
+				</>
+			)}
 		</>
 	);
 }
