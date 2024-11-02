@@ -11,6 +11,7 @@ import Feedback from "./components/Feedback";
 import History from "./pages/History";
 import PageNotFound from "./pages/PageNotFound";
 import { useLocalStorageState } from "./hooks/useLocalStorageState";
+import HistoryDay from "./pages/HistoryDay";
 
 function App() {
 	// Global State Vars
@@ -117,6 +118,7 @@ function App() {
 						/>
 					</>
 				)}
+				<Route path="historyDay" element={<HistoryDay />} />
 				<Route path="*" element={<PageNotFound />} />
 			</Routes>
 		</BrowserRouter>
