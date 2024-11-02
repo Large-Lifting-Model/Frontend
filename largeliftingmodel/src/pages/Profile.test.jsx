@@ -1,20 +1,15 @@
 import { describe, it, expect } from 'vitest'
 import React from 'react'
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { act } from 'react';
+import { screen, fireEvent } from '@testing-library/react';
 import Profile from './Profile';
-import { Router } from 'react-router-dom';
-import { createMemoryHistory } from 'history'
 import AppAPI from '../AppAPI';
 import AppTest from '../AppTest';
-
-const history = createMemoryHistory({ initialEntries: ["/"] });
 
 describe('ProfilePage - LoginInfo', () => {
 
   it('Edit and Save', async () => {
 
-    await AppTest.delay();
+    await AppTest.delay()
 
     await AppTest.render(<Profile />)
 

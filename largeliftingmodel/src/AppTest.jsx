@@ -15,11 +15,11 @@ class AppTest {
     );
   }
 
-  static delayCore = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+  static #delayCore = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
   static delay = async (ms=500) => {
     await act(async () => {
-      await AppTest.delayCore(ms)
+      await AppTest.#delayCore(ms)
     })
   }
 

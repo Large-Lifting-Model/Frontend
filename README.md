@@ -24,6 +24,13 @@ This is a frontend application which connects to a backend that stores user info
 - This will look equivalent to 'npm run dev' mode except that it uses the testserver instead of the live production backend.
 - To add another endpoint to the testserver, close the server and edit the testdb.json file (you may need to manually change it to writable with something like sudo chmod 777 testdb.json first) to add another top level object type in the form that was used for 'profile', with id = "seed".  This will create the new endpoint in the server.  Then edit the APPAPI.js code to add another 'pageName' to 'TestRoutes' and 'ProdRoutes' in the same form that was used for the PROFILE pageName.
 
+### Running the automated tests
+    - Open new terminal window, navigate to largeliftingmodel directory, and do command 'npm run testserver'
+    - in a SEPARATE terminal window, navigate to largeliftingmodel directory and do command 'npm run test'
+    - This will give you a console-based test.  It should show tests being run and passing or failing.
+    - To add another test, follow the pattern in "profile.test.jsx", making use of the new AppTest.jsx class.
+
+
 **(If Using ESLint) Configure ESLint**
 
 ESLint needs to be configured for each new vite project. Before running the project for the first time, do the following:
