@@ -2,6 +2,7 @@ import styles from "./Create.module.css";
 import buttonStyles from "../components/Button.module.css";
 import Select from "react-select";
 import { useLocalStorageState } from "../hooks/useLocalStorageState";
+import { useState } from "react";
 
 function Create({ setWorkoutState, workoutExists, setWorkoutExists }) {
 	const [length, setLength] = useLocalStorageState("", "workoutLength");
@@ -33,6 +34,9 @@ function Create({ setWorkoutState, workoutExists, setWorkoutExists }) {
 		"",
 		"workoutConsiderations"
 	);
+
+	const [showOtherWorkoutType, setShowOtherWorkoutType] = useState(false);
+	const [showOtherEquipment, setShowOtherEquipment] = useState(false);
 
 	const difficultyOptions = [
 		{ value: "easy", label: "Easy" },
@@ -67,6 +71,16 @@ function Create({ setWorkoutState, workoutExists, setWorkoutExists }) {
 			setWorkoutExists(false);
 	};
 
+	const handleWorkoutTypeChange = (selectedOption) => {
+		setWorkoutType(selectedOption);
+		setShowOtherWorkoutType(selectedOption?.value === "other");
+	}
+
+	const handleEquipmentAccessChange = (selectedOption) => {
+		setEquipmentAccess(selectedOption);
+		setShowOtherEquipment(selectedOption?.value === "other");
+	}
+
 	return (
 		<>
 			<form className={styles.form}>
@@ -92,16 +106,29 @@ function Create({ setWorkoutState, workoutExists, setWorkoutExists }) {
 					/>
 				</div>
 				<div className={styles.row}>
-					<label htmlFor="workoutType">Select Workout Type: </label>
+					<label htmlFor="workoutType">Select workout type: </label>
 					<Select
 						className={styles.dropdown}
 						placeholder="Select Workout Type..."
 						options={workoutTypeOptions}
-						onChange={setWorkoutType}
-						value={workoutType}
+						onChange={handleWorkoutTypeChange}
+						value={showOtherWorkoutType ? {label: "Other", value: "other"} : workoutType}
 						isDisabled={workoutExists}
 					/>
 				</div>
+				{showOtherWorkoutType && (
+					<div className={styles.row}>
+						<label htmlFor="otherWorkoutType">
+							Please specify workout type:
+						</label>
+						<input 
+							id="otherWorkoutType"
+							type="text"
+							onChange={(e) => setWorkoutType({ value: e.target.value, label: e.target.value })}
+							disabled={workoutExists}
+						/>
+					</div>
+				)}
 				<div className={styles.row}>
 					<label htmlFor="equipmentAccess">
 						What access to workout equipment do you have?{" "}
@@ -110,11 +137,24 @@ function Create({ setWorkoutState, workoutExists, setWorkoutExists }) {
 						className={styles.dropdown}
 						placeholder="Select Equipment Access..."
 						options={equipementAccessOptions}
-						onChange={setEquipmentAccess}
-						value={equipmentAccess}
+						onChange={handleEquipmentAccessChange}
+						value={showOtherEquipment ? {label: "Other", value: "other"} : equipmentAccess}
 						isDisabled={workoutExists}
 					/>
 				</div>
+				{showOtherEquipment && (
+					<div className={styles.row}>
+						<label htmlFor="otherEquipment">
+							Please specify equipment access:
+						</label>
+						<input 
+							id="otherEquipment"
+							type="text"
+							onChange={(e) => setEquipmentAccess({ value: e.target.value, label: e.target.value})}
+							disabled={workoutExists}
+						/>
+					</div>
+				)}
 				<div className={styles.row}>
 					<label htmlFor="targetMuscle">
 						Enter muscles you would like to target:{" "}

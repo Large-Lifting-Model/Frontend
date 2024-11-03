@@ -20,6 +20,11 @@
 	border-radius: 5px;
 	margin: 5px 0px;
 	width: 100%;
+	cursor: pointer;
+}
+
+.primary:hover {
+	background-color: var(--color-brand--2-hover);
 }
 
 .inline {
@@ -34,6 +39,11 @@
 	border-radius: 5px;
 	border: none;
 	margin: 0px 0px 0px 5px;
+	cursor: pointer;
+}
+
+.inline:hover {
+	background-color: var(--color-brand--2-hover);
 }
 
 .back {
@@ -47,6 +57,11 @@
 	padding: 1rem;
 	border-radius: 5px;
 	border: none;
+	cursor: pointer;
+}
+
+.back:hover {
+	background-color: var(--color-light--1);
 }
 
 .destructive {
