@@ -12,9 +12,6 @@ import AppAPI from "../AppAPI";
 import React from "react";
 
 function Profile() {
-
-	const profileID = AppAPI.djangoTestUserID // REPLACE THIS WITH PROFILE ID FROM USERDATA
-	//const useTestServer = import.meta.env.USE_TEST_SERVER;
 	
 	const [isEditingLoginInfo, setIsEditingLoginInfo] = useState(false);
 	const [isEditingHealthInfo, setIsEditingHealthInfo] = useState(false);
@@ -26,7 +23,7 @@ function Profile() {
 
 	const getOrCreateProfileIfTesting = async () => {
 		setLoading(true)
-		const returnedProfile = await AppAPI.getOrCreateProfileIfTesting(profileID)
+		const returnedProfile = await AppAPI.getOrCreateProfileIfTesting()
 		setProfile(returnedProfile)
 		setWIPProfile(returnedProfile)
 		setLoading(false)
@@ -34,7 +31,7 @@ function Profile() {
 
 	const putProfile = async (profileData) => {
 		setLoading(true)
-		await AppAPI.put("PROFILE", profileData, profileID)
+		await AppAPI.put("PROFILE", profileData)
 		setProfile(profileData)
 		setWIPProfile(profileData)
 		setIsEditingLoginInfo(false)
@@ -44,7 +41,7 @@ function Profile() {
 
 	const deleteProfile = async () => {
 		setLoading(true)
-		await AppAPI.delete("PROFILE", profileID)
+		await AppAPI.delete("PROFILE")
 		setProfile(AppAPI.emptyProfile);
 		setWIPProfile(AppAPI.emptyProfile);
 		setIsEditingLoginInfo(false);
