@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import PageNav from "../components/PageNav";
 import styles from "./Landing.module.css";
+import buttonStyles from "../components/Button.module.css";
 
 function Landing() {
 	return (
@@ -11,7 +12,7 @@ function Landing() {
 					<br />
 					On Demand Customized Workouts
 				</h1>
-				<Link to="/Register" className="cta">
+				<Link to="/Register" className={buttonStyles.inline}>
 					Start Tracking Now
 				</Link>
 				<p className={styles.paragraph}>
