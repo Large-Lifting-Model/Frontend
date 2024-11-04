@@ -14,9 +14,6 @@ import Loader from "../components/Loader";
 import useLoader from "../hooks/useLoader"
 
 function Profile() {
-
-	const profileID = AppAPI.djangoTestUserID // REPLACE THIS WITH PROFILE ID FROM USERDATA
-	//const useTestServer = import.meta.env.USE_TEST_SERVER;
 	
 	const [isEditingLoginInfo, setIsEditingLoginInfo] = useState(false);
 	const [isEditingHealthInfo, setIsEditingHealthInfo] = useState(false);

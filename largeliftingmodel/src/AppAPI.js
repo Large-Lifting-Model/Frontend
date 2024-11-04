@@ -114,6 +114,7 @@ class AppAPI {
   }
 
   static get = async (pageName) => {
+
     const response = await fetch(AppAPI.url(pageName));
 		if (!response.ok) throw new Error(AppAPI.#formattedError(response, pageName));
 		const data = response.json();
