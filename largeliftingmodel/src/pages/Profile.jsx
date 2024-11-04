@@ -30,7 +30,6 @@ function Profile() {
 	const getOrCreateProfileIfTesting = async () => {
 		await withLoader(async () =>  {
 			const returnedProfile = await AppAPI.getOrCreateProfileIfTesting(profileID)
-			console.info("returnedProfile: " + JSON.stringify(returnedProfile))
 			setProfile(returnedProfile)
 			setWIPProfile(returnedProfile)
 		})
