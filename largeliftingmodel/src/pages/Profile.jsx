@@ -11,6 +11,7 @@ import {useNavigate} from "react-router-dom"
 import AppAPI from "../AppAPI";
 import React from "react";
 import Loader from "../components/Loader";
+import useLoader from "../hooks/useLoader"
 
 function Profile() {
 
@@ -21,38 +22,39 @@ function Profile() {
 	const [isEditingHealthInfo, setIsEditingHealthInfo] = useState(false);
 	const [profile, setProfile] = useState(AppAPI.emptyProfile)
 	const [wipProfile, setWIPProfile] = useState(AppAPI.emptyProfile)
-	const [loading, setLoading] = useState(true)
 
 	const navigate = useNavigate();
 
+	const {error, isLoading, withLoader} = useLoader();
+
 	const getOrCreateProfileIfTesting = async () => {
-		setLoading(true)
-		const returnedProfile = await AppAPI.getOrCreateProfileIfTesting(profileID)
-		await new Promise((resolve) => setTimeout(resolve, 2000))
-		setProfile(returnedProfile)
-		setWIPProfile(returnedProfile)
-		setLoading(false)
+		await withLoader(async () =>  {
+			const returnedProfile = await AppAPI.getOrCreateProfileIfTesting(profileID)
+			console.info("returnedProfile: " + JSON.stringify(returnedProfile))
+			setProfile(returnedProfile)
+			setWIPProfile(returnedProfile)
+		})
 	}
 
 	const putProfile = async (profileData) => {
-		setLoading(true)
-		await AppAPI.put("PROFILE", profileData, profileID)
-		setProfile(profileData)
-		setWIPProfile(profileData)
-		setIsEditingLoginInfo(false)
-		setIsEditingHealthInfo(false)
-		setLoading(false)
+		await withLoader(async () =>  {
+			await AppAPI.put("PROFILE", profileData, profileID)
+			setProfile(profileData)
+			setWIPProfile(profileData)
+			setIsEditingLoginInfo(false)
+			setIsEditingHealthInfo(false)
+		})
 	}
 
 	const deleteProfile = async () => {
-		setLoading(true)
-		await AppAPI.delete("PROFILE", profileID)
-		setProfile(AppAPI.emptyProfile);
-		setWIPProfile(AppAPI.emptyProfile);
-		setIsEditingLoginInfo(false);
-		setIsEditingHealthInfo(false);
-		setLoading(false)
-		navigate('..');
+		await withLoader(async () =>  {
+			await AppAPI.delete("PROFILE", profileID)
+			setProfile(AppAPI.emptyProfile);
+			setWIPProfile(AppAPI.emptyProfile);
+			setIsEditingLoginInfo(false);
+			setIsEditingHealthInfo(false);
+			navigate('..');
+		})
 	}
 
 	useEffect(() => {
@@ -91,7 +93,7 @@ function Profile() {
 	return (
 		<main className={styles.feedback.main}>
 			<AppNav />
-			<Loader isLoading={loading}>
+			<Loader error={error} isLoading={isLoading}>
 				{isEditingLoginInfo ?
 					<div>
 						<form name="loginInfo" className={formStyles.form} onSubmit={handleSubmit}>
@@ -130,7 +132,6 @@ function Profile() {
 					</div>
 				}
 			</Loader>
-
 
 		</main>
 	);
