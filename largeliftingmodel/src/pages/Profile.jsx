@@ -26,7 +26,7 @@ function Profile() {
 
 	const getOrCreateProfileIfTesting = async () => {
 		await withLoader(async () =>  {
-			const returnedProfile = await AppAPI.getOrCreateProfileIfTesting(profileID)
+			const returnedProfile = await AppAPI.getOrCreateProfileIfTesting()
 			setProfile(returnedProfile)
 			setWIPProfile(returnedProfile)
 		})
@@ -34,7 +34,7 @@ function Profile() {
 
 	const putProfile = async (profileData) => {
 		await withLoader(async () =>  {
-			await AppAPI.put("PROFILE", profileData, profileID)
+			await AppAPI.put("PROFILE", profileData)
 			setProfile(profileData)
 			setWIPProfile(profileData)
 			setIsEditingLoginInfo(false)
@@ -44,7 +44,7 @@ function Profile() {
 
 	const deleteProfile = async () => {
 		await withLoader(async () =>  {
-			await AppAPI.delete("PROFILE", profileID)
+			await AppAPI.delete("PROFILE")
 			setProfile(AppAPI.emptyProfile);
 			setWIPProfile(AppAPI.emptyProfile);
 			setIsEditingLoginInfo(false);

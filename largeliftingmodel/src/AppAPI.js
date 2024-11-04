@@ -80,14 +80,16 @@ class AppAPI {
     "health_data": AppAPI.emptyHealth
   }
 
-  static url(pageName) { return AppAPI.server + AppAPI.getRoute(pageName) + AppAPI.getProfileID() }
+  static url(pageName, withID=true) { return AppAPI.server + AppAPI.getRoute(pageName) + (withID ? AppAPI.getProfileID() : "") }
 
   static getOrCreateProfileIfTesting = async () => {
 		try {
 			const gotProfile = await AppAPI.get("PROFILE")
       return gotProfile
 		} catch (error) { // If it has been deleted, re-create it.
-      if (AppAPI.useTestServer) {
+      console.info("caught Error")
+      if (AppAPI.useTestServer == true) {
+        console.info("Creating Profile")
 			  return await AppAPI.post("PROFILE", AppAPI.testProfile)
       } else {
         throw new Error(error)
@@ -95,28 +97,28 @@ class AppAPI {
 		}
 	}
 
-  static #formattedError(response, pageName) {
-    const errorString = "[" + response.status + " " + response.statusText + "]\n" + AppAPI.url(pageName)
+  static #formattedError(operation, response) {
+    const errorString = operation + " [" + response.status + " " + response.statusText + "]\n" + response.url
     console.info("errorstring: " + errorString)
     return errorString
   }
 
   static post = async (pageName, data) => {
-    const response = await fetch(AppAPI.url(pageName), {
+    const response = await fetch(AppAPI.url(pageName, false), {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json', // Indicate JSON content
       },
       body: JSON.stringify(data)
     })
-    if (!response.ok) throw new Error(AppAPI.#formattedError(response, pageName));
+    if (!response.ok) throw new Error(AppAPI.#formattedError("POST", response));
     return data
   }
 
   static get = async (pageName) => {
 
     const response = await fetch(AppAPI.url(pageName));
-		if (!response.ok) throw new Error(AppAPI.#formattedError(response, pageName));
+		if (!response.ok) throw new Error(AppAPI.#formattedError("GET", response));
 		const data = response.json();
     return data
   }
@@ -129,7 +131,7 @@ class AppAPI {
       },
       body: JSON.stringify(data)
     })
-    if (!response.ok) throw new Error(AppAPI.#formattedError(response, pageName));
+    if (!response.ok) throw new Error(AppAPI.#formattedError("PUT", response));
     return data
   }
 
@@ -139,7 +141,7 @@ class AppAPI {
       headers: {
       },
     })
-    if (!response.ok) throw new Error(AppAPI.#formattedError(response, pageName));
+    if (!response.ok) throw new Error(AppAPI.#formattedError("DELETE", response));
   }
 
   constructor() {
