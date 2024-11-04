@@ -10,6 +10,7 @@ import formStyles from "../components/Form.module.css"
 import {useNavigate} from "react-router-dom"
 import AppAPI from "../AppAPI";
 import React from "react";
+import Loader from "../components/Loader";
 
 function Profile() {
 
@@ -27,6 +28,7 @@ function Profile() {
 	const getOrCreateProfileIfTesting = async () => {
 		setLoading(true)
 		const returnedProfile = await AppAPI.getOrCreateProfileIfTesting(profileID)
+		await new Promise((resolve) => setTimeout(resolve, 2000))
 		setProfile(returnedProfile)
 		setWIPProfile(returnedProfile)
 		setLoading(false)
@@ -89,44 +91,45 @@ function Profile() {
 	return (
 		<main className={styles.feedback.main}>
 			<AppNav />
-			<h2 data-testid='profileLoadingIndicator'> {loading ? "Loading..." : ""}</h2>
-			{isEditingLoginInfo ?
-				<div>
-					<form name="loginInfo" className={formStyles.form} onSubmit={handleSubmit}>
-						<Form_LoginInfo_Core user = {wipProfile.user} setUser= {handleUserSubmit}/>
-						<div className={formStyles.buttons_bottom}>
-							<button type="submit" data-testid='profileUserSaveButton' className={formStyles.btn}>Save</button>
-							<button type="button" data-testid='profileUserCancelButton' className={formStyles.btn} onClick={()=>cancelEditingLoginInfo()}>Cancel</button>
-							<button type="button" data-testid='profileUserDeleteButton' className={formStyles.btn} onClick={()=>deleteProfile()}>Delete Profile</button>
-						</div>
-					</form>
-				</div>
-				:
-				<div>
-					<LoginInfo_Viewer user = {profile.user} />
-					<div className={styles.container}>
-						<button type="button" data-testid='profileUserEditButton' className={buttonStyles.primary} onClick={() => setIsEditingLoginInfo(true)}>Edit Login Info</button>
+			<Loader isLoading={loading}>
+				{isEditingLoginInfo ?
+					<div>
+						<form name="loginInfo" className={formStyles.form} onSubmit={handleSubmit}>
+							<Form_LoginInfo_Core user = {wipProfile.user} setUser= {handleUserSubmit}/>
+							<div className={formStyles.buttons_bottom}>
+								<button type="submit" data-testid='profileUserSaveButton' className={formStyles.btn}>Save</button>
+								<button type="button" data-testid='profileUserCancelButton' className={formStyles.btn} onClick={()=>cancelEditingLoginInfo()}>Cancel</button>
+								<button type="button" data-testid='profileUserDeleteButton' className={formStyles.btn} onClick={()=>deleteProfile()}>Delete Profile</button>
+							</div>
+						</form>
 					</div>
-				</div>
-			}
-			{isEditingHealthInfo ?
-				<div>
-					<form name="healthInfo" className={formStyles.form} onSubmit={handleSubmit}>
-						<Form_HealthInfo_Core health_data = {wipProfile.health_data} setHealthData = {handleHealthDataSubmit}/>
-						<div className={formStyles.buttons_bottom}>
-							<button type="submit" data-testid='profileHealthDataSaveButton' className={formStyles.btn}>Save</button>
-							<button type="button" data-testid='profileHealthDataCancelButton'className={formStyles.btn} onClick={()=>cancelEditingHealthInfo()}>Cancel</button>
+					:
+					<div>
+						<LoginInfo_Viewer user = {profile.user} />
+						<div className={styles.container}>
+							<button type="button" data-testid='profileUserEditButton' className={buttonStyles.primary} onClick={() => setIsEditingLoginInfo(true)}>Edit Login Info</button>
 						</div>
-					</form>
-				</div>
-				:
-				<div>
-					<HealthInfo_Viewer health_data = {profile.health_data} />
-					<div className={styles.container}>
-						<button type="button" data-testid='profileHealthDataEditButton' className={buttonStyles.primary} onClick={() => setIsEditingHealthInfo(true)}>Edit Health Info</button>
 					</div>
-				</div>
-			}
+				}
+				{isEditingHealthInfo ?
+					<div>
+						<form name="healthInfo" className={formStyles.form} onSubmit={handleSubmit}>
+							<Form_HealthInfo_Core health_data = {wipProfile.health_data} setHealthData = {handleHealthDataSubmit}/>
+							<div className={formStyles.buttons_bottom}>
+								<button type="submit" data-testid='profileHealthDataSaveButton' className={formStyles.btn}>Save</button>
+								<button type="button" data-testid='profileHealthDataCancelButton'className={formStyles.btn} onClick={()=>cancelEditingHealthInfo()}>Cancel</button>
+							</div>
+						</form>
+					</div>
+					:
+					<div>
+						<HealthInfo_Viewer health_data = {profile.health_data} />
+						<div className={styles.container}>
+							<button type="button" data-testid='profileHealthDataEditButton' className={buttonStyles.primary} onClick={() => setIsEditingHealthInfo(true)}>Edit Health Info</button>
+						</div>
+					</div>
+				}
+			</Loader>
 
 
 		</main>
