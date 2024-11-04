@@ -12,15 +12,15 @@ function Landing() {
 					<br />
 					On Demand Customized Workouts
 				</h1>
-				<Link to="/Register" className={buttonStyles.inline}>
+				<Link to="/login" className={buttonStyles.inline}>
 					Start Tracking Now
 				</Link>
 				<p className={styles.paragraph}>
-				Already Registered? <br />
-				<Link to="/login" className={styles.link}>
-					Login
-				</Link>
-			</p>
+					Already Registered? <br />
+					<Link to="/login" className={styles.link}>
+						Login
+					</Link>
+				</p>
 			</section>
 		</main>
 	);

@@ -2,7 +2,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import styles from "./AppNav.module.css";
 import Logo from "./Logo";
 
-function AppNav({ setToken }) {
+function AppNav() {
 	const navigate = useNavigate();
 	const handleLogout = () => {
 		localStorage.clear();
@@ -25,7 +25,7 @@ function AppNav({ setToken }) {
 					<NavLink to="/profile">Profile</NavLink>
 				</li>
 				<li>
-					<a href="/" onClick={() => handleLogout(setToken)}>
+					<a href="/" onClick={() => handleLogout()}>
 						Logout
 					</a>
 				</li>
