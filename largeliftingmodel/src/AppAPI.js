@@ -8,7 +8,6 @@ class AppAPI {
   static testUserID = "12903781273"
   static testServer = 'http://localhost:3885/'
   static prodServer = 'http://34.65.243.247/api/'
-  static djangoTestUserID = "1"
   static server = AppAPI.useTestServer ? AppAPI.testServer : AppAPI.prodServer
 
   static TestRoutes = {
@@ -19,8 +18,8 @@ class AppAPI {
     'PROFILE': 'users/profile/'
   }
 
-  static getProfileID(id) {
-    return AppAPI.useTestServer ? AppAPI.testUserID : id
+  static getProfileID() {
+    return AppAPI.useTestServer ? AppAPI.testUserID : ""
   }
 
   static getRoute(pageName) {
@@ -81,9 +80,9 @@ class AppAPI {
     "health_data": AppAPI.emptyHealth
   }
 
-  static getOrCreateProfileIfTesting = async (profileID) => {
+  static getOrCreateProfileIfTesting = async () => {
 		try {
-			const gotProfile = await AppAPI.get("PROFILE", profileID)
+			const gotProfile = await AppAPI.get("PROFILE")
       return gotProfile
 		} catch (error) { // If it has been deleted, re-create it.
       if (AppAPI.useTestServer) {
@@ -104,15 +103,15 @@ class AppAPI {
     return data
   }
 
-  static get = async (pageName, profileID) => {
-    const response = await fetch(AppAPI.server + AppAPI.getRoute(pageName) + AppAPI.getProfileID(profileID));
+  static get = async (pageName) => {
+    const response = await fetch(AppAPI.server + AppAPI.getRoute(pageName) + AppAPI.getProfileID());
 		if (!response.ok) throw new Error( pageName + ' GET failed');
 		const data = await response.json();
      return data
   }
 
-  static put = async (pageName, data, profileID) => {
-    const response = await fetch(AppAPI.server + AppAPI.getRoute(pageName) + AppAPI.getProfileID(profileID), {
+  static put = async (pageName, data) => {
+    const response = await fetch(AppAPI.server + AppAPI.getRoute(pageName) + AppAPI.getProfileID(), {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -123,8 +122,8 @@ class AppAPI {
     return data
   }
 
-  static delete = async (pageName, profileID) => {
-    const response = await fetch(AppAPI.server + AppAPI.getRoute(pageName) + AppAPI.getProfileID(profileID), {
+  static delete = async (pageName) => {
+    const response = await fetch(AppAPI.server + AppAPI.getRoute(pageName) + AppAPI.getProfileID(), {
       method: 'DELETE',
       headers: {
       },
