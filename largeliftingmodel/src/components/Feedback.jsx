@@ -11,6 +11,7 @@ function Feedback({ setWorkoutState, setWorkoutExists }) {
 	const [rating, setRating] = useState(0);
 
 	const handleSubmit = () => {
+		console.log(rating);
 		setWorkoutExists(false);
 		setWorkoutState(0);
 		setFeedback(""); // Clear the input after submission
