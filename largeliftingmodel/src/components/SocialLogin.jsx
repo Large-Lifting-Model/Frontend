@@ -14,10 +14,13 @@ const SocialLogin = ({ token, setToken }) => {
 			) : (
 				<div>
 					<LoginSocialGoogle
+						// google: need to add email as scope, currently only profile included in scope
 						isOnlyGetToken
 						client_id={import.meta.env.VITE_REACT_APP_GG_APP_ID || ""}
+						scope="https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile openid"
 						onResolve={({ data }) => {
 							setToken(data.access_token);
+							console.log(data);
 							const redirectTo =
 								location.state?.from?.pathnam || "/home";
 							navigate(redirectTo, { replace: true });
