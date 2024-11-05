@@ -2,11 +2,13 @@ import styles from "./Form.module.css";
 import buttonStyles from "../components/Button.module.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import StarRating from "./StarRating";
 
 function Feedback({ setWorkoutState, setWorkoutExists }) {
 	const navigate = useNavigate();
 	const [feedback, setFeedback] = useState("");
 	const [howlong, setHowlong] = useState("");
+	const [rating, setRating] = useState(0);
 
 	const handleSubmit = () => {
 		setWorkoutExists(false);
@@ -19,18 +21,23 @@ function Feedback({ setWorkoutState, setWorkoutExists }) {
 	return (
 		<>
 			<form className={styles.form} method="post" onSubmit={handleSubmit}>
-				<label>Star Rating Component to go here</label>
+				<div className={styles.container_inline}>
+					<label>Rate your workout: </label>
+					<StarRating size={40} ratingSetter={setRating} />
+				</div>
+				<div className={styles.container_inline}>
+					<label>How long did it take (mins)?</label>
+					<input
+						name="howlongText"
+						onChange={(e) => setHowlong(e.target.value)}
+						value={howlong}
+					/>
+				</div>
 				<label>What did you think about this workout?</label>
 				<input
 					name="feedbackText"
 					onChange={(e) => setFeedback(e.target.value)}
 					value={feedback}
-				/>
-				<label>How long did it take?</label>
-				<input
-					name="howlongText"
-					onChange={(e) => setHowlong(e.target.value)}
-					value={howlong}
 				/>
 			</form>
 			<button

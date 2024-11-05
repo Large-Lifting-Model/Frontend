@@ -129,6 +129,24 @@
 	justify-content: space-between;
 	padding: 0.5rem 1rem;
 }
+.container_inline {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: flex-start;
+	align-items: center;
+}
+
+.container_inline label {
+	/* flex: 1; */
+	flex-wrap: wrap;
+	min-width: 220px;
+}
+
+.container_inline input {
+	flex: 5;
+	flex-wrap: wrap;
+	min-width: 200px;
+}
 
 .h1 {
 	font-size: 4.5rem;
