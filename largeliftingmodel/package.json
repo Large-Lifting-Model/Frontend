@@ -4,7 +4,7 @@
 	"version": "0.0.0",
 	"type": "module",
 	"scripts": {
-		"dev": "cross-env VITE_USE_TEST_SERVER=0 vite",
+		"dev": "(if exist \"node_modules/.vite/deps\" rmdir \"node_modules/.vite/deps\" /q /s) && cross-env VITE_USE_TEST_SERVER=0 vite --host",
 		"dev2testserver": "cross-env VITE_USE_TEST_SERVER=1 vite",
 		"build": "vite build",
 		"lint": "eslint .",
@@ -30,6 +30,7 @@
 		"@types/react-dom": "^18.3.0",
 		"@vitejs/plugin-react": "^4.3.1",
 		"cross-env": "^7.0.3",
+		"@babel/plugin-proposal-private-property-in-object": "^7.21.11",
 		"eslint": "^8.57.1",
 		"eslint-config-react-app": "^7.0.1",
 		"eslint-plugin-react": "^7.35.0",
