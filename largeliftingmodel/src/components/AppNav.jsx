@@ -1,6 +1,7 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import styles from "./AppNav.module.css";
 import Logo from "./Logo";
+// import AppAPI from "./AppAPI";
 
 function AppNav() {
 	const navigate = useNavigate();
@@ -25,7 +26,12 @@ function AppNav() {
 					<NavLink to="/profile">Profile</NavLink>
 				</li>
 				<li>
-					<a href="/" onClick={() => handleLogout()}>
+					<a
+						href="/"
+						onClick={() => {
+							// e.preventDefault();
+							handleLogout();
+						}}>
 						Logout
 					</a>
 				</li>

@@ -16,6 +16,7 @@ class AppAPI {
 	static ProdRoutes = {
 		PROFILE: "users/profile/",
 		LOGIN: "users/auth/google/",
+		LOGOUT: "users/auth/logout/",
 	};
 
 	static getProfileID() {
@@ -91,8 +92,9 @@ class AppAPI {
 	}
 
 	static getOrCreateProfileIfTesting = async () => {
+		const tokens = JSON.parse(localStorage.getItem("tokens"));
 		try {
-			const gotProfile = await AppAPI.get("PROFILE");
+			const gotProfile = await AppAPI.get("PROFILE", tokens.access);
 			return gotProfile;
 		} catch (error) {
 			// If it has been deleted, re-create it.
@@ -123,20 +125,28 @@ class AppAPI {
 		const response = await fetch(AppAPI.url(pageName, false), {
 			method: "POST",
 			headers: {
-				"Content-Type": "application/json", // Indicate JSON content
+				"Content-Type": "application/json",
 			},
 			body: JSON.stringify(data),
 		});
 		if (!response.ok)
 			throw new Error(AppAPI.#formattedError("POST", response));
-		return data;
+		const jsonResponse = response.json();
+		console.log(jsonResponse);
+		return jsonResponse;
 	};
 
-	static get = async (pageName) => {
-		const response = await fetch(AppAPI.url(pageName));
+	static get = async (pageName, token = "") => {
+		const headers = token
+			? {
+					Authorization: `Bearer ${token}`,
+					"Content-Type": "application/json",
+			  }
+			: {};
+		const response = await fetch(AppAPI.url(pageName), { headers: headers });
 		if (!response.ok)
 			throw new Error(AppAPI.#formattedError("GET", response));
-		const data = response.json();
+		const data = await response.json();
 		return data;
 	};
 
@@ -150,7 +160,7 @@ class AppAPI {
 		});
 		if (!response.ok)
 			throw new Error(AppAPI.#formattedError("PUT", response));
-		return data;
+		return data.json();
 	};
 
 	static delete = async (pageName) => {
