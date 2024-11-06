@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import React from "react";
 
 
-const Form_LoginInfo_Core = ({profile, setProfile}) => {
+const FormLoginInfoCore = ({profile, setProfile}) => {
 
 	useEffect(() => {
 		console.info(JSON.stringify(profile))
@@ -53,4 +53,4 @@ const Form_LoginInfo_Core = ({profile, setProfile}) => {
 	);
 }
 
-export default Form_LoginInfo_Core;
+export default FormLoginInfoCore;

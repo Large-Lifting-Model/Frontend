@@ -4,7 +4,7 @@ import { useState } from "react";
 
 import styles from "./Form.module.css";
 import { Link } from "react-router-dom";
-import Form_LoginInfo_Core from "./Form_LoginInfo_Core";
+import FormLoginInfoCore from "./FormLoginInfoCore";
 import {useNavigate} from "react-router-dom"
 
 
@@ -14,7 +14,7 @@ const dummyLoginInfo = {
 	email: ""
 };
 
-function Form_LoginInfo() {
+function FormLoginInfo() {
 
 	const navigate = useNavigate();
 
@@ -37,7 +37,7 @@ function Form_LoginInfo() {
 			</div>
 			<form className={styles.form}>
 				
-				<Form_LoginInfo_Core user = {loginInfo} setUser = {setLoginInfo}/>
+				<FormLoginInfoCore user = {loginInfo} setUser = {setLoginInfo}/>
 				<div className={styles.buttons_bottom}>
 					<button className={styles.btn} onClick={(e) => handleSubmit(e)}>
 						Register
@@ -57,4 +57,4 @@ function Form_LoginInfo() {
 	);
 }
 
-export default Form_LoginInfo;
+export default FormLoginInfo;

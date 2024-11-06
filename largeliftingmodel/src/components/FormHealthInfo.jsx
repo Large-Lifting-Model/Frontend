@@ -3,7 +3,7 @@
 import { useState } from "react";
 
 import styles from "./Form.module.css";
-import Form_HealthInfo_Core from "./Form_HealthInfo_Core";
+import FormHealthInfoCore from "./FormHealthInfoCore";
 import {useNavigate} from "react-router-dom"
 
 
@@ -20,7 +20,7 @@ const dummyHealthInfo = {
 }
 
 
-function Form_HealthInfo() {
+function FormHealthInfo() {
 
 	const navigate = useNavigate();
 
@@ -42,7 +42,7 @@ function Form_HealthInfo() {
 			</div>
 			<form className={styles.form}>
 				
-				<Form_HealthInfo_Core health_data = {healthInfo} setHealthData = {setHealthInfo}/>
+				<FormHealthInfoCore health_data = {healthInfo} setHealthData = {setHealthInfo}/>
 				<div className={styles.buttons_bottom}>
 					<button type='submit' className={styles.btn} onClick={(e) => handleSubmit(e)}>Save</button>
 				</div>
@@ -51,4 +51,4 @@ function Form_HealthInfo() {
 	);
 }
 
-export default Form_HealthInfo;
+export default FormHealthInfo;

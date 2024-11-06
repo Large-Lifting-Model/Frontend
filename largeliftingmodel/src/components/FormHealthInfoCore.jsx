@@ -2,7 +2,7 @@ import styles from "./Form.module.css";
 import { useEffect } from "react";
 import React from "react";
 
-const Form_HealthInfo_Core = ({health_data, setHealthData}) => {
+const FormHealthInfoCore = ({health_data, setHealthData}) => {
 
 	useEffect(() => {
 		//console.info(JSON.stringify(health_data))
@@ -101,4 +101,4 @@ const Form_HealthInfo_Core = ({health_data, setHealthData}) => {
 	);
 }
 
-export default Form_HealthInfo_Core;
+export default FormHealthInfoCore;

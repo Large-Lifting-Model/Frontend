@@ -1,11 +1,11 @@
-import Form_LoginInfo from "../components/Form_LoginInfo";
+import FormLoginInfo from "../components/FormLoginInfo";
 import PageNav from "../components/PageNav";
 
 function Register() {
 	return (
 		<div>
 			<PageNav />
-			<Form_LoginInfo />
+			<FormLoginInfo />
 		</div>
 	);
 }

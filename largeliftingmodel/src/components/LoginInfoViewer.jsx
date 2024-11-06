@@ -3,10 +3,10 @@ import styles from "./Form.module.css";
 import { useEffect } from "react";
 import React from "react";
 
-const LoginInfo_Viewer = (props) => {
+const LoginInfoViewer = (props) => {
 
 	useEffect(() => {
-		console.info("LOGININFO_VIEWER")
+		console.info("LoginInfoViewer")
 		console.info(JSON.stringify(props))
 		// console.info(JSON.stringify(props.user.first_name))
     }, []);
@@ -34,4 +34,4 @@ const LoginInfo_Viewer = (props) => {
 	);
 }
 
-export default LoginInfo_Viewer;
+export default LoginInfoViewer;

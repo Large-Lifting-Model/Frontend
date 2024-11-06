@@ -1,10 +1,10 @@
 import AppNav from "../components/AppNav";
 import styles from "./Profile.module.css";
 import { useState, useEffect } from "react";
-import LoginInfo_Viewer from "../components/LoginInfo_Viewer";
-import HealthInfo_Viewer from "../components/HealthInfo_Viewer";
-import Form_LoginInfo_Core from "../components/Form_LoginInfo_Core";
-import Form_HealthInfo_Core from "../components/Form_HealthInfo_Core";
+import LoginInfoViewer from "../components/LoginInfoViewer";
+import HealthInfoViewer from "../components/HealthInfoViewer";
+import FormLoginInfoCore from "../components/FormLoginInfoCore";
+import FormHealthInfoCore from "../components/FormHealthInfoCore";
 import buttonStyles from "../components/Button.module.css";
 import formStyles from "../components/Form.module.css";
 import { useNavigate } from "react-router-dom";
@@ -97,7 +97,7 @@ function Profile() {
 							name="loginInfo"
 							className={formStyles.form}
 							onSubmit={handleSubmit}>
-							<Form_LoginInfo_Core
+							<FormLoginInfoCore
 								profile={wipProfile}
 								setProfile={handleUserSubmit}
 							/>
@@ -127,7 +127,7 @@ function Profile() {
 					</div>
 				) : (
 					<div>
-						<LoginInfo_Viewer profile={profile} />
+						<LoginInfoViewer profile={profile} />
 						<div className={styles.container}>
 							<button
 								type="button"
@@ -145,7 +145,7 @@ function Profile() {
 							name="healthInfo"
 							className={formStyles.form}
 							onSubmit={handleSubmit}>
-							<Form_HealthInfo_Core
+							<FormHealthInfoCore
 								health_data={wipProfile.health_data}
 								setHealthData={handleHealthDataSubmit}
 							/>
@@ -168,7 +168,7 @@ function Profile() {
 					</div>
 				) : (
 					<div>
-						<HealthInfo_Viewer health_data={profile.health_data} />
+						<HealthInfoViewer health_data={profile.health_data} />
 						<div className={styles.container}>
 							<button
 								type="button"
