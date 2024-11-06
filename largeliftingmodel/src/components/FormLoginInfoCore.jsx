@@ -1,6 +1,5 @@
 import styles from "./Form.module.css";
 import { useEffect } from "react";
-import React from "react";
 
 
 const FormLoginInfoCore = ({profile, setProfile}) => {

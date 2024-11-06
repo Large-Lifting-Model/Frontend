@@ -1,7 +1,6 @@
 
 //import { useEffect } from "react";
 import styles from "./Form.module.css";
-import React from "react";
 import { useEffect } from "react";
 
 const HealthInfo_Viewer = (props) => {

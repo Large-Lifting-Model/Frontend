@@ -1,7 +1,5 @@
 // import React from "react";
 
-const isDevelopmentMode = process.env.NODE_ENV === "development";
-
 class AppAPI {
 	static useTestServer = import.meta.env.VITE_USE_TEST_SERVER == "1";
 	static testUserID = "12903781273";
