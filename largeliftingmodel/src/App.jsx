@@ -42,8 +42,10 @@ function App() {
 		try {
 			const res = await AppAPI.post("LOGIN", {
 				access_token: token,
-			});
+			}, false);
 			if (res) {
+				console.info(JSON.stringify(token))
+				console.info(JSON.stringify(res))
 				tokenObj = {
 					google: token,
 					access: res.access,
@@ -51,7 +53,8 @@ function App() {
 				};
 				setTokens(tokenObj);
 			}
-			const userProfile = await AppAPI.get("PROFILE", res.access);
+			//const userProfile = await AppAPI.get("PROFILE", res.access);
+			const userProfile = await AppAPI.getWithToken("PROFILE", res.access);
 			setUser(userProfile);
 			const redirectTo = location.state?.from?.pathname || "/home";
 			console.log(tokenObj);

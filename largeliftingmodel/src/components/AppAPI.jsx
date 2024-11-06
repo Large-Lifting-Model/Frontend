@@ -19,6 +19,23 @@ class AppAPI {
 		LOGOUT: "users/auth/logout/",
 	};
 
+	static getAccessToken() {
+		return JSON.parse(localStorage.getItem("tokens")).access;
+	}
+
+	static getHeaders(useToken=true, json=true) {
+		const headers = json ? 
+		{"Content-Type": "application/json"}
+		:
+		{}
+		const token = AppAPI.getAccessToken()
+		if(token && useToken) {
+			headers.Authorization = `Bearer ${token}`
+		}
+		console.info("GetHeaders_Output" + JSON.stringify(headers))
+		return headers
+	}
+
 	static getProfileID() {
 		return AppAPI.useTestServer ? AppAPI.testUserID : "";
 	}
@@ -73,13 +90,13 @@ class AppAPI {
 
 	static testProfile = {
 		id: AppAPI.testUserID.toString(),
-		user: AppAPI.testUser,
+		...AppAPI.testUser,
 		health_data: AppAPI.testHealth,
 	};
 
 	static emptyProfile = {
 		id: "",
-		user: AppAPI.emptyUser,
+		...AppAPI.emptyUser,
 		health_data: AppAPI.emptyHealth,
 	};
 
@@ -92,16 +109,16 @@ class AppAPI {
 	}
 
 	static getOrCreateProfileIfTesting = async () => {
-		const tokens = JSON.parse(localStorage.getItem("tokens"));
 		try {
-			const gotProfile = await AppAPI.get("PROFILE", tokens.access);
+			const gotProfile = await AppAPI.get("PROFILE");
 			return gotProfile;
 		} catch (error) {
 			// If it has been deleted, re-create it.
 			console.info("caught Error");
 			if (AppAPI.useTestServer == true) {
 				console.info("Creating Profile");
-				return await AppAPI.post("PROFILE", AppAPI.testProfile);
+				await AppAPI.post("PROFILE", AppAPI.testProfile);
+				return AppAPI.testProfile
 			} else {
 				throw new Error(error);
 			}
@@ -121,12 +138,12 @@ class AppAPI {
 		return errorString;
 	}
 
-	static post = async (pageName, data) => {
+	static post = async (pageName, data, useToken=true) => {
+		const headers = AppAPI.getHeaders(useToken)
+		console.info("POSTHEADERS" + JSON.stringify(headers))
 		const response = await fetch(AppAPI.url(pageName, false), {
 			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
+			headers: headers,
 			body: JSON.stringify(data),
 		});
 		if (!response.ok)
@@ -136,13 +153,20 @@ class AppAPI {
 		return jsonResponse;
 	};
 
-	static get = async (pageName, token = "") => {
-		const headers = token
-			? {
-					Authorization: `Bearer ${token}`,
-					"Content-Type": "application/json",
-			  }
-			: {};
+	static getWithToken = async (pageName, token) => {
+		const response = await fetch(AppAPI.url(pageName), { headers: {
+			"Content-Type": "application/json",
+			"Authorization": `Bearer ${token}`
+		} });
+		if (!response.ok)
+			throw new Error(AppAPI.#formattedError("GET", response));
+		const data = await response.json();
+		return data;
+	}
+
+	static get = async (pageName) => {
+		const headers = AppAPI.getHeaders(true, false)
+		console.info("GetHeaders:" + JSON.stringify(headers))
 		const response = await fetch(AppAPI.url(pageName), { headers: headers });
 		if (!response.ok)
 			throw new Error(AppAPI.#formattedError("GET", response));
@@ -151,22 +175,23 @@ class AppAPI {
 	};
 
 	static put = async (pageName, data) => {
+		const headers = AppAPI.getHeaders()
 		const response = await fetch(AppAPI.url(pageName), {
 			method: "PUT",
-			headers: {
-				"Content-Type": "application/json",
-			},
+			headers: headers,
 			body: JSON.stringify(data),
 		});
 		if (!response.ok)
 			throw new Error(AppAPI.#formattedError("PUT", response));
-		return data.json();
+		const responseData = await response.json()
+		return responseData;
 	};
 
 	static delete = async (pageName) => {
+		const headers = AppAPI.getHeaders()
 		const response = await fetch(AppAPI.url(pageName), {
 			method: "DELETE",
-			headers: {},
+			headers: headers,
 		});
 		if (!response.ok)
 			throw new Error(AppAPI.#formattedError("DELETE", response));

@@ -3,14 +3,15 @@ import { useEffect } from "react";
 import React from "react";
 
 
-const Form_LoginInfo_Core = ({user, setUser}) => {
+const Form_LoginInfo_Core = ({profile, setProfile}) => {
 
 	useEffect(() => {
-		//console.info(JSON.stringify(user))
+		console.info(JSON.stringify(profile))
     }, []);
 
 	const changeElement = (name, value) => {
-		setUser({...user,
+		console.info("name:" + JSON.stringify(name) + "value:" + JSON.stringify(value))
+		setProfile({...profile,
 			[name]: value,
 		});
 	};
@@ -24,7 +25,7 @@ const Form_LoginInfo_Core = ({user, setUser}) => {
 					id="first_name"
 					type="text"
 					onChange={(e) => changeElement('first_name', e.target.value)}
-					value={user.first_name}
+					value={profile.first_name}
 					data-testid='profileUserFirstNameForm' 
 				/>
 			</div>
@@ -34,7 +35,7 @@ const Form_LoginInfo_Core = ({user, setUser}) => {
 					id="last_name"
 					type="text"
 					onChange={(e) => changeElement('last_name', e.target.value)}
-					value={user.last_name}
+					value={profile.last_name}
 					data-testid='profileUserLastNameForm' 
 				/>
 			</div>
@@ -44,7 +45,7 @@ const Form_LoginInfo_Core = ({user, setUser}) => {
 					id="email"
 					type="email"
 					onChange={(e) => changeElement('email', e.target.value)}
-					value={user.email}
+					value={profile.email}
 					data-testid='profileUserEmailForm' 
 				/>
 			</div>
