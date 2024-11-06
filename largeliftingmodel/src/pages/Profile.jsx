@@ -59,11 +59,18 @@ function Profile() {
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
+		console.info("putProfile" + JSON.stringify(wipProfile))
 		putProfile(wipProfile);
 	};
 
-	const handleUserSubmit = (value) => {
-		setWIPProfile({ ...profile, user: value });
+	const handleUserSubmit = (user) => {
+		const submittedProfile = { ...profile,
+			first_name: user.first_name,
+			last_name: user.last_name,
+			email: user.email
+		 }
+		 //console.info("Submitting..." + JSON.stringify(submittedProfile))
+		setWIPProfile(submittedProfile);
 	};
 
 	const handleHealthDataSubmit = (value) => {
@@ -91,8 +98,8 @@ function Profile() {
 							className={formStyles.form}
 							onSubmit={handleSubmit}>
 							<Form_LoginInfo_Core
-								user={wipProfile.user}
-								setUser={handleUserSubmit}
+								profile={wipProfile}
+								setProfile={handleUserSubmit}
 							/>
 							<div className={formStyles.buttons_bottom}>
 								<button
@@ -120,7 +127,7 @@ function Profile() {
 					</div>
 				) : (
 					<div>
-						<LoginInfo_Viewer user={profile.user} />
+						<LoginInfo_Viewer profile={profile} />
 						<div className={styles.container}>
 							<button
 								type="button"

@@ -8,7 +8,7 @@ const useLoader = () => {
 		try {
 			await asyncFunction()
 		} catch (e) {
-			console.error(e.message)
+			console.error(e)
 			setError(e)
 		}
 		setIsLoading(false)

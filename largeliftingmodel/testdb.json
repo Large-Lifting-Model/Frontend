@@ -2,11 +2,9 @@
   "profile": [
     {
       "id": "seed",
-      "user": {
-        "first_name": "",
-        "last_name": "",
-        "email": ""
-      },
+      "first_name": "",
+      "last_name": "",
+      "email": "",
       "health_data": {
         "dob": "",
         "gender": "",
@@ -21,11 +19,26 @@
     },
     {
       "id": "12903781273",
-      "user": {
-        "first_name": "Steve",
-        "last_name": "testUser_lname",
-        "email": "testUser_e@mail"
-      },
+      "first_name": "testUser_fName",
+      "last_name": "testUser_lname",
+      "email": "testUser_e@mail",
+      "health_data": {
+        "dob": "2002-11-20",
+        "gender": "Male",
+        "height": 172,
+        "weight": 90,
+        "favourite_workout_type": "weights",
+        "workout_experience": "medium",
+        "fitness_goal": "hypertrophy",
+        "injuries": "bad left knee",
+        "other_considerations": "none"
+      }
+    },
+    {
+      "id": "12903781273",
+      "first_name": "testUser_fName",
+      "last_name": "testUser_lname",
+      "email": "testUser_e@mail",
       "health_data": {
         "dob": "2002-11-20",
         "gender": "Male",
