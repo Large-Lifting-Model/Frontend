@@ -17,9 +17,22 @@ const FormHealthInfoCore = ({health_data, setHealthData}) => {
 		setHealthData(changed);
 	};
 
+	const setGender = (value) => {
+		changeElement("gender", value.value)
+	}
 	const setFavouriteWorkoutType = (value) => {
 		changeElement("favourite_workout_type", value.value)
 	}
+
+	const setWorkoutExperience = (value) => {
+		changeElement("workout_experience", value.value)
+	}
+
+	const genderOptions = [
+		{ value: "Male", label: "Male" },
+		{ value: "Female", label: "Female" },
+		{ value: "Other", label: "Other" },
+	]
 
 	const favouriteWorkoutTypeOptions = [
 		{ value: "Weights", label: "Weights" },
@@ -27,7 +40,12 @@ const FormHealthInfoCore = ({health_data, setHealthData}) => {
 		{ value: "Circuits", label: "Circuits" },
 		{ value: "Crossfit", label: "Crossfit" },
 		{ value: "Yoga", label: "Yoga" },
-		{ value: "Other", label: "Other" },
+	];
+
+	const workoutExperienceOptions = [
+		{ value: "Beginner", label: "Beginner" },
+		{ value: "Intermediate", label: "Intermediate" },
+		{ value: "Expert", label: "Expert" },
 	];
 
 	return (
@@ -43,11 +61,12 @@ const FormHealthInfoCore = ({health_data, setHealthData}) => {
 			</div>
 			<div className={styles.row}>
 				<label htmlFor="gender">Gender</label>
-				<input
-					id="gender"
-					type="text"
-					onChange={(e) => changeElement('gender', e.target.value)}
-					value={health_data.gender}
+				<Select
+					className={styles.dropdown}
+					placeholder= {!health_data.gender ? 'Select Gender...' : null}
+					options={genderOptions}
+					onChange={setGender}
+					value={{value: health_data.gender, label: health_data.gender}}
 				/>
 			</div>
 			<div className={styles.row}>
@@ -80,11 +99,12 @@ const FormHealthInfoCore = ({health_data, setHealthData}) => {
 			</div>
 			<div className={styles.row}>
 				<label htmlFor="workout_experience">Workout Experience</label>
-				<input
-					id="workout_experience"
-					type="text"
-					onChange={(e) => changeElement('workout_experience', e.target.value)}
-					value={health_data.workout_experience}
+				<Select
+					className={styles.dropdown}
+					placeholder= {!health_data.workout_experience ? 'Select Workout Experience...' : null}
+					options={workoutExperienceOptions}
+					onChange={setWorkoutExperience}
+					value={{value: health_data.workout_experience, label: health_data.workout_experience}}
 				/>
 			</div>
 			<div className={styles.row}>
