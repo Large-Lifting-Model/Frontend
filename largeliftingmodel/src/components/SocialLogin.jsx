@@ -1,12 +1,8 @@
 import User from "../components/User";
 import { LoginSocialGoogle } from "reactjs-social-login";
 import { GoogleLoginButton } from "react-social-login-buttons";
-import { useLocation, useNavigate } from "react-router-dom";
 
-const SocialLogin = ({ token, setToken }) => {
-	const navigate = useNavigate();
-	const location = useLocation();
-
+const SocialLogin = ({ token, handleLogin }) => {
 	return (
 		<>
 			{token ? (
@@ -19,11 +15,7 @@ const SocialLogin = ({ token, setToken }) => {
 						client_id={import.meta.env.VITE_REACT_APP_GG_APP_ID || ""}
 						scope="https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile openid"
 						onResolve={({ data }) => {
-							setToken(data.access_token);
-							console.log(data);
-							const redirectTo =
-								location.state?.from?.pathname || "/home";
-							navigate(redirectTo, { replace: true });
+							handleLogin(data.access_token);
 						}}
 						onReject={(err) => {
 							console.log(err);

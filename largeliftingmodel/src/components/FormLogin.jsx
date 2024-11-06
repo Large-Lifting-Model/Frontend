@@ -2,7 +2,7 @@
 import styles from "./Form.module.css";
 import SocialLogin from "./SocialLogin";
 
-function FormLogin({ token, setToken }) {
+function FormLogin({ token, handleLogin }) {
 	return (
 		<>
 			<div className={styles.form_description}>
@@ -12,7 +12,7 @@ function FormLogin({ token, setToken }) {
 				</p>
 			</div>
 			<form className={styles.form}>
-				<SocialLogin token={token} setToken={setToken} />
+				<SocialLogin token={token} handleLogin={handleLogin} />
 			</form>
 		</>
 	);
