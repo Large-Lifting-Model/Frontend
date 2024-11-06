@@ -1,13 +1,13 @@
 
 import PageNav from "../components/PageNav";
-import Form_HealthInfo from "../components/Form_HealthInfo";
+import FormHealthInfo from "../components/FormHealthInfo";
 
 
 function HealthInfo() {
 	return (
 		<div>
 				<PageNav />
-				<Form_HealthInfo />
+				<FormHealthInfo />
 		</div>
 	);
 }

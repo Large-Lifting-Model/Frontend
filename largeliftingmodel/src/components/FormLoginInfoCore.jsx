@@ -1,16 +1,14 @@
 import styles from "./Form.module.css";
 import { useEffect } from "react";
-import React from "react";
 
 
-const Form_LoginInfo_Core = ({profile, setProfile}) => {
+const FormLoginInfoCore = ({profile, setProfile}) => {
 
 	useEffect(() => {
-		console.info(JSON.stringify(profile))
+		//console.info(JSON.stringify(profile))
     }, []);
 
 	const changeElement = (name, value) => {
-		console.info("name:" + JSON.stringify(name) + "value:" + JSON.stringify(value))
 		setProfile({...profile,
 			[name]: value,
 		});
@@ -53,4 +51,4 @@ const Form_LoginInfo_Core = ({profile, setProfile}) => {
 	);
 }
 
-export default Form_LoginInfo_Core;
+export default FormLoginInfoCore;

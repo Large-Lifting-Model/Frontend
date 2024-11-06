@@ -1,14 +1,11 @@
 // "https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=0&longitude=0"
 import styles from "./Form.module.css";
 import { useEffect } from "react";
-import React from "react";
 
-const LoginInfo_Viewer = (props) => {
+const LoginInfoViewer = (props) => {
 
 	useEffect(() => {
-		console.info("LOGININFO_VIEWER")
-		console.info(JSON.stringify(props))
-		// console.info(JSON.stringify(props.user.first_name))
+		// console.info(JSON.stringify(props))
     }, []);
 
 	return (
@@ -34,4 +31,4 @@ const LoginInfo_Viewer = (props) => {
 	);
 }
 
-export default LoginInfo_Viewer;
+export default LoginInfoViewer;

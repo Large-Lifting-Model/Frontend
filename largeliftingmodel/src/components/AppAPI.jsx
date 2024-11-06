@@ -1,7 +1,5 @@
 // import React from "react";
 
-const isDevelopmentMode = process.env.NODE_ENV === "development";
-
 class AppAPI {
 	static useTestServer = import.meta.env.VITE_USE_TEST_SERVER == "1";
 	static testUserID = "12903781273";
@@ -20,6 +18,7 @@ class AppAPI {
 	};
 
 	static getAccessToken() {
+		if (AppAPI.useTestServer) {return ""}
 		return JSON.parse(localStorage.getItem("tokens")).access;
 	}
 
@@ -32,7 +31,6 @@ class AppAPI {
 		if(token && useToken) {
 			headers.Authorization = `Bearer ${token}`
 		}
-		console.info("GetHeaders_Output" + JSON.stringify(headers))
 		return headers
 	}
 
@@ -114,7 +112,6 @@ class AppAPI {
 			return gotProfile;
 		} catch (error) {
 			// If it has been deleted, re-create it.
-			console.info("caught Error");
 			if (AppAPI.useTestServer == true) {
 				console.info("Creating Profile");
 				await AppAPI.post("PROFILE", AppAPI.testProfile);
@@ -134,13 +131,11 @@ class AppAPI {
 			response.statusText +
 			"]\n" +
 			response.url;
-		console.info("errorstring: " + errorString);
 		return errorString;
 	}
 
 	static post = async (pageName, data, useToken=true) => {
 		const headers = AppAPI.getHeaders(useToken)
-		console.info("POSTHEADERS" + JSON.stringify(headers))
 		const response = await fetch(AppAPI.url(pageName, false), {
 			method: "POST",
 			headers: headers,
@@ -166,7 +161,6 @@ class AppAPI {
 
 	static get = async (pageName) => {
 		const headers = AppAPI.getHeaders(true, false)
-		console.info("GetHeaders:" + JSON.stringify(headers))
 		const response = await fetch(AppAPI.url(pageName), { headers: headers });
 		if (!response.ok)
 			throw new Error(AppAPI.#formattedError("GET", response));
