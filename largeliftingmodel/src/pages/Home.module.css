@@ -16,6 +16,13 @@
 
 }
 
+.suggestion {
+	padding: 1rem;
+	border-radius: 1rem;
+	background-color: #42484D;
+	/* Maybe should set a max width */
+}
+
 .cta {
     display: inline-block; /* Keep this if you prefer */
     margin-bottom: 1rem; /* Adds space between links */
