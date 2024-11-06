@@ -14,6 +14,7 @@
 	--color-light--1: #aaa;
 	--color-light--2: #ececec;
 	--color-light--3: #d6dee0;
+	--color-light--4: #ebeeef;
 	--color-red--1: #ff0000;
 }
 
@@ -69,6 +70,7 @@ input:focus {
 .cta:link,
 .cta:visited {
 	display: inline-block;
+	width: 25rem;
 	background-color: var(--color-brand--2);
 	color: var(--color-dark--1);
 	text-transform: uppercase;
@@ -77,6 +79,11 @@ input:focus {
 	font-weight: 600;
 	padding: 1rem 3rem;
 	border-radius: 5px;
+	margin-bottom: 1rem;
+}
+.cta:hover {
+    background-color: var(--color-brand--1);
+    color: var(--color-light--4); /* Change text color on hover */
 }
 
 @media (max-width: 660px) {
