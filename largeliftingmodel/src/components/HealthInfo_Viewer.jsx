@@ -2,8 +2,14 @@
 //import { useEffect } from "react";
 import styles from "./Form.module.css";
 import React from "react";
+import { useEffect } from "react";
 
 const HealthInfo_Viewer = (props) => {
+	useEffect(() => {
+		console.info("HEALTHINFO_VIEWER")
+		console.info(JSON.stringify(props))
+		// console.info(JSON.stringify(props.user.first_name))
+    }, []);
 
 	return (
 		<div>

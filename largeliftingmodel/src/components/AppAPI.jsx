@@ -176,6 +176,8 @@ class AppAPI {
 
 	static put = async (pageName, data) => {
 		const headers = AppAPI.getHeaders()
+		console.info("PUT:")
+		console.info(JSON.stringify(data))
 		const response = await fetch(AppAPI.url(pageName), {
 			method: "PUT",
 			headers: headers,
