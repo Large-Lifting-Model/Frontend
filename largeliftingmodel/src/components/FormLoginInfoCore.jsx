@@ -6,11 +6,10 @@ import React from "react";
 const FormLoginInfoCore = ({profile, setProfile}) => {
 
 	useEffect(() => {
-		console.info(JSON.stringify(profile))
+		//console.info(JSON.stringify(profile))
     }, []);
 
 	const changeElement = (name, value) => {
-		console.info("name:" + JSON.stringify(name) + "value:" + JSON.stringify(value))
 		setProfile({...profile,
 			[name]: value,
 		});

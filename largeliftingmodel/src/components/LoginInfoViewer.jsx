@@ -6,9 +6,7 @@ import React from "react";
 const LoginInfoViewer = (props) => {
 
 	useEffect(() => {
-		console.info("LoginInfoViewer")
-		console.info(JSON.stringify(props))
-		// console.info(JSON.stringify(props.user.first_name))
+		// console.info(JSON.stringify(props))
     }, []);
 
 	return (

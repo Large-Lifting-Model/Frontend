@@ -59,7 +59,6 @@ function Profile() {
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
-		console.info("putProfile" + JSON.stringify(wipProfile))
 		putProfile(wipProfile);
 	};
 
@@ -69,7 +68,6 @@ function Profile() {
 			last_name: user.last_name,
 			email: user.email
 		 }
-		 //console.info("Submitting..." + JSON.stringify(submittedProfile))
 		setWIPProfile(submittedProfile);
 	};
 
