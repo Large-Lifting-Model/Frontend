@@ -41,7 +41,7 @@ body {
 	background-size: cover;
 	background-position: center;
 	background-attachment: fixed;
-	padding: 2.5rem 5rem;
+	padding: 10px;
 }
 
 label {
@@ -96,7 +96,6 @@ input:focus {
 
 /* customized react calendar */
 .react-calendar__navigation button {
-  font-size: 1.8rem !important;
-  font-weight: bold !important;
+	font-size: 1.8rem !important;
+	font-weight: bold !important;
 }
-

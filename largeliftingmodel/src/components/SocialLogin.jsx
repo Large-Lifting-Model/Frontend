@@ -22,7 +22,7 @@ const SocialLogin = ({ token, setToken }) => {
 							setToken(data.access_token);
 							console.log(data);
 							const redirectTo =
-								location.state?.from?.pathnam || "/home";
+								location.state?.from?.pathname || "/home";
 							navigate(redirectTo, { replace: true });
 						}}
 						onReject={(err) => {

@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Landing from "./pages/Landing";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
@@ -12,9 +12,22 @@ import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
 	// Global State Vars
+	const [googleAccessToken, setGoogleAccessToken] = useLocalStorageState(
+		"",
+		"googleAccessToken"
+	);
+
 	const [accessToken, setAccessToken] = useLocalStorageState(
 		"",
 		"accessToken"
+	);
+	const [refreshToken, setRefreshToken] = useLocalStorageState(
+		"",
+		"refreshToken"
+	);
+	const [refreshTime, setRefreshTime] = useLocalStorageState(
+		"",
+		"refreshTime"
 	);
 
 	// create, view, finish
@@ -32,10 +45,24 @@ function App() {
 		<BrowserRouter>
 			<Routes>
 				{/* Public Routes */}
-				<Route path="/" element={<Landing />} />
+				<Route
+					path="/"
+					element={
+						googleAccessToken ? <Navigate to="/home" /> : <Landing />
+					}
+				/>
 				<Route
 					path="login"
-					element={<Login token={accessToken} setToken={setAccessToken} />}
+					element={
+						googleAccessToken ? (
+							<Navigate to="/home" />
+						) : (
+							<Login
+								token={googleAccessToken}
+								setToken={setGoogleAccessToken}
+							/>
+						)
+					}
 				/>
 
 				{/* Protected Routes */}
@@ -43,7 +70,7 @@ function App() {
 					<Route
 						path="home"
 						element={
-							<ProtectedRoute token={accessToken}>
+							<ProtectedRoute token={googleAccessToken}>
 								<Home />
 							</ProtectedRoute>
 						}
@@ -51,7 +78,7 @@ function App() {
 					<Route
 						path="workout"
 						element={
-							<ProtectedRoute token={accessToken}>
+							<ProtectedRoute token={googleAccessToken}>
 								<Workout
 									workoutState={workoutState}
 									setWorkoutState={setWorkoutState}
@@ -64,7 +91,7 @@ function App() {
 					<Route
 						path="history"
 						element={
-							<ProtectedRoute token={accessToken}>
+							<ProtectedRoute token={googleAccessToken}>
 								<History />
 							</ProtectedRoute>
 						}
@@ -72,7 +99,7 @@ function App() {
 					<Route
 						path="historyDay"
 						element={
-							<ProtectedRoute token={accessToken}>
+							<ProtectedRoute token={googleAccessToken}>
 								<HistoryDay />
 							</ProtectedRoute>
 						}
@@ -80,14 +107,17 @@ function App() {
 					<Route
 						path="profile"
 						element={
-							<ProtectedRoute token={accessToken}>
+							<ProtectedRoute token={googleAccessToken}>
 								<Profile />
 							</ProtectedRoute>
 						}
 					/>
 				</>
 
-				<Route path="*" element={<PageNotFound token={accessToken} />} />
+				<Route
+					path="*"
+					element={<PageNotFound token={googleAccessToken} />}
+				/>
 			</Routes>
 		</BrowserRouter>
 	);
