@@ -23,11 +23,11 @@ const HealthInfo_Viewer = (props) => {
 					<h2 className={styles.h2}> {props.health_data.gender} </h2>
 				</div>
 				<div className={styles.container}>
-					<label> Height </label>
+					<label> Height (m) </label>
 					<h2 className={styles.h2}> {props.health_data.height} </h2>
 				</div>
 				<div className={styles.container}>
-					<label> Weight </label>
+					<label> Weight (kg) </label>
 					<h2 className={styles.h2}> {props.health_data.weight} </h2>
 				</div>
 				<div className={styles.container}>

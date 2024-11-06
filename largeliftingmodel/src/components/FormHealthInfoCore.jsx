@@ -1,17 +1,34 @@
 import styles from "./Form.module.css";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import Select from "react-select";
 
 const FormHealthInfoCore = ({health_data, setHealthData}) => {
 
 	useEffect(() => {
-		//console.info(JSON.stringify(health_data))
+		console.info(JSON.stringify(health_data))
     }, []);
 
 	const changeElement = (name, value) => {
-		setHealthData({...health_data,
+		console.info("Name:" + name + " Value: " + JSON.stringify(value))
+		const changed = {...health_data,
 			[name]: value,
-		});
+		}
+		console.info(JSON.stringify(changed))
+		setHealthData(changed);
 	};
+
+	const setFavouriteWorkoutType = (value) => {
+		changeElement("favourite_workout_type", value.value)
+	}
+
+	const favouriteWorkoutTypeOptions = [
+		{ value: "Weights", label: "Weights" },
+		{ value: "Cardio", label: "Cardio" },
+		{ value: "Circuits", label: "Circuits" },
+		{ value: "Crossfit", label: "Crossfit" },
+		{ value: "Yoga", label: "Yoga" },
+		{ value: "Other", label: "Other" },
+	];
 
 	return (
 		<>
@@ -34,7 +51,7 @@ const FormHealthInfoCore = ({health_data, setHealthData}) => {
 				/>
 			</div>
 			<div className={styles.row}>
-				<label htmlFor="height">Height</label>
+				<label htmlFor="height">Height (Meters)</label>
 				<input
 					id="height"
 					type="number"
@@ -43,7 +60,7 @@ const FormHealthInfoCore = ({health_data, setHealthData}) => {
 				/>
 			</div>
 			<div className={styles.row}>
-				<label htmlFor="weight">Weight</label>
+				<label htmlFor="weight">Weight (kg)</label>
 				<input
 					id="weight"
 					type="number"
@@ -52,12 +69,13 @@ const FormHealthInfoCore = ({health_data, setHealthData}) => {
 				/>
 			</div>
 			<div className={styles.row}>
-				<label htmlFor="favourite_workout_type">Favorite Workout Type</label>
-				<input
-					id="favourite_workout_type"
-					type="text"
-					onChange={(e) => changeElement('favourite_workout_type', e.target.value)}
-					value={health_data.favourite_workout_type}
+				<label htmlFor="favourite_workout_type">Favourite Workout Type</label>
+				<Select
+					className={styles.dropdown}
+					placeholder= {!health_data.favourite_workout_type ? 'Select Favourite Workout Type...' : null}
+					options={favouriteWorkoutTypeOptions}
+					onChange={setFavouriteWorkoutType}
+					value={{value: health_data.favourite_workout_type, label: health_data.favourite_workout_type}}
 				/>
 			</div>
 			<div className={styles.row}>
