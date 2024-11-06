@@ -48,3 +48,12 @@
 .btn_create:hover {
 	background-color: #00c469a5;
 }
+
+.container {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 1rem;
+	justify-content: center;
+	width: 100%;
+	margin: 5px 0 0 0;
+}

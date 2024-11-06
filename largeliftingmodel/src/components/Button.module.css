@@ -1,5 +1,4 @@
 .btn {
-	color: inherit;
 	text-transform: uppercase;
 	padding: 0.8rem 1.6rem;
 	font-family: inherit;
@@ -19,11 +18,18 @@
 	font-weight: 600;
 	padding: 1rem 3rem;
 	border-radius: 5px;
+	margin: 5px 0px;
+	width: 100%;
+	cursor: pointer;
 }
 
-.back {
+.primary:hover {
+	background-color: var(--color-brand--2-hover);
+}
+
+.inline {
 	display: inline-block;
-	background-color: var(--color-light--2);
+	background-color: var(--color-brand--2);
 	color: var(--color-dark--1);
 	text-transform: uppercase;
 	text-decoration: none;
@@ -31,6 +37,31 @@
 	font-weight: 600;
 	padding: 1rem 3rem;
 	border-radius: 5px;
+	border: none;
+	margin: 0px 0px 0px 5px;
+	cursor: pointer;
+}
+
+.inline:hover {
+	background-color: var(--color-brand--2-hover);
+}
+
+.back {
+	display: inline-block;
+	background-color: var(--color-dark--2);
+	color: var(--color-light--3);
+	text-transform: uppercase;
+	text-decoration: none;
+	font-size: 1.6rem;
+	font-weight: 600;
+	padding: 1rem;
+	border-radius: 5px;
+	border: none;
+	cursor: pointer;
+}
+
+.back:hover {
+	background-color: var(--color-light--1);
 }
 
 .destructive {

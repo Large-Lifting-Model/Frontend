@@ -1,8 +1,14 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import styles from "./AppNav.module.css";
 import Logo from "./Logo";
+// import AppAPI from "./AppAPI";
 
 function AppNav() {
+	const navigate = useNavigate();
+	const handleLogout = () => {
+		localStorage.clear();
+		navigate("/");
+	};
 	return (
 		<nav className={styles.nav}>
 			<Logo link="/home" />
@@ -11,13 +17,23 @@ function AppNav() {
 					<NavLink to="/home">Home</NavLink>
 				</li>
 				<li>
-					<NavLink to="/create">Create Workout</NavLink>
+					<NavLink to="/workout">Workout</NavLink>
 				</li>
 				<li>
-					<NavLink to="/history">Past Workouts</NavLink>
+					<NavLink to="/history">History</NavLink>
 				</li>
 				<li>
 					<NavLink to="/profile">Profile</NavLink>
+				</li>
+				<li>
+					<a
+						href="/"
+						onClick={() => {
+							// e.preventDefault();
+							handleLogout();
+						}}>
+						Logout
+					</a>
 				</li>
 			</ul>
 		</nav>

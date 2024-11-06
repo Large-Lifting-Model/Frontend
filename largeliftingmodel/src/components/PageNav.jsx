@@ -7,14 +7,11 @@ function PageNav() {
 		<nav className={styles.nav}>
 			<Logo link="/" />
 			<ul>
-				{/* <li>
-					<NavLink to="/">Main</NavLink>
-				</li> */}
 				<li>
-					<NavLink to="/login">Login</NavLink>
+					<NavLink to="/">Large Lifting Model</NavLink>
 				</li>
 				<li>
-					<NavLink to="/register">Register</NavLink>
+					<NavLink to="/login">Login / Register</NavLink>
 				</li>
 			</ul>
 		</nav>

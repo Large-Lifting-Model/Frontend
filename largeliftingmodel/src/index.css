@@ -6,6 +6,7 @@
 :root {
 	--color-brand--1: #ffb545;
 	--color-brand--2: #00c46a;
+	--color-brand--2-hover: #009955;
 
 	--color-dark--0: #242a2e;
 	--color-dark--1: #2d3439;
@@ -41,7 +42,7 @@ body {
 	background-size: cover;
 	background-position: center;
 	background-attachment: fixed;
-	padding: 2.5rem 5rem;
+	padding: 10px;
 }
 
 label {
@@ -99,3 +100,9 @@ input:focus {
     "description": "Import CSS Module as `styles`"
   },
 */
+
+/* customized react calendar */
+.react-calendar__navigation button {
+	font-size: 1.8rem !important;
+	font-weight: bold !important;
+}

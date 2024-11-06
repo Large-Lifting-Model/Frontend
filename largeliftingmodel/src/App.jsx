@@ -1,33 +1,136 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import {
+	Navigate,
+	Route,
+	Routes,
+	useLocation,
+	useNavigate,
+} from "react-router-dom";
 import Landing from "./pages/Landing";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
-import Register from "./pages/Register";
-import HealthInfo from "./pages/HealthInfo";
 import Profile from "./pages/Profile";
-import Create from "./pages/Create";
 import Workout from "./pages/Workout";
-import Feedback from "./pages/Feedback";
 import History from "./pages/History";
 import PageNotFound from "./pages/PageNotFound";
+import { useLocalStorageState } from "./hooks/useLocalStorageState";
+import HistoryDay from "./pages/HistoryDay";
+import ProtectedRoute from "./components/ProtectedRoute";
+import AppAPI from "./components/AppAPI";
 
 function App() {
+	// Global State Vars
+	const [tokens, setTokens] = useLocalStorageState({}, "tokens");
+
+	// create, view, finish
+	const [workoutState, setWorkoutState] = useLocalStorageState(
+		0,
+		"workoutState"
+	);
+
+	const [workoutExists, setWorkoutExists] = useLocalStorageState(
+		false,
+		"workoutExists"
+	);
+
+	const [user, setUser] = useLocalStorageState({}, "user");
+
+	const navigate = useNavigate();
+	const location = useLocation();
+
+	const handleLogin = async (token) => {
+		let tokenObj = {};
+		try {
+			const res = await AppAPI.post("LOGIN", {
+				access_token: token,
+			});
+			if (res) {
+				tokenObj = {
+					google: token,
+					access: res.access,
+					refresh: res.refresh,
+				};
+				setTokens(tokenObj);
+			}
+			const userProfile = await AppAPI.get("PROFILE", res.access);
+			setUser(userProfile);
+			const redirectTo = location.state?.from?.pathname || "/home";
+			console.log(tokenObj);
+			console.log(userProfile);
+			navigate(redirectTo, { replace: true });
+		} catch (error) {
+			console.error("Error during login");
+		}
+	};
+
 	return (
-		<BrowserRouter>
-			<Routes>
-				<Route path="/" element={<Landing />} />
-				<Route path="home" element={<Home />} />
-				<Route path="login" element={<Login />} />
-				<Route path="register" element={<Register />} />
-				<Route path="healthInfo" element={<HealthInfo />} />
-				<Route path="profile" element={<Profile />} />
-				<Route path="create" element={<Create />} />
-				<Route path="workout" element={<Workout />} />
-				<Route path="feedback" element={<Feedback />} />
-				<Route path="history" element={<History />} />
-				<Route path="*" element={<PageNotFound />} />
-			</Routes>
-		</BrowserRouter>
+		<Routes>
+			{/* Public Routes */}
+			<Route
+				path="/"
+				element={tokens.google ? <Navigate to="/home" /> : <Landing />}
+			/>
+			<Route
+				path="login"
+				element={
+					tokens.google ? (
+						<Navigate to="/home" />
+					) : (
+						<Login token={tokens.google} handleLogin={handleLogin} />
+					)
+				}
+			/>
+
+			{/* Protected Routes */}
+			<>
+				<Route
+					path="home"
+					element={
+						<ProtectedRoute token={tokens.google}>
+							<Home />
+						</ProtectedRoute>
+					}
+				/>
+				<Route
+					path="workout"
+					element={
+						<ProtectedRoute token={tokens.google}>
+							<Workout
+								workoutState={workoutState}
+								setWorkoutState={setWorkoutState}
+								workoutExists={workoutExists}
+								setWorkoutExists={setWorkoutExists}
+							/>
+						</ProtectedRoute>
+					}
+				/>
+				<Route
+					path="history"
+					element={
+						<ProtectedRoute token={tokens.google}>
+							<History />
+						</ProtectedRoute>
+					}
+				/>
+				<Route
+					path="historyDay"
+					element={
+						<ProtectedRoute token={tokens.google}>
+							<HistoryDay />
+						</ProtectedRoute>
+					}
+				/>
+				<Route
+					path="profile"
+					element={
+						<ProtectedRoute token={tokens.google}>
+							<Profile user={user} setUser={setUser} />
+						</ProtectedRoute>
+					}
+				/>
+			</>
+
+			<Route path="*" element={<PageNotFound token={tokens.google} />} />
+		</Routes>
 	);
 }
 

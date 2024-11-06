@@ -1,135 +1,179 @@
 import AppNav from "../components/AppNav";
 import styles from "./Profile.module.css";
-import { useState, useEffect,} from 'react'
+import { useState, useEffect } from "react";
 import LoginInfo_Viewer from "../components/LoginInfo_Viewer";
 import HealthInfo_Viewer from "../components/HealthInfo_Viewer";
 import Form_LoginInfo_Core from "../components/Form_LoginInfo_Core";
 import Form_HealthInfo_Core from "../components/Form_HealthInfo_Core";
-import buttonStyles from "../components/Button.module.css"
-import formStyles from "../components/Form.module.css"
-import {useNavigate} from "react-router-dom"
-
-const dummyLoginInfo = {
-	firstName: "",
-	lastName: "",
-	email: ""
-};
-
-const dummyHealthInfo = {
-	dob: "",
-	gender: "",
-	height: 0,
-	weight: 0,
-	favoriteWorkoutType: "",
-	workoutExperience: "",
-	fitnessGoal: "",
-	injuries: "",
-	otherConsiderations: ""
-}
-
-
-
+import buttonStyles from "../components/Button.module.css";
+import formStyles from "../components/Form.module.css";
+import { useNavigate } from "react-router-dom";
+import AppAPI from "../components/AppAPI";
+// import React from "react"; //needed for testing
+import Loader from "../components/Loader";
+import useLoader from "../hooks/useLoader";
 
 function Profile() {
-	
-	const [loginInfo, setLoginInfo] = useState(dummyLoginInfo);
-	const [wipLoginInfo, setWIPLoginInfo] = useState(dummyLoginInfo);
-	const [healthInfo, setHealthInfo] = useState(dummyHealthInfo);
-	const [wipHealthInfo, setWIPHealthInfo] = useState(dummyHealthInfo);
 	const [isEditingLoginInfo, setIsEditingLoginInfo] = useState(false);
 	const [isEditingHealthInfo, setIsEditingHealthInfo] = useState(false);
+	const [profile, setProfile] = useState(AppAPI.emptyProfile);
+	const [wipProfile, setWIPProfile] = useState(AppAPI.emptyProfile);
 
 	const navigate = useNavigate();
 
+	const { error, isLoading, withLoader } = useLoader();
+
+	const getOrCreateProfileIfTesting = async () => {
+		await withLoader(async () => {
+			const returnedProfile = await AppAPI.getOrCreateProfileIfTesting();
+			setProfile(returnedProfile);
+			setWIPProfile(returnedProfile);
+		});
+	};
+
+	const putProfile = async (profileData) => {
+		await withLoader(async () => {
+			await AppAPI.put("PROFILE", profileData);
+			setProfile(profileData);
+			setWIPProfile(profileData);
+			setIsEditingLoginInfo(false);
+			setIsEditingHealthInfo(false);
+		});
+	};
+
+	const deleteProfile = async () => {
+		await withLoader(async () => {
+			await AppAPI.delete("PROFILE");
+			setProfile(AppAPI.emptyProfile);
+			setWIPProfile(AppAPI.emptyProfile);
+			setIsEditingLoginInfo(false);
+			setIsEditingHealthInfo(false);
+			navigate("..");
+		});
+	};
+
+	//only run once on component mount -> empty array OK.
 	useEffect(() => {
-		setLoginInfo(dummyLoginInfo); // replace with API data
-		setWIPLoginInfo(dummyLoginInfo); // replace with API data
-		setHealthInfo(dummyHealthInfo); // replace with API data
-		setWIPHealthInfo(dummyHealthInfo); // replace with API data
-    }, []);
+		getOrCreateProfileIfTesting();
+	}, []);
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
-		const formName = event.target.name;
-		switch(formName) {
-		case "loginInfo":
-			alert(`Saving loginInfo:  "${JSON.stringify(wipLoginInfo)}". This is a placeholder for API call`);
-			setLoginInfo(wipLoginInfo)
-			setIsEditingLoginInfo(false)
-			break;
-		case "healthInfo":
-			alert(`Saving healthInfo:  "${JSON.stringify(wipHealthInfo)}". This is a placeholder for API call`);
-			setHealthInfo(wipHealthInfo)
-			setIsEditingHealthInfo(false)
-			break;
-		default:
-
-		}
+		putProfile(wipProfile);
 	};
 
-	const deleteProfile = () => {
-		alert(`Deleting Profile. This is a placeholder for API call`);
-		setLoginInfo(dummyLoginInfo);
-		setWIPLoginInfo(loginInfo);
-		setHealthInfo(dummyHealthInfo);
-		setWIPHealthInfo(healthInfo);
-		setIsEditingLoginInfo(false);
-		setIsEditingHealthInfo(false);
-		navigate('..');
-	}
+	const handleUserSubmit = (value) => {
+		setWIPProfile({ ...profile, user: value });
+	};
+
+	const handleHealthDataSubmit = (value) => {
+		setWIPProfile({ ...profile, health_data: value });
+	};
 
 	const cancelEditingLoginInfo = () => {
-		setWIPLoginInfo(loginInfo)
-		setIsEditingLoginInfo(false)
-	}
+		setWIPProfile(profile);
+		setIsEditingLoginInfo(false);
+	};
 
 	const cancelEditingHealthInfo = () => {
-		setWIPHealthInfo(healthInfo)
-		setIsEditingHealthInfo(false)
-	}
+		setWIPProfile(profile);
+		setIsEditingHealthInfo(false);
+	};
 
 	return (
 		<main className={styles.feedback.main}>
 			<AppNav />
-			{isEditingLoginInfo ?
-				<div>
-					<form name="loginInfo" className={formStyles.form} onSubmit={handleSubmit}>
-						<Form_LoginInfo_Core loginInfo = {wipLoginInfo} setLoginInfo = {setWIPLoginInfo}/>
-						<div className={formStyles.buttons_bottom}>
-							<button type="submit" className={formStyles.btn}>Save</button>
-							<button type="button" className={formStyles.btn} onClick={()=>cancelEditingLoginInfo()}>Cancel</button>
-							<button type="button" className={formStyles.btn} onClick={()=>deleteProfile()}>Delete Profile</button>
-						</div>
-					</form>
-				</div>
-				:
-				<div>
-					<LoginInfo_Viewer loginInfo = {loginInfo} />
-					<div className={styles.container}>
-						<button type="button" className={buttonStyles.primary} onClick={() => setIsEditingLoginInfo(true)}>Edit Login Info</button>
+			<Loader error={error} isLoading={isLoading}>
+				{isEditingLoginInfo ? (
+					<div>
+						<form
+							name="loginInfo"
+							className={formStyles.form}
+							onSubmit={handleSubmit}>
+							<Form_LoginInfo_Core
+								user={wipProfile.user}
+								setUser={handleUserSubmit}
+							/>
+							<div className={formStyles.buttons_bottom}>
+								<button
+									type="submit"
+									data-testid="profileUserSaveButton"
+									className={formStyles.btn}>
+									Save
+								</button>
+								<button
+									type="button"
+									data-testid="profileUserCancelButton"
+									className={formStyles.btn}
+									onClick={() => cancelEditingLoginInfo()}>
+									Cancel
+								</button>
+								<button
+									type="button"
+									data-testid="profileUserDeleteButton"
+									className={formStyles.btn}
+									onClick={() => deleteProfile()}>
+									Delete Profile
+								</button>
+							</div>
+						</form>
 					</div>
-				</div>
-			}
-			{isEditingHealthInfo ?
-				<div>
-					<form name="healthInfo" className={formStyles.form} onSubmit={handleSubmit}>
-						<Form_HealthInfo_Core healthInfo = {wipHealthInfo} setHealthInfo = {setWIPHealthInfo}/>
-						<div className={formStyles.buttons_bottom}>
-							<button type="submit" className={formStyles.btn}>Save</button>
-							<button type="button" className={formStyles.btn} onClick={()=>cancelEditingHealthInfo()}>Cancel</button>
+				) : (
+					<div>
+						<LoginInfo_Viewer user={profile.user} />
+						<div className={styles.container}>
+							<button
+								type="button"
+								data-testid="profileUserEditButton"
+								className={buttonStyles.primary}
+								onClick={() => setIsEditingLoginInfo(true)}>
+								Edit Login Info
+							</button>
 						</div>
-					</form>
-				</div>
-				:
-				<div>
-					<HealthInfo_Viewer healthInfo = {healthInfo} />
-					<div className={styles.container}>
-						<button type="button" className={buttonStyles.primary} onClick={() => setIsEditingHealthInfo(true)}>Edit Health Info</button>
 					</div>
-				</div>
-			}
-
-
+				)}
+				{isEditingHealthInfo ? (
+					<div>
+						<form
+							name="healthInfo"
+							className={formStyles.form}
+							onSubmit={handleSubmit}>
+							<Form_HealthInfo_Core
+								health_data={wipProfile.health_data}
+								setHealthData={handleHealthDataSubmit}
+							/>
+							<div className={formStyles.buttons_bottom}>
+								<button
+									type="submit"
+									data-testid="profileHealthDataSaveButton"
+									className={formStyles.btn}>
+									Save
+								</button>
+								<button
+									type="button"
+									data-testid="profileHealthDataCancelButton"
+									className={formStyles.btn}
+									onClick={() => cancelEditingHealthInfo()}>
+									Cancel
+								</button>
+							</div>
+						</form>
+					</div>
+				) : (
+					<div>
+						<HealthInfo_Viewer health_data={profile.health_data} />
+						<div className={styles.container}>
+							<button
+								type="button"
+								data-testid="profileHealthDataEditButton"
+								className={buttonStyles.primary}
+								onClick={() => setIsEditingHealthInfo(true)}>
+								Edit Health Info
+							</button>
+						</div>
+					</div>
+				)}
+			</Loader>
 		</main>
 	);
 }
