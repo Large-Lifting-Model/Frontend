@@ -1,7 +1,7 @@
 // import React from "react";
 
 class AppAPI {
-	static useTestServer = import.meta.env.VITE_USE_TEST_SERVER == "1";
+	static useTestServer = import.meta.env.VITE_USE_TEST_SERVER === "1";
 	static testUserID = "12903781273";
 	static testServer = "http://localhost:3885/";
 	static prodServer = "http://34.65.243.247/api/";
@@ -112,7 +112,7 @@ class AppAPI {
 			return gotProfile;
 		} catch (error) {
 			// If it has been deleted, re-create it.
-			if (AppAPI.useTestServer == true) {
+			if (AppAPI.useTestServer === true) {
 				console.info("Creating Profile");
 				await AppAPI.post("PROFILE", AppAPI.testProfile);
 				return AppAPI.testProfile
