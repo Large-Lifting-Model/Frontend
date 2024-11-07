@@ -41,6 +41,7 @@
   gap: 1rem;
   width: 80%;
   max-width: 600px;
+  max-width: 500px;
 }
 
 .workoutItem {
@@ -58,8 +59,6 @@
   font-weight: bold;
   color: var(--color-dark--0);
 }
-
-
 
 .calendar {
   width: 900px !important;
@@ -93,10 +92,9 @@
   font-size: 2.5rem !important;
 }
 
-/* ADD HOVER COLOR */
-/* .workout-day:hover {
-  background-color: var();
-} */
+.workout-day:hover {
+  background-color: var(--color-brand--2-hover);
+}
 
 .past-day {
   background-color: var(--color-light--1) !important;
@@ -114,7 +112,42 @@
   font-size: 2.5rem !important;
 }
 
+.workoutBox {
+  border: 1px solid #ccc;
+  padding: 8px;
+  margin-bottom: 16px;
+  background-color: #f9f9f9;
+  border-radius: 16px;
+}
 
+.workoutTitle {
+  font-size: 1.25em;
+  font-weight: bold;
+  margin-bottom: 8px;
+  color: black;
+}
+
+.exerciseItem {
+  margin-bottom: 16px;
+}
+
+.exerciseName {
+  font-weight: bold;
+  color: black;
+}
+
+.exerciseType {
+  float: right;
+  font-style: italic;
+  color: var(--color-dark--2);
+}
+
+.exerciseInfo {
+  margin-top: 4px;
+  font-size: 0.9em;
+  color: #555;
+  color: var(--color-dark--0);
+}
 
 
 

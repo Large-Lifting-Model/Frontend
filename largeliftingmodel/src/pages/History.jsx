@@ -3,16 +3,16 @@ import Calendar from 'react-calendar';
 import styles from "./History.module.css";
 import 'react-calendar/dist/Calendar.css';
 import { useNavigate } from "react-router-dom"
+import testWorkout from "../testWorkout.json"; // delete once we call API
 
 function History() {
 	const navigate = useNavigate();
 
 	// Use API Call to get dates and past workouts
 	const workoutDays = [
-		{ date: new Date(2024, 9, 6), workouts: ["Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quis venenatis eros. Fusce maximus, sapien ac cursus gravida, lorem leo vulputate erat, sed porttitor nunc mi nec nunc. Fusce a commodo urna. Aliquam eu iaculis ex. Fusce malesuada luctus nibh vel sagittis. Nunc quis purus a risus tincidunt convallis nec ut orci. Nam ac tellus risus. Duis a venenatis lorem, sit amet rutrum erat. Nulla faucibus erat a efficitur pellentesque. Vestibulum quis dictum nisi, in luctus augue. Morbi a laoreet risus. Aliquam faucibus tortor at mattis suscipit.", 
-																						 "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris commodo tempus aliquet. Phasellus aliquam pellentesque eros quis eleifend. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Quisque congue erat ipsum, tincidunt posuere mauris finibus ac. Cras efficitur, arcu tempus fringilla congue, mi nibh lacinia nunc, eget tempus velit nunc ac magna. Maecenas fermentum sit amet ante et rhoncus. Fusce aliquam felis sem, sit amet ultricies arcu molestie et. Proin et diam mi. Fusce aliquet, ante vel iaculis eleifend, orci arcu lacinia urna, rhoncus interdum nunc orci sit amet turpis. Ut id dui imperdiet, malesuada augue eu, imperdiet ipsum. Integer vitae tortor nec mauris pretium ultrices."] },
-		{ date: new Date(2024, 9, 10), workouts: ["Workout 1"] },
-		{ date: new Date(2024, 9, 15), workouts: ["Workout 1", "Workout 2", "Workout 3"] },
+		{ date: new Date(2024, 9, 6), workouts: [testWorkout.workout, testWorkout.workout] },
+		{ date: new Date(2024, 9, 10), workouts: [testWorkout.workout] },
+		{ date: new Date(2024, 9, 15), workouts: [testWorkout.workout, testWorkout.workout, testWorkout.workout] },
 	];
 
 	const handleClickDay = (selectedDay) => {

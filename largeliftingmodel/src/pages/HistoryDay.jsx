@@ -26,11 +26,23 @@ function HistoryDay() {
         <div className={styles.workoutList}>
           {workouts.length > 0 ? (
             workouts.map((workout, index) => (
-              <p key={index} className={styles.workoutItem}>
-                <strong>{`Workout ${index + 1}:`}</strong>
-                <br />
-                {workout}
-              </p>
+              <div key={index} className={styles.workoutBox}> 
+                <h3 className={styles.workoutTitle}>
+                  {`Workout ${index + 1}:`}
+                </h3>
+                {workout.map((exeriseObj, subIndex) => {
+                  const exercise = exeriseObj.exercise || {}
+                  return (
+                    <div key={`${index}-${subIndex}`} className={styles.exerciseItem}>
+                      <p>
+                        <strong className={styles.exerciseName}>{exercise.name}</strong>
+                        <strong className={styles.exerciseType}>{exercise.type}</strong>
+                      </p>
+                      <p className={styles.exerciseInfo}>{exercise.info}</p>
+                    </div>
+                  )
+                })}
+              </div>
             ))
           ) : (
             <p></p>

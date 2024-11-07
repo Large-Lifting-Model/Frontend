@@ -30,7 +30,7 @@ function Home({ token, setToken }) {
 				<p className={styles.suggestion}>{suggestion}</p>
 
 				<div className={styles.links}>
-					<Link to="/create" className="cta">
+					<Link to="/workout" className="cta">
 						Create Workout
 					</Link>
 					<Link to="/history" className="cta">
