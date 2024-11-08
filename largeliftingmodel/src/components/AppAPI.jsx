@@ -65,6 +65,29 @@ class AppAPI {
 		other_considerations: "",
 	};
 
+	static emptyWorkoutForState = {
+		"id":"",
+   		"user":"",
+   		"created":"",
+   		"length":0,
+   		"difficulty": { value: "", label: "" },
+   		"workout_type": { value: "", label: "" },
+   		"target_area":"",
+   		"equipment_access": { value: "", label: "" },
+   		"included_exercises":"",
+   		"excluded_exercises":"",
+   		"other_workout_considerations":"",
+   		"llm_suggested_changes":[
+   		],
+   		"llm_suggested_workout":[
+   		],
+   		"llm_final_workout":null,
+   		"workout_rating":null,
+		"workout_comments":null,
+	}
+
+	
+
 	static vitestUser = {
 		first_name: "vitest_fName",
 		last_name: "vitest_lname",
@@ -83,15 +106,7 @@ class AppAPI {
 		health_data: AppAPI.emptyHealth,
 	};
 
-	static url(pageName, withID = true) {
-		return (
-			AppAPI.server +
-			AppAPI.getRoute(pageName) +
-			(withID ? AppAPI.getProfileID() : "")
-		);
-	}
-
-	static newURL(route) {
+	static url(route) {
 		return (
 			AppAPI.server +
 			route
@@ -128,7 +143,7 @@ class AppAPI {
 
 	static get = async (route, headers, testRoute="") => {
 		const theRoute = AppAPI.useTestServer ? testRoute : route
-		const response = await fetch(AppAPI.newURL(theRoute), { headers: headers });
+		const response = await fetch(AppAPI.url(theRoute), { headers: headers });
 		if (!response.ok)
 			throw new Error(AppAPI.#formattedError("GET", response));
 		const data = await response.json();
@@ -137,7 +152,7 @@ class AppAPI {
 
 	static put = async (route, data, headers, testRoute="") => {
 		const theRoute = AppAPI.useTestServer ? testRoute : route
-		const response = await fetch(AppAPI.newURL(theRoute), {
+		const response = await fetch(AppAPI.url(theRoute), {
 			method: "PUT",
 			headers: headers,
 			body: JSON.stringify(data),
@@ -150,7 +165,7 @@ class AppAPI {
 
 	static post = async (route, data, headers, testRoute="") => {
 		const theRoute = AppAPI.useTestServer ? testRoute : route
-		const response = await fetch(AppAPI.newURL(theRoute), {
+		const response = await fetch(AppAPI.url(theRoute), {
 			method: "POST",
 			headers: headers,
 			body: JSON.stringify(data),
@@ -164,12 +179,20 @@ class AppAPI {
 
 	static delete = async (route, headers, testRoute="") => {
 		const theRoute = AppAPI.useTestServer ? testRoute : route
-		const response = await fetch(AppAPI.newURL(theRoute), {
+		const response = await fetch(AppAPI.url(theRoute), {
 			method: "DELETE",
 			headers: headers,
 		});
 		if (!response.ok)
 			throw new Error(AppAPI.#formattedError("DELETE", response));
+	}
+
+	static createWorkout = async (workoutData) => {
+		return await AppAPI.post('workout/', workoutData, AppAPI.getDefaultHeaders(), "")
+	}
+
+	static deleteWorkout = async(workoutID) => {
+		return await AppAPI.delete('workout/' + workoutID, AppAPI.getDefaultHeaders(), "")
 	}
 
 	constructor() {}
