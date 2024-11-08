@@ -42,9 +42,9 @@ function App() {
 		let tokenObj = {};
 		try {
 
-			const res = await AppAPI.post("LOGIN", {
+			const res = await AppAPI.newPost("users/auth/google/", {
 				access_token: token,
-			}, false);
+			}, AppAPI.getHeaders(false,true), "")
 			if (res) {
 				tokenObj = {
 					google: token,
@@ -53,7 +53,10 @@ function App() {
 				};
 				setTokens(tokenObj);
 			}
-			const userProfile = await AppAPI.getWithToken("PROFILE", res.access);
+			const userProfile = await AppAPI.newGet("users/profile/", {
+				"Content-Type": "application/json",
+				"Authorization": `Bearer ${res.access}`
+			});
 			setUser(userProfile);
 			const redirectTo = location.state?.from?.pathname || "/home";
 			console.log(tokenObj);

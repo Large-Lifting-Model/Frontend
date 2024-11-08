@@ -7,18 +7,6 @@ class AppAPI {
 	static prodServer = "http://34.65.243.247/api/";
 	static server = AppAPI.useTestServer ? AppAPI.testServer : AppAPI.prodServer;
 
-	static TestRoutes = {
-		PROFILE: "profile/",
-		WORKOUT: "workout/",
-	};
-
-	static ProdRoutes = {
-		PROFILE: "users/profile/",
-		LOGIN: "users/auth/google/",
-		LOGOUT: "users/auth/logout/",
-		WORKOUT: "workout/"
-	};
-
 	static getAccessToken() {
 		if (AppAPI.useTestServer) {return ""}
 		return JSON.parse(localStorage.getItem("tokens")).access;
@@ -142,63 +130,6 @@ class AppAPI {
 			response.url;
 		return errorString;
 	}
-
-	static post = async (pageName, data, useToken=true) => {
-		const headers = AppAPI.getHeaders(useToken)
-		const response = await fetch(AppAPI.url(pageName, false), {
-			method: "POST",
-			headers: headers,
-			body: JSON.stringify(data),
-		});
-		if (!response.ok)
-			throw new Error(AppAPI.#formattedError("POST", response));
-		const jsonResponse = response.json();
-		console.log(jsonResponse);
-		return jsonResponse;
-	};
-
-	static getWithToken = async (pageName, token) => {
-		const response = await fetch(AppAPI.url(pageName), { headers: {
-			"Content-Type": "application/json",
-			"Authorization": `Bearer ${token}`
-		} });
-		if (!response.ok)
-			throw new Error(AppAPI.#formattedError("GET", response));
-		const data = await response.json();
-		return data;
-	}
-
-	static get = async (pageName) => {
-		const headers = AppAPI.getHeaders(true, false)
-		const response = await fetch(AppAPI.url(pageName), { headers: headers });
-		if (!response.ok)
-			throw new Error(AppAPI.#formattedError("GET", response));
-		const data = await response.json();
-		return data;
-	};
-
-	static put = async (pageName, data) => {
-		const headers = AppAPI.getHeaders()
-		const response = await fetch(AppAPI.url(pageName), {
-			method: "PUT",
-			headers: headers,
-			body: JSON.stringify(data),
-		});
-		if (!response.ok)
-			throw new Error(AppAPI.#formattedError("PUT", response));
-		const responseData = await response.json()
-		return responseData;
-	};
-
-	static delete = async (pageName) => {
-		const headers = AppAPI.getHeaders()
-		const response = await fetch(AppAPI.url(pageName), {
-			method: "DELETE",
-			headers: headers,
-		});
-		if (!response.ok)
-			throw new Error(AppAPI.#formattedError("DELETE", response));
-	};
 
 	static newGet = async (route, headers, testRoute="") => {
 		const theRoute = AppAPI.useTestServer ? testRoute : route

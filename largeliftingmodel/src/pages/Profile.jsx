@@ -42,13 +42,16 @@ function Profile() {
 	};
 
 	const deleteProfile = async () => {
+		window.confirm("Are you sure you want to delete your profile?") &&
 		await withLoader(async () => {
 			await AppAPI.newDelete("users/profile/", AppAPI.getHeaders(), "profile/" + AppAPI.testUserID)
 			setProfile(AppAPI.emptyProfile);
 			setWIPProfile(AppAPI.emptyProfile);
 			setIsEditingLoginInfo(false);
 			setIsEditingHealthInfo(false);
-			navigate("..");
+			localStorage.clear()
+			navigate("/");
+			window.location.reload()
 		});
 	};
 
