@@ -117,13 +117,13 @@ class AppAPI {
 
 	static getOrCreateProfileIfTesting = async () => {
 		try {
-			const gotProfile = await AppAPI.get("PROFILE");
+			const gotProfile = await AppAPI.newGet("users/profile/", AppAPI.getHeaders(), "profile/" + AppAPI.testUserID);
 			return gotProfile;
 		} catch (error) {
 			// If it has been deleted, re-create it.
 			if (AppAPI.useTestServer === true) {
 				console.info("Creating Profile");
-				await AppAPI.post("PROFILE", AppAPI.testProfile);
+				await AppAPI.newPost("", AppAPI.testProfile, AppAPI.getHeaders(), "profile/" );
 				return AppAPI.testProfile
 			} else {
 				throw new Error(error);
@@ -200,8 +200,8 @@ class AppAPI {
 			throw new Error(AppAPI.#formattedError("DELETE", response));
 	};
 
-	static newGet = async (route, headers=AppAPI.getHeaders(), testRoute="") => {
-		const theRoute = AppAPI.useTestServer ? route : testRoute
+	static newGet = async (route, headers, testRoute="") => {
+		const theRoute = AppAPI.useTestServer ? testRoute : route
 		const response = await fetch(AppAPI.newURL(theRoute), { headers: headers });
 		if (!response.ok)
 			throw new Error(AppAPI.#formattedError("GET", response));
@@ -209,8 +209,8 @@ class AppAPI {
 		return data;
 	}
 
-	static newPut = async (route, data, headers=AppAPI.getHeaders(), testRoute="") => {
-		const theRoute = AppAPI.useTestServer ? route : testRoute
+	static newPut = async (route, data, headers, testRoute="") => {
+		const theRoute = AppAPI.useTestServer ? testRoute : route
 		const response = await fetch(AppAPI.newURL(theRoute), {
 			method: "PUT",
 			headers: headers,
@@ -222,9 +222,9 @@ class AppAPI {
 		return responseData;
 	}
 
-	static newPost = async (route, data, headers = AppAPI.getHeaders(), testRoute="") => {
+	static newPost = async (route, data, headers, testRoute="") => {
 		console.info("TBD - During initial login verify headers.  Likely need to remove token at times")
-		const theRoute = AppAPI.useTestServer ? route : testRoute
+		const theRoute = AppAPI.useTestServer ? testRoute : route
 		const response = await fetch(AppAPI.newURL(theRoute), {
 			method: "POST",
 			headers: headers,
@@ -237,8 +237,8 @@ class AppAPI {
 		return jsonResponse;
 	};
 
-	static newDelete = async (route, headers = AppAPI.getHeaders(), testRoute="") => {
-		const theRoute = AppAPI.useTestServer ? route : testRoute
+	static newDelete = async (route, headers, testRoute="") => {
+		const theRoute = AppAPI.useTestServer ? testRoute : route
 		const response = await fetch(AppAPI.newURL(theRoute), {
 			method: "DELETE",
 			headers: headers,

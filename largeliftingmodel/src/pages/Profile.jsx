@@ -33,7 +33,7 @@ function Profile() {
 
 	const putProfile = async (profileData) => {
 		await withLoader(async () => {
-			await AppAPI.put("PROFILE", profileData);
+			await AppAPI.newPut("users/profile/", profileData, AppAPI.getHeaders(), "profile/" + AppAPI.testUserID);
 			setProfile(profileData);
 			setWIPProfile(profileData);
 			setIsEditingLoginInfo(false);
@@ -43,7 +43,7 @@ function Profile() {
 
 	const deleteProfile = async () => {
 		await withLoader(async () => {
-			await AppAPI.delete("PROFILE");
+			await AppAPI.newDelete("users/profile/", AppAPI.getHeaders(), "profile/" + AppAPI.testUserID)
 			setProfile(AppAPI.emptyProfile);
 			setWIPProfile(AppAPI.emptyProfile);
 			setIsEditingLoginInfo(false);
