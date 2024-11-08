@@ -30,7 +30,7 @@ function Workout({
 			<AppNav token={token} setToken={setToken} />
 			<div className={`${styles.container}`}>
 				<span className={styles.leftCol}>
-					{workoutState == 0 ? (
+					{workoutState === 0 ? (
 						<></>
 					) : (
 						<button
@@ -51,7 +51,7 @@ function Workout({
 						: "Finished Workout"}
 				</span>
 				<span className={styles.rightCol}>
-					{workoutState != 2 && workoutExists ? (
+					{workoutState !== 2 && workoutExists ? (
 						<button
 							className={`${buttonStyles.back} ${styles.btnRight}`}
 							onClick={() => handleForward()}>
@@ -62,13 +62,13 @@ function Workout({
 					)}
 				</span>
 			</div>
-			{workoutState == 0 ? (
+			{workoutState === 0 ? (
 				<Create
 					workoutExists={workoutExists}
 					setWorkoutState={setWorkoutState}
 					setWorkoutExists={setWorkoutExists}
 				/>
-			) : workoutState == 1 ? (
+			) : workoutState === 1 ? (
 				<CurrentWorkout
 					workoutState={workoutState}
 					setWorkoutState={setWorkoutState}

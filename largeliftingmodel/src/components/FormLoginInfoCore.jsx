@@ -37,15 +37,9 @@ const FormLoginInfoCore = ({profile, setProfile}) => {
 					data-testid='profileUserLastNameForm' 
 				/>
 			</div>
-			<div className={styles.row}>
-				<label htmlFor="email">Email</label>
-				<input
-					id="email"
-					type="email"
-					onChange={(e) => changeElement('email', e.target.value)}
-					value={profile.email}
-					data-testid='profileUserEmailForm' 
-				/>
+			<div className={styles.container}>
+				<label> Email </label>
+				<h2 className={styles.h2} data-testid='profileUserEmailForm'> {profile.email} </h2>
 			</div>
 		</>
 	);
