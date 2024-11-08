@@ -12,16 +12,11 @@ class AppAPI {
 		return JSON.parse(localStorage.getItem("tokens")).access;
 	}
 
-	static getHeaders(useToken=true, json=true) {
-		const headers = json ? 
-		{"Content-Type": "application/json"}
-		:
-		{}
-		const token = AppAPI.getAccessToken()
-		if(token && useToken) {
-			headers.Authorization = `Bearer ${token}`
+	static getDefaultHeaders() {
+		return {
+		 "Content-Type": "application/json",
+		 "Authorization": `Bearer ${AppAPI.getAccessToken()}`
 		}
-		return headers
 	}
 
 	static getProfileID() {
@@ -105,13 +100,13 @@ class AppAPI {
 
 	static getOrCreateProfileIfTesting = async () => {
 		try {
-			const gotProfile = await AppAPI.newGet("users/profile/", AppAPI.getHeaders(), "profile/" + AppAPI.testUserID);
+			const gotProfile = await AppAPI.get("users/profile/", AppAPI.getDefaultHeaders(), "profile/" + AppAPI.testUserID);
 			return gotProfile;
 		} catch (error) {
 			// If it has been deleted, re-create it.
 			if (AppAPI.useTestServer === true) {
 				console.info("Creating Profile");
-				await AppAPI.newPost("", AppAPI.testProfile, AppAPI.getHeaders(), "profile/" );
+				await AppAPI.post("", AppAPI.testProfile, AppAPI.getDefaultHeaders(), "profile/" );
 				return AppAPI.testProfile
 			} else {
 				throw new Error(error);
@@ -131,7 +126,7 @@ class AppAPI {
 		return errorString;
 	}
 
-	static newGet = async (route, headers, testRoute="") => {
+	static get = async (route, headers, testRoute="") => {
 		const theRoute = AppAPI.useTestServer ? testRoute : route
 		const response = await fetch(AppAPI.newURL(theRoute), { headers: headers });
 		if (!response.ok)
@@ -140,7 +135,7 @@ class AppAPI {
 		return data;
 	}
 
-	static newPut = async (route, data, headers, testRoute="") => {
+	static put = async (route, data, headers, testRoute="") => {
 		const theRoute = AppAPI.useTestServer ? testRoute : route
 		const response = await fetch(AppAPI.newURL(theRoute), {
 			method: "PUT",
@@ -153,8 +148,7 @@ class AppAPI {
 		return responseData;
 	}
 
-	static newPost = async (route, data, headers, testRoute="") => {
-		console.info("TBD - During initial login verify headers.  Likely need to remove token at times")
+	static post = async (route, data, headers, testRoute="") => {
 		const theRoute = AppAPI.useTestServer ? testRoute : route
 		const response = await fetch(AppAPI.newURL(theRoute), {
 			method: "POST",
@@ -168,7 +162,7 @@ class AppAPI {
 		return jsonResponse;
 	};
 
-	static newDelete = async (route, headers, testRoute="") => {
+	static delete = async (route, headers, testRoute="") => {
 		const theRoute = AppAPI.useTestServer ? testRoute : route
 		const response = await fetch(AppAPI.newURL(theRoute), {
 			method: "DELETE",
