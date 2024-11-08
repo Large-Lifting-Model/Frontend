@@ -66,7 +66,7 @@ class AppAPI {
 	};
 
 	static emptyWorkoutForState = {
-		"id":"",
+		"id":0,
    		"user":"",
    		"created":"",
    		"length":0,
@@ -74,6 +74,27 @@ class AppAPI {
    		"workout_type": { value: "", label: "" },
    		"target_area":"",
    		"equipment_access": { value: "", label: "" },
+   		"included_exercises":"",
+   		"excluded_exercises":"",
+   		"other_workout_considerations":"",
+   		"llm_suggested_changes":[
+   		],
+   		"llm_suggested_workout":[
+   		],
+   		"llm_final_workout":null,
+   		"workout_rating":null,
+		"workout_comments":null,
+	}
+
+	static testWorkoutForState = {
+		"id":99999,
+   		"user":"",
+   		"created":"",
+   		"length":20,
+   		"difficulty": { value: "Easy", label: "Easy" },
+   		"workout_type": { value: "Weights", label: "Weights" },
+   		"target_area":"Biceps",
+   		"equipment_access": { value: "Full Gym", label: "Full Gym" },
    		"included_exercises":"",
    		"excluded_exercises":"",
    		"other_workout_considerations":"",

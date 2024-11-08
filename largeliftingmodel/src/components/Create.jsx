@@ -6,43 +6,45 @@ import { useState } from "react";
 import AppAPI from "../components/AppAPI"
 import Loader from "../components/Loader";
 import useLoader from "../hooks/useLoader";
+import { flushSync } from 'react-dom';
+
 
 
 function Create({ setWorkoutState, workoutExists, setWorkoutExists }) {
 	const { error, isLoading, withLoader } = useLoader();
 
-	const [length, setLength] = useLocalStorageState("", "workoutLength");
-	const [difficulty, setDifficuty] = useLocalStorageState(
-		"",
-		"workoutDifficulty"
-	);
-	const [workoutType, setWorkoutType] = useLocalStorageState(
-		"",
-		"workoutType"
-	);
-	const [equipmentAccess, setEquipmentAccess] = useLocalStorageState(
-		"",
-		"workoutEquipmentAccess"
-	);
-	const [targetMuscle, setMuscleTarget] = useLocalStorageState(
-		"",
-		"workoutTargetMuscle"
-	);
-	const [includeExercise, setIncludeExercise] = useLocalStorageState(
-		"",
-		"workoutIncludeExercise"
-	);
-	const [excludeExercise, setExcludeExercise] = useLocalStorageState(
-		"",
-		"workoutExcludeExercise"
-	);
-	const [considerations, setConsiderations] = useLocalStorageState(
-		"",
-		"workoutConsiderations"
-	);
+	// const [length, setLength] = useLocalStorageState("", "workoutLength");
+	// const [difficulty, setDifficuty] = useLocalStorageState(
+	// 	"",
+	// 	"workoutDifficulty"
+	// );
+	// const [workoutType, setWorkoutType] = useLocalStorageState(
+	// 	"",
+	// 	"workoutType"
+	// );
+	// const [equipmentAccess, setEquipmentAccess] = useLocalStorageState(
+	// 	"",
+	// 	"workoutEquipmentAccess"
+	// );
+	// const [targetMuscle, setMuscleTarget] = useLocalStorageState(
+	// 	"",
+	// 	"workoutTargetMuscle"
+	// );
+	// const [includeExercise, setIncludeExercise] = useLocalStorageState(
+	// 	"",
+	// 	"workoutIncludeExercise"
+	// );
+	// const [excludeExercise, setExcludeExercise] = useLocalStorageState(
+	// 	"",
+	// 	"workoutExcludeExercise"
+	// );
+	// const [considerations, setConsiderations] = useLocalStorageState(
+	// 	"",
+	// 	"workoutConsiderations"
+	// );
 
 	const [workout, setWorkout] = useLocalStorageState(
-		JSON.stringify(AppAPI.emptyWorkoutForState),
+		AppAPI.emptyWorkoutForState,
 		"workout"
 	)
 
@@ -73,46 +75,88 @@ function Create({ setWorkoutState, workoutExists, setWorkoutExists }) {
 	];
 
 	function getWorkoutFromState() {
+		console.info("GetWorkoutFromState:" + JSON.stringify(workout))
 		return {
 			"length": workout.length,
 			"difficulty": workout.difficulty.value,
-			"workout_type": workout.workoutType.value,
-			"target_area": workout.targetMuscle,
-			"equipment_access": workout.equipmentAccess.value,
-			"included_exercises": workout.includeExercise,
-			"excluded_exercises": workout.excludeExercise,
-			"other_workout_considerations": workout.considerations,			
+			"workout_type": workout.workout_type.value,
+			"target_area": workout.target_area,
+			"equipment_access": workout.equipment_access.value,
+			"included_exercises": workout.included_exercises,
+			"excluded_exercises": workout.excluded_exercises,
+			"other_workout_considerations": workout.other_workout_considerations,			
 		}
 	}
+
+	// function getWorkoutFromTest() {
+	// 	//console.info("GetWorkoutFromTest:" + JSON.stringify(AppAPI.testWorkoutForState))
+	// 	return {
+	// 		"id":AppAPI.testWorkoutForState.id,
+   	// 		"user":AppAPI.testWorkoutForState.user,
+   	// 		"created":AppAPI.testWorkoutForState.created,
+	// 		"length": AppAPI.testWorkoutForState.length,
+	// 		"difficulty": AppAPI.testWorkoutForState.difficulty.value,
+	// 		"workout_type": AppAPI.testWorkoutForState.workout_type.value,
+	// 		"target_area": AppAPI.testWorkoutForState.target_area,
+	// 		"equipment_access": AppAPI.testWorkoutForState.equipment_access.value,
+	// 		"included_exercises": AppAPI.testWorkoutForState.included_exercises,
+	// 		"excluded_exercises": AppAPI.testWorkoutForState.excluded_exercises,
+	// 		"other_workout_considerations": AppAPI.testWorkoutForState.other_workout_considerations,			
+	// 	}
+	// }
+
+
+	// const handleCreate = async () => {
+	// 	await withLoader(async () => {
+	// 		const workoutToCreate = getWorkoutFromState()
+	// 		console.info("Creating Workout: " + JSON.stringify(workoutToCreate))
+	// 		const createdWorkoutReturn = await AppAPI.createWorkout(workoutToCreate)
+	// 		console.info("returned: " + JSON.stringify(createdWorkoutReturn))
+	// 		console.info("AboutToWrite")
+	// 		const testWrite = AppAPI.testWorkoutForState
+	// 		await setWorkout("THIS IS THE TEST WRITE")
+	// 		console.info("ShouldHaveWrittenCHECK")
+	// 		//setWorkout(JSON.stringify(createdWorkoutReturn))
+	// 		setWorkoutExists(true);
+	// 		setWorkoutState(1);
+	// 	})
+		
+	// };
 
 	const handleCreate = async () => {
 		await withLoader(async () => {
 			const workoutToCreate = getWorkoutFromState()
-			console.info("Creating Workout: " + JSON.stringify(workoutToCreate))
-			const createdWorkoutReturn = await AppAPI.createWorkout(workoutToCreate)
-			console.info("returned: " + JSON.stringify(createdWorkoutReturn))
-			setWorkout(createdWorkoutReturn)
-			setWorkoutExists(true);
-			setWorkoutState(1);
+			const res = await AppAPI.createWorkout(workoutToCreate)
+			flushSync(() => {
+				setWorkout(res)
+				setWorkoutExists(true)
+			});
+			setWorkoutState(1)
+			
 		})
-	};
+	}
 
 	const handleModify = async () => {
 		window.confirm("Are you sure? This will delete the current state of the workout") &&
 			await withLoader(async () => {
-				console.info("Deleting Workout: " + workout.id)
+				console.info("Deleting Workout: " + JSON.stringify(workout))
 				await AppAPI.deleteWorkout(workout.id)
+				setWorkout(AppAPI.emptyWorkoutForState)
 				setWorkoutExists(false);
 			})
 	};
 
+	const handleWorkoutDifficultyChange = (selectedOption) => {
+		setWorkout({ ...workout, difficulty: selectedOption });
+	}
+
 	const handleWorkoutTypeChange = (selectedOption) => {
-		setWorkoutType(selectedOption);
+		setWorkout({ ...workout, workout_type: selectedOption });
 		setShowOtherWorkoutType(selectedOption?.value === "other");
 	}
 
 	const handleEquipmentAccessChange = (selectedOption) => {
-		setEquipmentAccess(selectedOption);
+		setWorkout({ ...workout, equipment_access: selectedOption });
 		setShowOtherEquipment(selectedOption?.value === "other");
 	}
 
@@ -125,8 +169,8 @@ function Create({ setWorkoutState, workoutExists, setWorkoutExists }) {
 						<input
 							id="length"
 							type="text"
-							onChange={(e) => setLength(e.target.value)}
-							value={length}
+							onChange={(e) => setWorkout({ ...workout, length: e.target.value })}
+							value={workout.length}
 							disabled={workoutExists}
 						/>
 					</div>
@@ -136,8 +180,8 @@ function Create({ setWorkoutState, workoutExists, setWorkoutExists }) {
 							className={styles.dropdown}
 							placeholder="Select Difficulty..."
 							options={difficultyOptions}
-							onChange={setDifficuty}
-							value={difficulty}
+							onChange={handleWorkoutDifficultyChange}
+							value={workout.difficulty}
 							isDisabled={workoutExists}
 						/>
 					</div>
@@ -148,7 +192,7 @@ function Create({ setWorkoutState, workoutExists, setWorkoutExists }) {
 							placeholder="Select Workout Type..."
 							options={workoutTypeOptions}
 							onChange={handleWorkoutTypeChange}
-							value={showOtherWorkoutType ? {label: "Other", value: "other"} : workoutType}
+							value={showOtherWorkoutType ? {label: "Other", value: "other"} : workout.workout_type}
 							isDisabled={workoutExists}
 						/>
 					</div>
@@ -160,7 +204,7 @@ function Create({ setWorkoutState, workoutExists, setWorkoutExists }) {
 							<input 
 								id="otherWorkoutType"
 								type="text"
-								onChange={(e) => setWorkoutType({ value: e.target.value, label: e.target.value })}
+								onChange={(e) => setWorkout({ ...workout, workout_type: e.target.value })}
 								disabled={workoutExists}
 							/>
 						</div>
@@ -174,7 +218,7 @@ function Create({ setWorkoutState, workoutExists, setWorkoutExists }) {
 							placeholder="Select Equipment Access..."
 							options={equipementAccessOptions}
 							onChange={handleEquipmentAccessChange}
-							value={showOtherEquipment ? {label: "Other", value: "other"} : equipmentAccess}
+							value={showOtherEquipment ? {label: "Other", value: "other"} : workout.equipment_access}
 							isDisabled={workoutExists}
 						/>
 					</div>
@@ -186,20 +230,20 @@ function Create({ setWorkoutState, workoutExists, setWorkoutExists }) {
 							<input 
 								id="otherEquipment"
 								type="text"
-								onChange={(e) => setEquipmentAccess({ value: e.target.value, label: e.target.value})}
+								onChange={handleEquipmentAccessChange}
 								disabled={workoutExists}
 							/>
 						</div>
 					)}
 					<div className={styles.row}>
-						<label htmlFor="targetMuscle">
+						<label htmlFor="targetArea">
 							Enter muscles you would like to target:{" "}
 						</label>
 						<input
-							id="targetMuscle"
+							id="targetArea"
 							type="text"
-							onChange={(e) => setMuscleTarget(e.target.value)}
-							value={targetMuscle}
+							onChange={(e) => setWorkout({ ...workout, target_area: e.target.value })}
+							value={workout.target_area}
 							disabled={workoutExists}
 						/>
 					</div>
@@ -210,8 +254,8 @@ function Create({ setWorkoutState, workoutExists, setWorkoutExists }) {
 						<input
 							id="includeExercise"
 							type="text"
-							onChange={(e) => setIncludeExercise(e.target.value)}
-							value={includeExercise}
+							onChange={(e) => setWorkout({ ...workout, included_exercises: e.target.value })}
+							value={workout.included_exercises}
 							disabled={workoutExists}
 						/>
 					</div>
@@ -222,8 +266,8 @@ function Create({ setWorkoutState, workoutExists, setWorkoutExists }) {
 						<input
 							id="excludeExercise"
 							type="text"
-							onChange={(e) => setExcludeExercise(e.target.value)}
-							value={excludeExercise}
+							onChange={(e) => setWorkout({ ...workout, excluded_exercises: e.target.value })}
+							value={workout.excluded_exercises}
 							disabled={workoutExists}
 						/>
 					</div>
@@ -234,8 +278,8 @@ function Create({ setWorkoutState, workoutExists, setWorkoutExists }) {
 						<input
 							id="considerations"
 							type="text"
-							onChange={(e) => setConsiderations(e.target.value)}
-							value={considerations}
+							onChange={(e) => setWorkout({ ...workout, other_workout_considerations: e.target.value })}
+							value={workout.other_workout_considerations}
 							disabled={workoutExists}
 						/>
 					</div>
@@ -250,7 +294,7 @@ function Create({ setWorkoutState, workoutExists, setWorkoutExists }) {
 					<>
 						<button
 							className={`${buttonStyles.primary} ${styles.container}`}
-							onClick={() => handleCreate()}>
+							onClick={() => {handleCreate();}}>
 							CREATE WORKOUT
 						</button>
 					</>
