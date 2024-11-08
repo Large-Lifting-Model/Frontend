@@ -33,7 +33,7 @@ function Profile() {
 
 	const putProfile = async (profileData) => {
 		await withLoader(async () => {
-			await AppAPI.put("PROFILE", profileData);
+			await AppAPI.put("users/profile/", profileData, AppAPI.getDefaultHeaders(), "profile/" + AppAPI.testUserID);
 			setProfile(profileData);
 			setWIPProfile(profileData);
 			setIsEditingLoginInfo(false);
@@ -42,13 +42,16 @@ function Profile() {
 	};
 
 	const deleteProfile = async () => {
+		window.confirm("Are you sure you want to delete your profile?") &&
 		await withLoader(async () => {
-			await AppAPI.delete("PROFILE");
+			await AppAPI.delete("users/profile/", AppAPI.getDefaultHeaders(), "profile/" + AppAPI.testUserID)
 			setProfile(AppAPI.emptyProfile);
 			setWIPProfile(AppAPI.emptyProfile);
 			setIsEditingLoginInfo(false);
 			setIsEditingHealthInfo(false);
-			navigate("..");
+			localStorage.clear()
+			navigate("/");
+			window.location.reload()
 		});
 	};
 
