@@ -208,6 +208,20 @@ class AppAPI {
 			throw new Error(AppAPI.#formattedError("DELETE", response));
 	}
 
+	static patch = async (route, data, headers, testRoute="") => {
+		const theRoute = AppAPI.useTestServer ? testRoute : route
+		const response = await fetch(AppAPI.url(theRoute), {
+			method: "PATCH",
+			headers: headers,
+			body: JSON.stringify(data),
+		});
+		if (!response.ok)
+			throw new Error(AppAPI.#formattedError("PATCH", response));
+		const jsonResponse = response.json();
+		console.log(jsonResponse);
+		return jsonResponse;
+	};
+
 	static createWorkout = async (workoutData) => {
 		return await AppAPI.post('workout/', workoutData, AppAPI.getDefaultHeaders(), "")
 	}
@@ -215,6 +229,26 @@ class AppAPI {
 	static deleteWorkout = async(workoutID) => {
 		return await AppAPI.delete('workout/' + workoutID, AppAPI.getDefaultHeaders(), "")
 	}
+
+	static refineWorkout = async (workoutData, refinement) => {
+		const initialRefinements = workoutData.llm_suggested_changes
+		console.info("InitialRefinements" + JSON.stringify(initialRefinements))
+		initialRefinements.push(refinement)
+		const refinedRefinements = { "llm_suggested_changes": initialRefinements }
+		console.info("RefinedRefinements" + JSON.stringify(refinedRefinements))
+		const returnedData = await AppAPI.patch('workout/' + workoutData.id, refinedRefinements, AppAPI.getDefaultHeaders(), "")
+		console.info("RefinementReturnedData" + JSON.stringify(returnedData))
+	}
+
+	static rateWorkout = async (workoutData, workout_rating, workout_comments, actual_length) => {
+		const patchData = { "workout_rating": workout_rating,
+			"workout_comments": workout_comments,
+			"actual_length": actual_length,
+		 }
+		 console.info("WorkoutRating" + JSON.stringify(patchData))
+		 const returnedData = await AppAPI.patch('workout/' + workoutData.id, patchData, AppAPI.getDefaultHeaders(), "")
+		 console.info("RatingReturnedData" + JSON.stringify(returnedData))
+		}
 
 	constructor() {}
 }

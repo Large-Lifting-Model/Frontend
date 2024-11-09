@@ -10,7 +10,7 @@ import { flushSync } from 'react-dom';
 
 
 
-function Create({ setWorkoutState, workoutExists, setWorkoutExists }) {
+function Create({ workoutState, setWorkoutState, workoutExists, setWorkoutExists, workout, setWorkout }) {
 	const { error, isLoading, withLoader } = useLoader();
 
 	// const [length, setLength] = useLocalStorageState("", "workoutLength");
@@ -42,11 +42,6 @@ function Create({ setWorkoutState, workoutExists, setWorkoutExists }) {
 	// 	"",
 	// 	"workoutConsiderations"
 	// );
-
-	const [workout, setWorkout] = useLocalStorageState(
-		AppAPI.emptyWorkoutForState,
-		"workout"
-	)
 
 	const [showOtherWorkoutType, setShowOtherWorkoutType] = useState(false);
 	const [showOtherEquipment, setShowOtherEquipment] = useState(false);
@@ -88,46 +83,11 @@ function Create({ setWorkoutState, workoutExists, setWorkoutExists }) {
 		}
 	}
 
-	// function getWorkoutFromTest() {
-	// 	//console.info("GetWorkoutFromTest:" + JSON.stringify(AppAPI.testWorkoutForState))
-	// 	return {
-	// 		"id":AppAPI.testWorkoutForState.id,
-   	// 		"user":AppAPI.testWorkoutForState.user,
-   	// 		"created":AppAPI.testWorkoutForState.created,
-	// 		"length": AppAPI.testWorkoutForState.length,
-	// 		"difficulty": AppAPI.testWorkoutForState.difficulty.value,
-	// 		"workout_type": AppAPI.testWorkoutForState.workout_type.value,
-	// 		"target_area": AppAPI.testWorkoutForState.target_area,
-	// 		"equipment_access": AppAPI.testWorkoutForState.equipment_access.value,
-	// 		"included_exercises": AppAPI.testWorkoutForState.included_exercises,
-	// 		"excluded_exercises": AppAPI.testWorkoutForState.excluded_exercises,
-	// 		"other_workout_considerations": AppAPI.testWorkoutForState.other_workout_considerations,			
-	// 	}
-	// }
-
-
-	// const handleCreate = async () => {
-	// 	await withLoader(async () => {
-	// 		const workoutToCreate = getWorkoutFromState()
-	// 		console.info("Creating Workout: " + JSON.stringify(workoutToCreate))
-	// 		const createdWorkoutReturn = await AppAPI.createWorkout(workoutToCreate)
-	// 		console.info("returned: " + JSON.stringify(createdWorkoutReturn))
-	// 		console.info("AboutToWrite")
-	// 		const testWrite = AppAPI.testWorkoutForState
-	// 		await setWorkout("THIS IS THE TEST WRITE")
-	// 		console.info("ShouldHaveWrittenCHECK")
-	// 		//setWorkout(JSON.stringify(createdWorkoutReturn))
-	// 		setWorkoutExists(true);
-	// 		setWorkoutState(1);
-	// 	})
-		
-	// };
-
 	const handleCreate = async () => {
 		await withLoader(async () => {
 			const workoutToCreate = getWorkoutFromState()
 			const res = await AppAPI.createWorkout(workoutToCreate)
-			flushSync(() => {
+			flushSync(() => { // To avoid race conditions with setWorkoutState
 				setWorkout(res)
 				setWorkoutExists(true)
 			});
@@ -139,10 +99,13 @@ function Create({ setWorkoutState, workoutExists, setWorkoutExists }) {
 	const handleModify = async () => {
 		window.confirm("Are you sure? This will delete the current state of the workout") &&
 			await withLoader(async () => {
-				console.info("Deleting Workout: " + JSON.stringify(workout))
 				await AppAPI.deleteWorkout(workout.id)
-				setWorkout(AppAPI.emptyWorkoutForState)
-				setWorkoutExists(false);
+				flushSync(() => {
+					setWorkout(AppAPI.emptyWorkoutForState)
+					setWorkoutExists(false);
+				})
+				setWorkoutState(0)
+
 			})
 	};
 
