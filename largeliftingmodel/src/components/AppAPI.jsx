@@ -200,7 +200,7 @@ class AppAPI {
 	};
 
 	static createWorkout = async (workoutData) => {
-		console.info("CreatingWorkout" + JSON.stringify(workoutData))
+		//console.info("CreatingWorkout" + JSON.stringify(workoutData))
 		return await AppAPI.post('workout/', workoutData, AppAPI.getDefaultHeaders(), "")
 	}
 
@@ -226,12 +226,12 @@ class AppAPI {
 		 }
 		 console.info("WorkoutRating" + JSON.stringify(patchData))
 		 const returnedData = await AppAPI.patch('workout/' + workoutData.id + '/', patchData, AppAPI.getDefaultHeaders(), "")
-		 console.info("RatingReturnedData" + JSON.stringify(returnedData))
+		 //console.info("RatingReturnedData" + JSON.stringify(returnedData))
 		 return returnedData
 		}
 
 	static parseSuggestedWorkout(workout) {
-		console.info("TOPARSE" + JSON.stringify(workout))
+		//console.info("TOPARSE" + JSON.stringify(workout))
 		const unparsed = workout.llm_suggested_workout[workout.llm_suggested_workout.length - 1];
 		//console.info("PARSINGSUGGESTEDWORKOUT" + JSON.stringify(unparsed))
 		const parsed = AppAPI.extractJSON(unparsed)

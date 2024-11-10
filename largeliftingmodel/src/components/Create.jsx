@@ -42,7 +42,7 @@ function Create({ setWorkoutState, workoutExists, setWorkoutExists, workout, set
 	];
 
 	function getCreationWorkoutFromState() {
-		console.info("GetWorkoutFromState:" + JSON.stringify(workout))
+		//:" + JSON.stringify(workout))
 		return {
 			"length": workout.length,
 			"difficulty": workout.difficulty,
@@ -59,7 +59,7 @@ function Create({ setWorkoutState, workoutExists, setWorkoutExists, workout, set
 		await withLoader(async () => {
 			const workoutToCreate = getCreationWorkoutFromState()
 			const res = await AppAPI.createWorkout(workoutToCreate)
-			console.info("CreatedWorkout" + JSON.stringify(res))
+			//Workout" + JSON.stringify(res))
 			flushSync(() => { // To avoid race conditions with setWorkoutState
 				setWorkout(res)
 				setWorkoutExists(true)

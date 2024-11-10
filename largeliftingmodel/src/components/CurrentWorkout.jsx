@@ -18,8 +18,7 @@ function CurrentWorkout({ setWorkoutState, workout, setWorkout }) {
 	const [suggestedWorkout, setSuggestedWorkout] = useState(AppAPI.parseSuggestedWorkout(workout))
 
 	useEffect(() => {
-		console.info("CurrentWorkoutUSEEFFECT with suggestedWorkout" + JSON.stringify(suggestedWorkout))
-
+		//console.info("CurrentWorkoutUSEEFFECT with suggestedWorkout" + JSON.stringify(suggestedWorkout))
 		setCompletionStatus((prevStatus) => {
 			return prevStatus.length === suggestedWorkout.length ? prevStatus : 
 						 new Array(suggestedWorkout.length).fill(false);
@@ -46,7 +45,7 @@ function CurrentWorkout({ setWorkoutState, workout, setWorkout }) {
 
 	const reactToUpdatedWorkout = (updatedWorkout) => {
 		const updatedSuggestedWorkout = AppAPI.parseSuggestedWorkout(updatedWorkout)
-		console.info("UPDATE to SUGGESTED WORKOUT: \n " + JSON.stringify(updatedSuggestedWorkout))
+		//console.info("UPDATE to SUGGESTED WORKOUT: \n " + JSON.stringify(updatedSuggestedWorkout))
 		setWorkout(updatedWorkout)
 		setSuggestedWorkout(updatedSuggestedWorkout)
 		setCompletionStatus((prevStatus) => {
