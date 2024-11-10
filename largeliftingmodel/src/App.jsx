@@ -37,6 +37,11 @@ function App() {
 		"workoutExists"
 	);
 
+	const [workout, setWorkout] = useLocalStorageState(
+		AppAPI.emptyWorkout,
+		"workout"
+	)
+
 	const [user, setUser] = useLocalStorageState({}, "user");
 
 	const navigate = useNavigate();
@@ -175,6 +180,8 @@ function App() {
 								setWorkoutState={setWorkoutState}
 								workoutExists={workoutExists}
 								setWorkoutExists={setWorkoutExists}
+								workout={workout}
+								setWorkout={setWorkout}
 							/>
 						</ProtectedRoute>
 					}

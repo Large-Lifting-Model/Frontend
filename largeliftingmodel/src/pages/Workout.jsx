@@ -13,6 +13,8 @@ function Workout({
 	setWorkoutState,
 	workoutExists,
 	setWorkoutExists,
+	workout,
+	setWorkout,
 }) {
 	const handleBack = () => {
 		workoutExists && workoutState > 0
@@ -64,9 +66,12 @@ function Workout({
 			</div>
 			{workoutState === 0 ? (
 				<Create
-					workoutExists={workoutExists}
+					workoutState={workoutState}
 					setWorkoutState={setWorkoutState}
+					workoutExists={workoutExists}
 					setWorkoutExists={setWorkoutExists}
+					workout={workout}
+					setWorkout={setWorkout}
 				/>
 			) : workoutState === 1 ? (
 				<CurrentWorkout
@@ -74,11 +79,17 @@ function Workout({
 					setWorkoutState={setWorkoutState}
 					workoutExists={workoutExists}
 					setWorkoutExists={setWorkoutExists}
+					workout={workout}
+					setWorkout={setWorkout}
 				/>
 			) : (
 				<Feedback
+					workoutState={workoutState}
 					setWorkoutState={setWorkoutState}
+					workoutExists={workoutExists}
 					setWorkoutExists={setWorkoutExists}
+					workout={workout}
+					setWorkout={setWorkout}
 				/>
 			)}
 		</>

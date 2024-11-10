@@ -65,6 +65,27 @@ class AppAPI {
 		other_considerations: "",
 	};
 
+	static emptyWorkout = {
+		"id":0,
+   		"user":"",
+   		"created":"",
+   		"length":0,
+   		"difficulty": "",
+   		"workout_type": "",
+   		"target_area":"",
+   		"equipment_access": "",
+   		"included_exercises":"",
+   		"excluded_exercises":"",
+   		"other_workout_considerations":"",
+   		"llm_suggested_changes":[
+   		],
+   		"llm_suggested_workout":[
+   		],
+   		"llm_final_workout":null,
+   		"workout_rating":null,
+		"workout_comments":null,
+	}
+
 	static vitestUser = {
 		first_name: "vitest_fName",
 		last_name: "vitest_lname",
@@ -83,15 +104,7 @@ class AppAPI {
 		health_data: AppAPI.emptyHealth,
 	};
 
-	static url(pageName, withID = true) {
-		return (
-			AppAPI.server +
-			AppAPI.getRoute(pageName) +
-			(withID ? AppAPI.getProfileID() : "")
-		);
-	}
-
-	static newURL(route) {
+	static url(route) {
 		return (
 			AppAPI.server +
 			route
@@ -128,7 +141,7 @@ class AppAPI {
 
 	static get = async (route, headers, testRoute="") => {
 		const theRoute = AppAPI.useTestServer ? testRoute : route
-		const response = await fetch(AppAPI.newURL(theRoute), { headers: headers });
+		const response = await fetch(AppAPI.url(theRoute), { headers: headers });
 		if (!response.ok)
 			throw new Error(AppAPI.#formattedError("GET", response));
 		const data = await response.json();
@@ -137,7 +150,7 @@ class AppAPI {
 
 	static put = async (route, data, headers, testRoute="") => {
 		const theRoute = AppAPI.useTestServer ? testRoute : route
-		const response = await fetch(AppAPI.newURL(theRoute), {
+		const response = await fetch(AppAPI.url(theRoute), {
 			method: "PUT",
 			headers: headers,
 			body: JSON.stringify(data),
@@ -150,7 +163,7 @@ class AppAPI {
 
 	static post = async (route, data, headers, testRoute="") => {
 		const theRoute = AppAPI.useTestServer ? testRoute : route
-		const response = await fetch(AppAPI.newURL(theRoute), {
+		const response = await fetch(AppAPI.url(theRoute), {
 			method: "POST",
 			headers: headers,
 			body: JSON.stringify(data),
@@ -164,13 +177,76 @@ class AppAPI {
 
 	static delete = async (route, headers, testRoute="") => {
 		const theRoute = AppAPI.useTestServer ? testRoute : route
-		const response = await fetch(AppAPI.newURL(theRoute), {
+		const response = await fetch(AppAPI.url(theRoute), {
 			method: "DELETE",
 			headers: headers,
 		});
 		if (!response.ok)
 			throw new Error(AppAPI.#formattedError("DELETE", response));
 	}
+
+	static patch = async (route, data, headers, testRoute="") => {
+		const theRoute = AppAPI.useTestServer ? testRoute : route
+		const response = await fetch(AppAPI.url(theRoute), {
+			method: "PATCH",
+			headers: headers,
+			body: JSON.stringify(data),
+		});
+		if (!response.ok)
+			throw new Error(AppAPI.#formattedError("PATCH", response));
+		const jsonResponse = response.json();
+		console.log(jsonResponse);
+		return jsonResponse;
+	};
+
+	static createWorkout = async (workoutData) => {
+		//console.info("CreatingWorkout" + JSON.stringify(workoutData))
+		return await AppAPI.post('workout/', workoutData, AppAPI.getDefaultHeaders(), "")
+	}
+
+	static deleteWorkout = async(workoutID) => {
+		return await AppAPI.delete('workout/' + workoutID, AppAPI.getDefaultHeaders(), "")
+	}
+
+	static refineWorkout = async (workoutData, refinement) => {
+		const initialRefinements = workoutData.llm_suggested_changes
+		//console.info("InitialRefinements" + JSON.stringify(initialRefinements))
+		initialRefinements.push(refinement)
+		const refinedRefinements = { "llm_suggested_changes": initialRefinements }
+		console.info("RefinedRefinements" + JSON.stringify(refinedRefinements))
+		const returnedData = await AppAPI.patch('workout/' + workoutData.id + '/', refinedRefinements, AppAPI.getDefaultHeaders(), "")
+		//console.info("RefinementReturnedData" + JSON.stringify(returnedData))
+		return returnedData
+	}
+
+	static rateWorkout = async (workoutData, workout_rating, workout_comments, actual_length) => {
+		const patchData = { "workout_rating": workout_rating,
+			"workout_comments": workout_comments,
+			"actual_length": actual_length,
+		 }
+		 console.info("WorkoutRating" + JSON.stringify(patchData))
+		 const returnedData = await AppAPI.patch('workout/' + workoutData.id + '/', patchData, AppAPI.getDefaultHeaders(), "")
+		 //console.info("RatingReturnedData" + JSON.stringify(returnedData))
+		 return returnedData
+		}
+
+	static parseSuggestedWorkout(workout) {
+		//console.info("TOPARSE" + JSON.stringify(workout))
+		const unparsed = workout.llm_suggested_workout[workout.llm_suggested_workout.length - 1];
+		//console.info("PARSINGSUGGESTEDWORKOUT" + JSON.stringify(unparsed))
+		const parsed = AppAPI.extractJSON(unparsed)
+		//console.info("PARSINGRESULT" + JSON.stringify(parsed))
+		return parsed
+	}
+
+	static extractJSON(text) {
+		const jsonRegex = /{(?:[^{}]|(?:{[^{}]*}))*}/g; // Matches JSON objects in text
+		const matches = text.match(jsonRegex);           // Extracts all JSON objects
+		
+		// Parses each match into a JSON object
+		return matches ? matches.map(json => JSON.parse(json)) : [];
+	  }
+	  
 
 	constructor() {}
 }
