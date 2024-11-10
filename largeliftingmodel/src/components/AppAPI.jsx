@@ -236,8 +236,9 @@ class AppAPI {
 		initialRefinements.push(refinement)
 		const refinedRefinements = { "llm_suggested_changes": initialRefinements }
 		console.info("RefinedRefinements" + JSON.stringify(refinedRefinements))
-		const returnedData = await AppAPI.patch('workout/' + workoutData.id, refinedRefinements, AppAPI.getDefaultHeaders(), "")
+		const returnedData = await AppAPI.patch('workout/' + workoutData.id + '/', refinedRefinements, AppAPI.getDefaultHeaders(), "")
 		console.info("RefinementReturnedData" + JSON.stringify(returnedData))
+		return returnedData
 	}
 
 	static rateWorkout = async (workoutData, workout_rating, workout_comments, actual_length) => {
@@ -246,8 +247,9 @@ class AppAPI {
 			"actual_length": actual_length,
 		 }
 		 console.info("WorkoutRating" + JSON.stringify(patchData))
-		 const returnedData = await AppAPI.patch('workout/' + workoutData.id, patchData, AppAPI.getDefaultHeaders(), "")
+		 const returnedData = await AppAPI.patch('workout/' + workoutData.id + '/', patchData, AppAPI.getDefaultHeaders(), "")
 		 console.info("RatingReturnedData" + JSON.stringify(returnedData))
+		 return returnedData
 		}
 
 	constructor() {}
