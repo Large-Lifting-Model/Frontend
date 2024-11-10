@@ -232,9 +232,9 @@ class AppAPI {
 
 	static parseSuggestedWorkout(workout) {
 		const unparsed = workout.llm_suggested_workout[0]
-		console.info("PARSINGSUGGESTEDWORKOUT" + JSON.stringify(unparsed))
+		//console.info("PARSINGSUGGESTEDWORKOUT" + JSON.stringify(unparsed))
 		const parsed = AppAPI.extractJSON(unparsed)
-		console.info("PARSINGRESULT" + JSON.stringify(parsed))
+		//console.info("PARSINGRESULT" + JSON.stringify(parsed))
 		return parsed
 	}
 
