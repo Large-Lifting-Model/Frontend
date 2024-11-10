@@ -65,15 +65,15 @@ class AppAPI {
 		other_considerations: "",
 	};
 
-	static emptyWorkoutForState = {
+	static emptyWorkout = {
 		"id":0,
    		"user":"",
    		"created":"",
    		"length":0,
-   		"difficulty": { value: "", label: "" },
-   		"workout_type": { value: "", label: "" },
+   		"difficulty": "",
+   		"workout_type": "",
    		"target_area":"",
-   		"equipment_access": { value: "", label: "" },
+   		"equipment_access": "",
    		"included_exercises":"",
    		"excluded_exercises":"",
    		"other_workout_considerations":"",
@@ -85,29 +85,6 @@ class AppAPI {
    		"workout_rating":null,
 		"workout_comments":null,
 	}
-
-	static testWorkoutForState = {
-		"id":99999,
-   		"user":"",
-   		"created":"",
-   		"length":20,
-   		"difficulty": { value: "Easy", label: "Easy" },
-   		"workout_type": { value: "Weights", label: "Weights" },
-   		"target_area":"Biceps",
-   		"equipment_access": { value: "Full Gym", label: "Full Gym" },
-   		"included_exercises":"",
-   		"excluded_exercises":"",
-   		"other_workout_considerations":"",
-   		"llm_suggested_changes":[
-   		],
-   		"llm_suggested_workout":[
-   		],
-   		"llm_final_workout":null,
-   		"workout_rating":null,
-		"workout_comments":null,
-	}
-
-	
 
 	static vitestUser = {
 		first_name: "vitest_fName",
@@ -223,6 +200,7 @@ class AppAPI {
 	};
 
 	static createWorkout = async (workoutData) => {
+		console.info("CreatingWorkout" + JSON.stringify(workoutData))
 		return await AppAPI.post('workout/', workoutData, AppAPI.getDefaultHeaders(), "")
 	}
 

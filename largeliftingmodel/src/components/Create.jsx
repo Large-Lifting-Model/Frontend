@@ -2,7 +2,7 @@ import styles from "./Create.module.css";
 import buttonStyles from "../components/Button.module.css";
 import Select from "react-select";
 import { useLocalStorageState } from "../hooks/useLocalStorageState";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import AppAPI from "../components/AppAPI"
 import Loader from "../components/Loader";
 import useLoader from "../hooks/useLoader";
@@ -13,38 +13,11 @@ import { flushSync } from 'react-dom';
 function Create({ workoutState, setWorkoutState, workoutExists, setWorkoutExists, workout, setWorkout }) {
 	const { error, isLoading, withLoader } = useLoader();
 
-	// const [length, setLength] = useLocalStorageState("", "workoutLength");
-	// const [difficulty, setDifficuty] = useLocalStorageState(
-	// 	"",
-	// 	"workoutDifficulty"
-	// );
-	// const [workoutType, setWorkoutType] = useLocalStorageState(
-	// 	"",
-	// 	"workoutType"
-	// );
-	// const [equipmentAccess, setEquipmentAccess] = useLocalStorageState(
-	// 	"",
-	// 	"workoutEquipmentAccess"
-	// );
-	// const [targetMuscle, setMuscleTarget] = useLocalStorageState(
-	// 	"",
-	// 	"workoutTargetMuscle"
-	// );
-	// const [includeExercise, setIncludeExercise] = useLocalStorageState(
-	// 	"",
-	// 	"workoutIncludeExercise"
-	// );
-	// const [excludeExercise, setExcludeExercise] = useLocalStorageState(
-	// 	"",
-	// 	"workoutExcludeExercise"
-	// );
-	// const [considerations, setConsiderations] = useLocalStorageState(
-	// 	"",
-	// 	"workoutConsiderations"
-	// );
-
 	const [showOtherWorkoutType, setShowOtherWorkoutType] = useState(false);
 	const [showOtherEquipment, setShowOtherEquipment] = useState(false);
+	const [workoutDifficulty, setWorkoutDifficulty] = useState({value: workout.difficulty, label: workout.difficulty})
+	const [workoutType, setWorkoutType] = useState({value: workout.workout_type, label: workout.workout_type})
+	const [workoutEquipmentAccess, setWorkoutEquipmentAccess] = useState({value: workout.equipment_access, label: workout.equipment_access})
 
 	const difficultyOptions = [
 		{ value: "Easy", label: "Easy" },
@@ -69,14 +42,20 @@ function Create({ workoutState, setWorkoutState, workoutExists, setWorkoutExists
 		{ value: "other", label: "Other" },
 	];
 
-	function getWorkoutFromState() {
+	// useEffect(() => {
+	// 	setWorkoutDifficulty({value: workout.difficulty, label: workout.difficulty})
+	// 	setWorkoutType({value: workout.workout_type, label: workout.workout_type})
+	// 	setWorkoutEquipmentAccess({value: workout.equipment_access, label: workout.equipment_access})
+	// }, []);
+
+	function getCreationWorkoutFromState() {
 		console.info("GetWorkoutFromState:" + JSON.stringify(workout))
 		return {
 			"length": workout.length,
-			"difficulty": workout.difficulty.value,
-			"workout_type": workout.workout_type.value,
+			"difficulty": workout.difficulty,
+			"workout_type": workout.workout_type,
 			"target_area": workout.target_area,
-			"equipment_access": workout.equipment_access.value,
+			"equipment_access": workout.equipment_access,
 			"included_exercises": workout.included_exercises,
 			"excluded_exercises": workout.excluded_exercises,
 			"other_workout_considerations": workout.other_workout_considerations,			
@@ -85,7 +64,7 @@ function Create({ workoutState, setWorkoutState, workoutExists, setWorkoutExists
 
 	const handleCreate = async () => {
 		await withLoader(async () => {
-			const workoutToCreate = getWorkoutFromState()
+			const workoutToCreate = getCreationWorkoutFromState()
 			const res = await AppAPI.createWorkout(workoutToCreate)
 			flushSync(() => { // To avoid race conditions with setWorkoutState
 				setWorkout(res)
@@ -101,7 +80,6 @@ function Create({ workoutState, setWorkoutState, workoutExists, setWorkoutExists
 			await withLoader(async () => {
 				await AppAPI.deleteWorkout(workout.id)
 				flushSync(() => {
-					setWorkout(AppAPI.emptyWorkoutForState)
 					setWorkoutExists(false);
 				})
 				setWorkoutState(0)
@@ -110,16 +88,19 @@ function Create({ workoutState, setWorkoutState, workoutExists, setWorkoutExists
 	};
 
 	const handleWorkoutDifficultyChange = (selectedOption) => {
-		setWorkout({ ...workout, difficulty: selectedOption });
+		setWorkoutDifficulty(selectedOption)
+		setWorkout({ ...workout, difficulty: selectedOption.value });
 	}
 
 	const handleWorkoutTypeChange = (selectedOption) => {
-		setWorkout({ ...workout, workout_type: selectedOption });
+		setWorkoutType(selectedOption)
+		setWorkout({ ...workout, workout_type: selectedOption.value });
 		setShowOtherWorkoutType(selectedOption?.value === "other");
 	}
 
 	const handleEquipmentAccessChange = (selectedOption) => {
-		setWorkout({ ...workout, equipment_access: selectedOption });
+		setWorkoutEquipmentAccess(selectedOption)
+		setWorkout({ ...workout, equipment_access: selectedOption.value });
 		setShowOtherEquipment(selectedOption?.value === "other");
 	}
 
@@ -144,7 +125,7 @@ function Create({ workoutState, setWorkoutState, workoutExists, setWorkoutExists
 							placeholder="Select Difficulty..."
 							options={difficultyOptions}
 							onChange={handleWorkoutDifficultyChange}
-							value={workout.difficulty}
+							value={workoutDifficulty}
 							isDisabled={workoutExists}
 						/>
 					</div>
@@ -155,7 +136,7 @@ function Create({ workoutState, setWorkoutState, workoutExists, setWorkoutExists
 							placeholder="Select Workout Type..."
 							options={workoutTypeOptions}
 							onChange={handleWorkoutTypeChange}
-							value={showOtherWorkoutType ? {label: "Other", value: "other"} : workout.workout_type}
+							value={showOtherWorkoutType ? {label: "Other", value: "other"} : workoutType}
 							isDisabled={workoutExists}
 						/>
 					</div>
@@ -181,7 +162,7 @@ function Create({ workoutState, setWorkoutState, workoutExists, setWorkoutExists
 							placeholder="Select Equipment Access..."
 							options={equipementAccessOptions}
 							onChange={handleEquipmentAccessChange}
-							value={showOtherEquipment ? {label: "Other", value: "other"} : workout.equipment_access}
+							value={showOtherEquipment ? {label: "Other", value: "other"} : workoutEquipmentAccess}
 							isDisabled={workoutExists}
 						/>
 					</div>

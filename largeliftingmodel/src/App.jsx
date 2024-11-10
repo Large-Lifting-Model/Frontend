@@ -38,7 +38,7 @@ function App() {
 	);
 
 	const [workout, setWorkout] = useLocalStorageState(
-		AppAPI.emptyWorkoutForState,
+		AppAPI.emptyWorkout,
 		"workout"
 	)
 

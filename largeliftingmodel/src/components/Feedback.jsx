@@ -23,7 +23,7 @@ function Feedback({ workoutState, setWorkoutState, workoutExists, setWorkoutExis
 			const rateReturn = await AppAPI.rateWorkout(workout, rating, feedback, howlong)
 			console.info("RateReturn" + JSON.stringify(rateReturn))
 			flushSync(() => { // To avoid race conditions with setWorkoutState
-				setWorkout(AppAPI.emptyWorkoutForState)
+				setWorkout(AppAPI.emptyWorkout)
 				setWorkoutExists(false);
 				setFeedback(""); // Clear the input after submission
 				setHowlong("");
