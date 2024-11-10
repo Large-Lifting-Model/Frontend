@@ -16,6 +16,11 @@ import { useLocalStorageState } from "./hooks/useLocalStorageState";
 import HistoryDay from "./pages/HistoryDay";
 import ProtectedRoute from "./components/ProtectedRoute";
 import AppAPI from "./components/AppAPI";
+import { useCallback, useEffect } from "react";
+// import { useEffect } from "react";
+// import { test } from "vitest";
+
+const TIMER_BUFFER = 300;
 
 function App() {
 	// Global State Vars
@@ -37,27 +42,91 @@ function App() {
 	const navigate = useNavigate();
 	const location = useLocation();
 
+	// callback function for useEffect directly below; refreshes tokens
+	const refreshTokens = useCallback(async () => {
+		if (AppAPI.useTestServer) {
+			return;
+		}
+		try {
+			const res = await AppAPI.post(
+				"users/auth/token/refresh/",
+				{
+					refresh: tokens.refresh,
+				},
+				{
+					"Content-Type": "application/json",
+				},
+				""
+			);
+			if (res) {
+				console.log(res);
+				const tokenObj = {
+					...tokens,
+					access: res.access,
+					refresh: res.refresh,
+					tokenReceivedTimeInSec: Math.floor(Date.now() / 1000),
+				};
+				// setTimeout(res.expires);
+				setTokens(tokenObj);
+			}
+		} catch (error) {
+			console.error("Error during login");
+		}
+		console.log("refreshTokens() was called.");
+	}, [tokens, setTokens]);
+
+	// Determine when to refresh tokens
+	useEffect(() => {
+		const timer = setInterval(() => {
+			if (Object.keys(tokens).length > 0) {
+				const expiration_time = Math.floor(
+					tokens.expires -
+						TIMER_BUFFER -
+						Date.now() / 1000 +
+						tokens.tokenReceivedTimeInSec
+				);
+				if (expiration_time <= 0) {
+					refreshTokens();
+				}
+			}
+		}, 1000);
+
+		return () => {
+			clearInterval(timer);
+		};
+	}, [tokens, refreshTokens]);
+
 	const handleLogin = async (token) => {
-		if(AppAPI.useTestServer) {return}
+		if (AppAPI.useTestServer) {
+			return;
+		}
 		let tokenObj = {};
 		try {
-
-			const res = await AppAPI.post("users/auth/google/", {
-				access_token: token,
-			}, {
-				"Content-Type": "application/json",
-			}, "")
+			const res = await AppAPI.post(
+				"users/auth/google/",
+				{
+					access_token: token,
+				},
+				{
+					"Content-Type": "application/json",
+				},
+				""
+			);
 			if (res) {
+				console.log(res);
 				tokenObj = {
 					google: token,
 					access: res.access,
 					refresh: res.refresh,
+					expires: res.expires,
+					tokenReceivedTimeInSec: Math.floor(Date.now() / 1000),
 				};
+				// setTimeout(res.expires);
 				setTokens(tokenObj);
 			}
 			const userProfile = await AppAPI.get("users/profile/", {
 				"Content-Type": "application/json",
-				"Authorization": `Bearer ${res.access}`
+				Authorization: `Bearer ${res.access}`,
 			});
 			setUser(userProfile);
 			const redirectTo = location.state?.from?.pathname || "/home";
