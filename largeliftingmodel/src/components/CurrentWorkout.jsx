@@ -1,7 +1,6 @@
 import styles from "./CurrentWorkout.module.css";
 import buttonStyles from "../components/Button.module.css";
 import { useEffect, useState } from "react";
-import testWorkout from "../testWorkout.json"; // delete once we call API
 import { useLocalStorageState } from "../hooks/useLocalStorageState";
 import AppAPI from "../components/AppAPI"
 import Loader from "../components/Loader";
@@ -11,8 +10,6 @@ function CurrentWorkout({ workoutState, setWorkoutState, workoutExists, setWorko
 	const { error, isLoading, withLoader } = useLoader();
 
 	const [completionStatus, setCompletionStatus] = useLocalStorageState(
-		// new Array(testWorkout.workout.length).fill(false),
-		// "completionStatus"
 		new Array(AppAPI.parseSuggestedWorkout(workout).length).fill(false),
 		"completionStatus"
 	);
@@ -43,10 +40,21 @@ function CurrentWorkout({ workoutState, setWorkoutState, workoutExists, setWorko
 		event.preventDefault();
 		await withLoader(async () => {
 			const refinedWorkout = await AppAPI.refineWorkout(workout, refinement)
-			setWorkout(refinedWorkout)
-			setRefinement(""); // Clear the input after submission
+			reactToUpdatedWorkout(refinedWorkout)
 		})
 	};
+
+	const reactToUpdatedWorkout = (updatedWorkout) => {
+		console.info("REACTTOUPDATEDWORKOUT" + JSON.stringify(updatedWorkout))
+		const updatedSuggestedWorkout = AppAPI.parseSuggestedWorkout(updatedWorkout)
+		setWorkout(updatedWorkout)
+		setSuggestedWorkout(updatedSuggestedWorkout)
+		setCompletionStatus((prevStatus) => {
+			return prevStatus.length === updatedSuggestedWorkout.length ? prevStatus : 
+						 new Array(updatedSuggestedWorkout.length).fill(false);
+		})
+		setRefinement("");
+	}
 
 	return (
 		<Loader error={error} isLoading={isLoading}>
