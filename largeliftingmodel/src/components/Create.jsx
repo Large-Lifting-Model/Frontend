@@ -1,8 +1,7 @@
 import styles from "./Create.module.css";
 import buttonStyles from "../components/Button.module.css";
 import Select from "react-select";
-import { useLocalStorageState } from "../hooks/useLocalStorageState";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import AppAPI from "../components/AppAPI"
 import Loader from "../components/Loader";
 import useLoader from "../hooks/useLoader";
@@ -10,7 +9,7 @@ import { flushSync } from 'react-dom';
 
 
 
-function Create({ workoutState, setWorkoutState, workoutExists, setWorkoutExists, workout, setWorkout }) {
+function Create({ setWorkoutState, workoutExists, setWorkoutExists, workout, setWorkout }) {
 	const { error, isLoading, withLoader } = useLoader();
 
 	const [showOtherWorkoutType, setShowOtherWorkoutType] = useState(false);

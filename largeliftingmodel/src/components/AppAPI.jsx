@@ -210,12 +210,12 @@ class AppAPI {
 
 	static refineWorkout = async (workoutData, refinement) => {
 		const initialRefinements = workoutData.llm_suggested_changes
-		console.info("InitialRefinements" + JSON.stringify(initialRefinements))
+		//console.info("InitialRefinements" + JSON.stringify(initialRefinements))
 		initialRefinements.push(refinement)
 		const refinedRefinements = { "llm_suggested_changes": initialRefinements }
 		console.info("RefinedRefinements" + JSON.stringify(refinedRefinements))
 		const returnedData = await AppAPI.patch('workout/' + workoutData.id + '/', refinedRefinements, AppAPI.getDefaultHeaders(), "")
-		console.info("RefinementReturnedData" + JSON.stringify(returnedData))
+		//console.info("RefinementReturnedData" + JSON.stringify(returnedData))
 		return returnedData
 	}
 
@@ -231,7 +231,8 @@ class AppAPI {
 		}
 
 	static parseSuggestedWorkout(workout) {
-		const unparsed = workout.llm_suggested_workout[0]
+		console.info("TOPARSE" + JSON.stringify(workout))
+		const unparsed = workout.llm_suggested_workout[workout.llm_suggested_workout.length - 1];
 		//console.info("PARSINGSUGGESTEDWORKOUT" + JSON.stringify(unparsed))
 		const parsed = AppAPI.extractJSON(unparsed)
 		//console.info("PARSINGRESULT" + JSON.stringify(parsed))

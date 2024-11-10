@@ -6,7 +6,7 @@ import AppAPI from "../components/AppAPI"
 import Loader from "../components/Loader";
 import useLoader from "../hooks/useLoader";
 
-function CurrentWorkout({ workoutState, setWorkoutState, workoutExists, setWorkoutExists, workout, setWorkout }) {
+function CurrentWorkout({ setWorkoutState, workout, setWorkout }) {
 	const { error, isLoading, withLoader } = useLoader();
 
 	const [completionStatus, setCompletionStatus] = useLocalStorageState(
@@ -45,8 +45,8 @@ function CurrentWorkout({ workoutState, setWorkoutState, workoutExists, setWorko
 	};
 
 	const reactToUpdatedWorkout = (updatedWorkout) => {
-		console.info("REACTTOUPDATEDWORKOUT" + JSON.stringify(updatedWorkout))
 		const updatedSuggestedWorkout = AppAPI.parseSuggestedWorkout(updatedWorkout)
+		console.info("UPDATE to SUGGESTED WORKOUT: \n " + JSON.stringify(updatedSuggestedWorkout))
 		setWorkout(updatedWorkout)
 		setSuggestedWorkout(updatedSuggestedWorkout)
 		setCompletionStatus((prevStatus) => {
