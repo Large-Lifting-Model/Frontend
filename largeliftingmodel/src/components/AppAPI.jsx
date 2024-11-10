@@ -230,6 +230,23 @@ class AppAPI {
 		 return returnedData
 		}
 
+	static parseSuggestedWorkout(workout) {
+		const unparsed = workout.llm_suggested_workout[0]
+		console.info("PARSINGSUGGESTEDWORKOUT" + JSON.stringify(unparsed))
+		const parsed = AppAPI.extractJSON(unparsed)
+		console.info("PARSINGRESULT" + JSON.stringify(parsed))
+		return parsed
+	}
+
+	static extractJSON(text) {
+		const jsonRegex = /{(?:[^{}]|(?:{[^{}]*}))*}/g; // Matches JSON objects in text
+		const matches = text.match(jsonRegex);           // Extracts all JSON objects
+		
+		// Parses each match into a JSON object
+		return matches ? matches.map(json => JSON.parse(json)) : [];
+	  }
+	  
+
 	constructor() {}
 }
 export default AppAPI;

@@ -42,12 +42,6 @@ function Create({ workoutState, setWorkoutState, workoutExists, setWorkoutExists
 		{ value: "other", label: "Other" },
 	];
 
-	// useEffect(() => {
-	// 	setWorkoutDifficulty({value: workout.difficulty, label: workout.difficulty})
-	// 	setWorkoutType({value: workout.workout_type, label: workout.workout_type})
-	// 	setWorkoutEquipmentAccess({value: workout.equipment_access, label: workout.equipment_access})
-	// }, []);
-
 	function getCreationWorkoutFromState() {
 		console.info("GetWorkoutFromState:" + JSON.stringify(workout))
 		return {
@@ -66,6 +60,7 @@ function Create({ workoutState, setWorkoutState, workoutExists, setWorkoutExists
 		await withLoader(async () => {
 			const workoutToCreate = getCreationWorkoutFromState()
 			const res = await AppAPI.createWorkout(workoutToCreate)
+			console.info("CreatedWorkout" + JSON.stringify(res))
 			flushSync(() => { // To avoid race conditions with setWorkoutState
 				setWorkout(res)
 				setWorkoutExists(true)

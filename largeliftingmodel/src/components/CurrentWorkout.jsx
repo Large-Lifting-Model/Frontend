@@ -10,18 +10,22 @@ import useLoader from "../hooks/useLoader";
 function CurrentWorkout({ workoutState, setWorkoutState, workoutExists, setWorkoutExists, workout, setWorkout }) {
 	const { error, isLoading, withLoader } = useLoader();
 
-	const [temp, setTemp] = useState([]);
 	const [completionStatus, setCompletionStatus] = useLocalStorageState(
-		new Array(testWorkout.workout.length).fill(false),
+		// new Array(testWorkout.workout.length).fill(false),
+		// "completionStatus"
+		new Array(AppAPI.parseSuggestedWorkout(workout).length).fill(false),
 		"completionStatus"
 	);
 	const [refinement, setRefinement] = useState("");
 
+	const [suggestedWorkout, setSuggestedWorkout] = useState(AppAPI.parseSuggestedWorkout(workout))
+
 	useEffect(() => {
-		setTemp(testWorkout.workout); // replace with API data
+		console.info("CurrentWorkoutUSEEFFECT with suggestedWorkout" + JSON.stringify(suggestedWorkout))
+
 		setCompletionStatus((prevStatus) => {
-			return prevStatus.length === testWorkout.workout.length ? prevStatus : 
-						 new Array(testWorkout.workout.length).fill(false);
+			return prevStatus.length === suggestedWorkout.length ? prevStatus : 
+						 new Array(suggestedWorkout.length).fill(false);
 		})
 	}, [setCompletionStatus]);
 
@@ -50,8 +54,8 @@ function CurrentWorkout({ workoutState, setWorkoutState, workoutExists, setWorko
 				<section className={styles.workoutContainer}>
 					<div className={styles.exerciseList}>
 					<h2 className={styles.title}>Exercises</h2>
-						{temp && workout.length > 0 ? (
-							temp.map((item, index) => (
+						{suggestedWorkout && suggestedWorkout.length > 0 ? (
+							suggestedWorkout.map((item, index) => (
 								<div key={index} className={`${styles.exerciseCard} ${completionStatus[index] ? styles.completedExercise : ""}`}>
 									<div className={styles.exerciseHeader}>
 										<span className={styles.exerciseNumber}>{item.exercise.name}</span>
@@ -66,7 +70,7 @@ function CurrentWorkout({ workoutState, setWorkoutState, workoutExists, setWorko
 					</div>
 					<div className={styles.completedColumn}>
 						<h3 className={styles.title}>Completed?</h3>
-						{temp.map((_, index) => (
+						{suggestedWorkout.map((_, index) => (
 							<div key={index} className={`${styles.checkboxContainer} ${completionStatus[index] ? styles.completedCheckbox : ""}`}>
 								<input
 									type="checkbox"
