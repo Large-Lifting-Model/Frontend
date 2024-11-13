@@ -1,6 +1,7 @@
 import AppNav from "../components/AppNav";
 import styles from "./Profile.module.css";
 import { useState, useEffect } from "react";
+// import { useState } from "react";
 import LoginInfoViewer from "../components/LoginInfoViewer";
 import HealthInfoViewer from "../components/HealthInfoViewer";
 import FormLoginInfoCore from "../components/FormLoginInfoCore";
@@ -33,7 +34,12 @@ function Profile() {
 
 	const putProfile = async (profileData) => {
 		await withLoader(async () => {
-			await AppAPI.put("users/profile/", profileData, AppAPI.getDefaultHeaders(), "profile/" + AppAPI.testUserID);
+			await AppAPI.put(
+				"users/profile/",
+				profileData,
+				AppAPI.getDefaultHeaders(),
+				"profile/" + AppAPI.testUserID
+			);
 			setProfile(profileData);
 			setWIPProfile(profileData);
 			setIsEditingLoginInfo(false);
@@ -43,16 +49,20 @@ function Profile() {
 
 	const deleteProfile = async () => {
 		window.confirm("Are you sure you want to delete your profile?") &&
-		await withLoader(async () => {
-			await AppAPI.delete("users/profile/", AppAPI.getDefaultHeaders(), "profile/" + AppAPI.testUserID)
-			setProfile(AppAPI.emptyProfile);
-			setWIPProfile(AppAPI.emptyProfile);
-			setIsEditingLoginInfo(false);
-			setIsEditingHealthInfo(false);
-			localStorage.clear()
-			navigate("/");
-			window.location.reload()
-		});
+			(await withLoader(async () => {
+				await AppAPI.delete(
+					"users/profile/",
+					AppAPI.getDefaultHeaders(),
+					"profile/" + AppAPI.testUserID
+				);
+				setProfile(AppAPI.emptyProfile);
+				setWIPProfile(AppAPI.emptyProfile);
+				setIsEditingLoginInfo(false);
+				setIsEditingHealthInfo(false);
+				localStorage.clear();
+				navigate("/");
+				window.location.reload();
+			}));
 	};
 
 	//only run once on component mount -> empty array OK.
@@ -66,11 +76,12 @@ function Profile() {
 	};
 
 	const handleUserSubmit = (user) => {
-		const submittedProfile = { ...profile,
+		const submittedProfile = {
+			...profile,
 			first_name: user.first_name,
 			last_name: user.last_name,
-			email: user.email
-		 }
+			email: user.email,
+		};
 		setWIPProfile(submittedProfile);
 	};
 

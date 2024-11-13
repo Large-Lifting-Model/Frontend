@@ -12,6 +12,7 @@ import Profile from "./pages/Profile";
 import Workout from "./pages/Workout";
 import History from "./pages/History";
 import PageNotFound from "./pages/PageNotFound";
+import Register from "./pages/Register";
 import { useLocalStorageState } from "./hooks/useLocalStorageState";
 import HistoryDay from "./pages/HistoryDay";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -40,7 +41,7 @@ function App() {
 	const [workout, setWorkout] = useLocalStorageState(
 		AppAPI.emptyWorkout,
 		"workout"
-	)
+	);
 
 	const [user, setUser] = useLocalStorageState({}, "user");
 
@@ -134,7 +135,9 @@ function App() {
 				Authorization: `Bearer ${res.access}`,
 			});
 			setUser(userProfile);
-			const redirectTo = location.state?.from?.pathname || "/home";
+			const redirectTo = userProfile.is_new
+				? "/register"
+				: location.state?.from?.pathname || "/home";
 			console.log(tokenObj);
 			console.log(userProfile);
 			navigate(redirectTo, { replace: true });
@@ -207,6 +210,14 @@ function App() {
 					element={
 						<ProtectedRoute token={tokens.google}>
 							<Profile user={user} setUser={setUser} />
+						</ProtectedRoute>
+					}
+				/>
+				<Route
+					path="register"
+					element={
+						<ProtectedRoute token={tokens.google}>
+							<Register user={user} setUser={setUser} />
 						</ProtectedRoute>
 					}
 				/>

@@ -1,38 +1,30 @@
 import styles from "./Form.module.css";
-import { useEffect, useState } from "react";
 import Select from "react-select";
 
-const FormHealthInfoCore = ({health_data, setHealthData}) => {
-
-	useEffect(() => {
-		console.info(JSON.stringify(health_data))
-    }, []);
-
+const FormHealthInfoCore = ({ health_data, setHealthData }) => {
 	const changeElement = (name, value) => {
-		console.info("Name:" + name + " Value: " + JSON.stringify(value))
-		const changed = {...health_data,
-			[name]: value,
-		}
-		console.info(JSON.stringify(changed))
+		console.info("Name:" + name + " Value: " + JSON.stringify(value));
+		const changed = { ...health_data, [name]: value };
+		console.info(JSON.stringify(changed));
 		setHealthData(changed);
 	};
 
 	const setGender = (value) => {
-		changeElement("gender", value.value)
-	}
+		changeElement("gender", value.value);
+	};
 	const setFavouriteWorkoutType = (value) => {
-		changeElement("favourite_workout_type", value.value)
-	}
+		changeElement("favourite_workout_type", value.value);
+	};
 
 	const setWorkoutExperience = (value) => {
-		changeElement("workout_experience", value.value)
-	}
+		changeElement("workout_experience", value.value);
+	};
 
 	const genderOptions = [
 		{ value: "Male", label: "Male" },
 		{ value: "Female", label: "Female" },
 		{ value: "Other", label: "Other" },
-	]
+	];
 
 	const favouriteWorkoutTypeOptions = [
 		{ value: "Weights", label: "Weights" },
@@ -55,7 +47,7 @@ const FormHealthInfoCore = ({health_data, setHealthData}) => {
 				<input
 					type="date"
 					id="dob"
-					onChange={(e) => changeElement('dob', e.target.value)}
+					onChange={(e) => changeElement("dob", e.target.value)}
 					value={health_data.dob}
 				/>
 			</div>
@@ -63,10 +55,10 @@ const FormHealthInfoCore = ({health_data, setHealthData}) => {
 				<label htmlFor="gender">Gender</label>
 				<Select
 					className={styles.dropdown}
-					placeholder= {!health_data.gender ? 'Select Gender...' : null}
+					placeholder={!health_data.gender ? "Select Gender..." : null}
 					options={genderOptions}
 					onChange={setGender}
-					value={{value: health_data.gender, label: health_data.gender}}
+					value={{ value: health_data.gender, label: health_data.gender }}
 				/>
 			</div>
 			<div className={styles.row}>
@@ -74,7 +66,7 @@ const FormHealthInfoCore = ({health_data, setHealthData}) => {
 				<input
 					id="height"
 					type="number"
-					onChange={(e) => changeElement('height', e.target.value)}
+					onChange={(e) => changeElement("height", e.target.value)}
 					value={health_data.height}
 				/>
 			</div>
@@ -83,28 +75,44 @@ const FormHealthInfoCore = ({health_data, setHealthData}) => {
 				<input
 					id="weight"
 					type="number"
-					onChange={(e) => changeElement('weight', e.target.value)}
+					onChange={(e) => changeElement("weight", e.target.value)}
 					value={health_data.weight}
 				/>
 			</div>
 			<div className={styles.row}>
-				<label htmlFor="favourite_workout_type">Favourite Workout Type</label>
+				<label htmlFor="favourite_workout_type">
+					Favourite Workout Type
+				</label>
 				<Select
 					className={styles.dropdown}
-					placeholder= {!health_data.favourite_workout_type ? 'Select Favourite Workout Type...' : null}
+					placeholder={
+						!health_data.favourite_workout_type
+							? "Select Favourite Workout Type..."
+							: null
+					}
 					options={favouriteWorkoutTypeOptions}
 					onChange={setFavouriteWorkoutType}
-					value={{value: health_data.favourite_workout_type, label: health_data.favourite_workout_type}}
+					value={{
+						value: health_data.favourite_workout_type,
+						label: health_data.favourite_workout_type,
+					}}
 				/>
 			</div>
 			<div className={styles.row}>
 				<label htmlFor="workout_experience">Workout Experience</label>
 				<Select
 					className={styles.dropdown}
-					placeholder= {!health_data.workout_experience ? 'Select Workout Experience...' : null}
+					placeholder={
+						!health_data.workout_experience
+							? "Select Workout Experience..."
+							: null
+					}
 					options={workoutExperienceOptions}
 					onChange={setWorkoutExperience}
-					value={{value: health_data.workout_experience, label: health_data.workout_experience}}
+					value={{
+						value: health_data.workout_experience,
+						label: health_data.workout_experience,
+					}}
 				/>
 			</div>
 			<div className={styles.row}>
@@ -112,7 +120,7 @@ const FormHealthInfoCore = ({health_data, setHealthData}) => {
 				<input
 					id="fitness_goal"
 					type="text"
-					onChange={(e) => changeElement('fitness_goal', e.target.value)}
+					onChange={(e) => changeElement("fitness_goal", e.target.value)}
 					value={health_data.fitness_goal}
 				/>
 			</div>
@@ -121,7 +129,7 @@ const FormHealthInfoCore = ({health_data, setHealthData}) => {
 				<input
 					id="injuries"
 					type="text"
-					onChange={(e) => changeElement('injuries', e.target.value)}
+					onChange={(e) => changeElement("injuries", e.target.value)}
 					value={health_data.injuries}
 				/>
 			</div>
@@ -130,12 +138,14 @@ const FormHealthInfoCore = ({health_data, setHealthData}) => {
 				<input
 					id="other_considerations"
 					type="text"
-					onChange={(e) => changeElement('other_considerations', e.target.value)}
+					onChange={(e) =>
+						changeElement("other_considerations", e.target.value)
+					}
 					value={health_data.other_considerations}
 				/>
 			</div>
 		</>
 	);
-}
+};
 
 export default FormHealthInfoCore;
