@@ -47,13 +47,6 @@ function History() {
 		})
 	}
 
-	// Use API Call to get dates and past workouts
-	// const workoutDays = [
-	// 	{ date: new Date(2024, 9, 6), workouts: [testWorkout.workout, testWorkout.workout] },
-	// 	{ date: new Date(2024, 9, 10), workouts: [testWorkout.workout] },
-	// 	{ date: new Date(2024, 9, 15), workouts: [testWorkout.workout, testWorkout.workout, testWorkout.workout] },
-	// ];
-
 	const handleClickDay = (selectedDay) => {
 		const today = new Date();
 		if(selectedDay > today) {
@@ -65,7 +58,7 @@ function History() {
 		const day = selectedDay.getDate().toString().padStart(2, '0');
 		const formattedDate = `${year}-${month}-${day}`
 
-		alert(`The date you selected is: ${formattedDate}`);
+		//alert(`The date you selected is: ${formattedDate}`);
 
 		const selectedWorkouts = workoutDays.find(
 			(workoutDay) => 
@@ -74,7 +67,10 @@ function History() {
 				workoutDay.date.getDate() === selectedDay.getDate()
 		)?.workouts || [];
 
-		navigate('../historyDay', {state: {selectedDate: formattedDate, workouts: selectedWorkouts}});
+		if (!selectedWorkouts.length == 0) {
+			//console.info("NavigatingToHistoryDayWith: " + selectedWorkouts.toString())
+			navigate('../historyDay', {state: {selectedDate: formattedDate, workouts: selectedWorkouts}});
+		}
 	};
 
 	const isWorkoutDay = (date) => {

@@ -253,8 +253,13 @@ class AppAPI {
 		
 		// Parses each match into a JSON object
 		return matches ? matches.map(json => JSON.parse(json)) : [];
-	  }
+	}
 
 	constructor() {}
+
+	static convertWorkoutToExercises(workout) {
+		const unparsed = workout.llm_suggested_workout[workout.llm_suggested_workout.length - 1]
+     	return AppAPI.extractJSON(unparsed)      
+	}
 }
 export default AppAPI;
