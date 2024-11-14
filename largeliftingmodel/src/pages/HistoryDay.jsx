@@ -12,12 +12,7 @@ function HistoryDay() {
   const { selectedDate, workouts = [] } = location.state || {};
   const { error, isLoading, withLoader } = useLoader();
 
-  const formattedDate = new Date(selectedDate).toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "long",
-    day: "numeric"
-  })
-
+  const formattedDate = selectedDate
   const workoutCountMessage = `${workouts.length} workout${workouts.length !== 1 ? 's' : ''} completed this day.`;
 
   return (

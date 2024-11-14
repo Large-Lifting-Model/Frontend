@@ -68,7 +68,7 @@ function History() {
 		)?.workouts || [];
 
 		if (!selectedWorkouts.length == 0) {
-			//console.info("NavigatingToHistoryDayWith: " + selectedWorkouts.toString())
+			//console.info("NavigatingToHistoryDayWith: " + formattedDate.toString())
 			navigate('../historyDay', {state: {selectedDate: formattedDate, workouts: selectedWorkouts}});
 		}
 	};
