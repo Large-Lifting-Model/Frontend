@@ -239,12 +239,7 @@ class AppAPI {
 	}
 
 	static parseSuggestedWorkout(workout) {
-		//console.info("TOPARSE" + JSON.stringify(workout))
-		const unparsed = workout.llm_suggested_workout[workout.llm_suggested_workout.length - 1];
-		//console.info("PARSINGSUGGESTEDWORKOUT" + JSON.stringify(unparsed))
-		const parsed = AppAPI.extractJSON(unparsed)
-		//console.info("PARSINGRESULT" + JSON.stringify(parsed))
-		return parsed
+		return AppAPI.convertWorkoutToExercises(workout)
 	}
 
 	static extractJSON(text) {
