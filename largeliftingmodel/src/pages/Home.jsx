@@ -28,9 +28,23 @@ function Home({ token, setToken }) {
 		const fetchData = async () => {
 			await withLoader(async () => {
 				const userData = await AppAPI.get("/users/profile", AppAPI.getDefaultHeaders(token));
+
 				setUsername(userData?.first_name || "User");
 
 				const workoutData = await AppAPI.get("/workout/recommendation", AppAPI.getDefaultHeaders(token));
+				console.info("WORKOUTDATA:" + JSON.stringify(workoutData))
+				const workoutDataRecommendationJSONString = workoutData.recommendation
+				const workoutDataRecommendationList = AppAPI.extractJSON(workoutDataRecommendationJSONString)
+				if (workoutDataRecommendationList.length > 0) {
+					const workoutDataRecommendation = workoutDataRecommendationList[workoutDataRecommendationList.length - 1]
+					const workoutDataRecommendationParameters = workoutDataRecommendation.parameters
+					console.info("WORKOUTDATA_LAST_RECOMMENDATION: " + JSON.stringify(workoutDataRecommendation))
+					console.info("WORKOUTDATA_LAST_RECOMMENDATION_PARAMETERS: " + JSON.stringify(workoutDataRecommendationParameters))
+				}
+
+				// const suggestionJSON = AppAPI.extractJSON(workoutData)
+				// console.info(JSON.stringify("suggestionJSON:" + JSON.stringify(suggestionJSON) ))
+
 				// let recommendationText = workoutData.recommendation;
 
         // Remove markdown code block syntax (```json\n at the start and ``` at the end)
@@ -38,9 +52,9 @@ function Home({ token, setToken }) {
 				// console.log(recommendationText)
 
         // Parse the cleaned JSON string
-				console.log(workoutData.recommendation)
-        const parsedData = JSON.parse(workoutData);
-        setSuggestion(parsedData.recommendation);
+		//console.log(workoutData.recommendation)
+        //const parsedData = JSON.parse(workoutData);
+        //setSuggestion(parsedData.recommendation);
 			});
 		};
 		fetchData();
