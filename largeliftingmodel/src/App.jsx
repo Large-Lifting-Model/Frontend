@@ -170,7 +170,7 @@ function App() {
 					path="home"
 					element={
 						<ProtectedRoute token={tokens.google}>
-							<Home />
+							<Home user={user} token={tokens.access} />
 						</ProtectedRoute>
 					}
 				/>
