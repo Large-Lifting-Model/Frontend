@@ -100,11 +100,11 @@ function Profile() {
 	};
 
 	return (
-		<main className={styles.feedback.main}>
+		<main>
 			<AppNav />
 			<Loader error={error} isLoading={isLoading}>
 				{isEditingLoginInfo ? (
-					<div>
+					<div className={styles.container}>
 						<form
 							name="loginInfo"
 							className={formStyles.form}
@@ -138,7 +138,7 @@ function Profile() {
 						</form>
 					</div>
 				) : (
-					<div>
+					<div className={formStyles.view}>
 						<LoginInfoViewer profile={profile} />
 						<div className={styles.container}>
 							<button
@@ -179,7 +179,7 @@ function Profile() {
 						</form>
 					</div>
 				) : (
-					<div>
+					<div className={formStyles.view}>
 						<HealthInfoViewer health_data={profile.health_data} />
 						<div className={styles.container}>
 							<button

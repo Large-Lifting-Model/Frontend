@@ -1,14 +1,19 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import styles from "./AppNav.module.css";
 import Logo from "./Logo";
+import { useEffect } from "react";
 // import AppAPI from "./AppAPI";
 
 function AppNav() {
 	const navigate = useNavigate();
 	const handleLogout = () => {
 		localStorage.clear();
-		navigate("/");
 	};
+	useEffect(() => {
+		if (!localStorage.getItem("tokens")) {
+			navigate("/login");
+		}
+	});
 	return (
 		<nav className={styles.nav}>
 			<Logo link="/home" />
@@ -29,7 +34,6 @@ function AppNav() {
 					<a
 						href="/"
 						onClick={() => {
-							// e.preventDefault();
 							handleLogout();
 						}}>
 						Logout

@@ -2,7 +2,7 @@ import styles from "./CurrentWorkout.module.css";
 import buttonStyles from "../components/Button.module.css";
 import { useEffect, useState } from "react";
 import { useLocalStorageState } from "../hooks/useLocalStorageState";
-import AppAPI from "../components/AppAPI"
+import AppAPI from "../components/AppAPI";
 import Loader from "../components/Loader";
 import useLoader from "../hooks/useLoader";
 
@@ -15,21 +15,24 @@ function CurrentWorkout({ setWorkoutState, workout, setWorkout }) {
 	);
 	const [refinement, setRefinement] = useState("");
 
-	const [suggestedWorkout, setSuggestedWorkout] = useState(AppAPI.parseSuggestedWorkout(workout))
+	const [suggestedWorkout, setSuggestedWorkout] = useState(
+		AppAPI.parseSuggestedWorkout(workout)
+	);
 
 	useEffect(() => {
 		//console.info("CurrentWorkoutUSEEFFECT with suggestedWorkout" + JSON.stringify(suggestedWorkout))
 		setCompletionStatus((prevStatus) => {
-			return prevStatus.length === suggestedWorkout.length ? prevStatus : 
-						 new Array(suggestedWorkout.length).fill(false);
-		})
-	}, [setCompletionStatus]);
+			return prevStatus.length === suggestedWorkout.length
+				? prevStatus
+				: new Array(suggestedWorkout.length).fill(false);
+		});
+	}, [setCompletionStatus, suggestedWorkout]);
 
 	const toggleCompletion = (index) => {
 		const updatedStatus = [...completionStatus];
 		updatedStatus[index] = !updatedStatus[index];
 		setCompletionStatus(updatedStatus);
-	}
+	};
 
 	const handleFinished = () => {
 		setWorkoutState(2);
@@ -38,37 +41,70 @@ function CurrentWorkout({ setWorkoutState, workout, setWorkout }) {
 	const handleSubmit = async (event) => {
 		event.preventDefault();
 		await withLoader(async () => {
-			const refinedWorkout = await AppAPI.refineWorkout(workout, refinement)
-			reactToUpdatedWorkout(refinedWorkout)
-		})
+			const refinedWorkout = await AppAPI.refineWorkout(workout, refinement);
+			reactToUpdatedWorkout(refinedWorkout);
+		});
 	};
 
 	const reactToUpdatedWorkout = (updatedWorkout) => {
-		const updatedSuggestedWorkout = AppAPI.parseSuggestedWorkout(updatedWorkout)
+		const updatedSuggestedWorkout =
+			AppAPI.parseSuggestedWorkout(updatedWorkout);
 		//console.info("UPDATE to SUGGESTED WORKOUT: \n " + JSON.stringify(updatedSuggestedWorkout))
-		setWorkout(updatedWorkout)
-		setSuggestedWorkout(updatedSuggestedWorkout)
+		setWorkout(updatedWorkout);
+		setSuggestedWorkout(updatedSuggestedWorkout);
 		setCompletionStatus((prevStatus) => {
-			return prevStatus.length === updatedSuggestedWorkout.length ? prevStatus : 
-						 new Array(updatedSuggestedWorkout.length).fill(false);
-		})
+			return prevStatus.length === updatedSuggestedWorkout.length
+				? prevStatus
+				: new Array(updatedSuggestedWorkout.length).fill(false);
+		});
 		setRefinement("");
-	}
+	};
 
 	return (
 		<Loader error={error} isLoading={isLoading}>
 			<main className={styles.workout}>
 				<section className={styles.workoutContainer}>
 					<div className={styles.exerciseList}>
-					<h2 className={styles.title}>Exercises</h2>
+						<h2 className={styles.title}>Exercises</h2>
 						{suggestedWorkout && suggestedWorkout.length > 0 ? (
 							suggestedWorkout.map((item, index) => (
-								<div key={index} className={`${styles.exerciseCard} ${completionStatus[index] ? styles.completedExercise : ""}`}>
+								<div
+									key={index}
+									className={`${styles.exerciseCard} ${
+										completionStatus[index]
+											? styles.completedExercise
+											: ""
+									}`}>
 									<div className={styles.exerciseHeader}>
-										<span className={styles.exerciseNumber}>{item.exercise.name}</span>
-										<span className={styles.exerciseType}>{item.exercise.type}</span>
+										<span className={styles.exerciseNumber}>
+											{item.exercise.name}
+										</span>
+										<span className={styles.exerciseType}>
+											{item.exercise.type}
+										</span>
 									</div>
-									<div className={styles.exerciseInfo}>{item.exercise.info}</div>
+									<div>
+										<a
+											href={`https://www.google.com/search?tbm=isch&q=${item.exercise.name.replace(
+												" ",
+												"+"
+											)}+exercise+gif&tbs=itp:animated`}
+											target="_blank"
+											rel="noopener noreferrer">
+											Google
+										</a>
+										<a
+											href={`https://www.tenor.com/search/${item.exercise.name
+												.replace(" ", "-")
+												.replace(/[^-a-zA-Z0-9]/g, "-")}-workout`}
+											target="_blank"
+											rel="noopener noreferrer">
+											TenorGIF
+										</a>
+									</div>
+									<div className={styles.exerciseInfo}>
+										{item.exercise.info}
+									</div>
 								</div>
 							))
 						) : (
@@ -78,14 +114,20 @@ function CurrentWorkout({ setWorkoutState, workout, setWorkout }) {
 					<div className={styles.completedColumn}>
 						<h3 className={styles.title}>Completed?</h3>
 						{suggestedWorkout.map((_, index) => (
-							<div key={index} className={`${styles.checkboxContainer} ${completionStatus[index] ? styles.completedCheckbox : ""}`}>
+							<div
+								key={index}
+								className={`${styles.checkboxContainer} ${
+									completionStatus[index]
+										? styles.completedCheckbox
+										: ""
+								}`}>
 								<input
 									type="checkbox"
 									checked={completionStatus[index]}
 									onChange={() => toggleCompletion(index)}
 								/>
 							</div>
-					))}
+						))}
 					</div>
 				</section>
 				<section>

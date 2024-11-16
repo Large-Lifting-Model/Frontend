@@ -15,7 +15,8 @@ function Create({
 	setWorkout,
 }) {
 	const { error, isLoading, withLoader } = useLoader();
-
+	const [otherWorkoutType, setOtherWorkoutType] = useState("");
+	const [otherEquipmentAccess, setOtherEquipmentAccess] = useState("");
 	const [showOtherWorkoutType, setShowOtherWorkoutType] = useState(false);
 	const [showOtherEquipment, setShowOtherEquipment] = useState(false);
 	// const [workoutDifficulty, setWorkoutDifficulty] = useState({
@@ -135,15 +136,33 @@ function Create({
 	};
 
 	const handleWorkoutTypeChange = (selectedOption) => {
-		// setWorkoutType(selectedOption);
-		setWorkout({ ...workout, workout_type: selectedOption.value });
-		setShowOtherWorkoutType(selectedOption?.value === "other");
+		if (selectedOption.value === "other") {
+			setShowOtherWorkoutType(true);
+			setOtherWorkoutType("");
+		} else {
+			setShowOtherWorkoutType(false);
+			setWorkout({ ...workout, workout_type: selectedOption.value });
+		}
 	};
 
 	const handleEquipmentAccessChange = (selectedOption) => {
-		// setWorkoutEquipmentAccess(selectedOption);
-		setWorkout({ ...workout, equipment_access: selectedOption.value });
-		setShowOtherEquipment(selectedOption?.value === "other");
+		if (selectedOption.value === "other") {
+			setShowOtherEquipment(true);
+			setOtherEquipmentAccess("");
+		} else {
+			setShowOtherEquipment(false);
+			setWorkout({ ...workout, equipment_access: selectedOption.value });
+		}
+	};
+
+	const handleOtherWorkoutTypeChange = (e) => {
+		setOtherWorkoutType(e.target.value);
+		setWorkout({ ...workout, workout_type: e.target.value });
+	};
+
+	const handleOtherEquipmentAccessChange = (e) => {
+		setOtherEquipmentAccess(e.target.value);
+		setWorkout({ ...workout, equipment_access: e.target.value });
 	};
 
 	return (
@@ -203,12 +222,7 @@ function Create({
 							<input
 								id="otherWorkoutType"
 								type="text"
-								onChange={(e) =>
-									setWorkout({
-										...workout,
-										workout_type: e.target.value,
-									})
-								}
+								onChange={handleOtherWorkoutTypeChange}
 								value={workout.workout_type || ""}
 								disabled={workoutExists}
 							/>
@@ -240,12 +254,7 @@ function Create({
 							<input
 								id="otherEquipment"
 								type="text"
-								onChange={(e) =>
-									setWorkout({
-										...workout,
-										equipment_access: e.target.value,
-									})
-								}
+								onChange={handleOtherEquipmentAccessChange}
 								value={workout.equipment_access || ""}
 								disabled={workoutExists}
 							/>
@@ -321,14 +330,14 @@ function Create({
 				</form>
 				{workoutExists === true ? (
 					<button
-						className={`${buttonStyles.primary} ${styles.container}`}
+						className={`${styles.btn_create} ${buttonStyles.primary}`}
 						onClick={() => handleModify()}>
 						Modify
 					</button>
 				) : (
 					<>
 						<button
-							className={`${buttonStyles.primary} ${styles.container}`}
+							className={`${styles.btn_create} ${buttonStyles.primary}`}
 							onClick={() => {
 								handleCreate();
 							}}>

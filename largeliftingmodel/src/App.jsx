@@ -180,6 +180,8 @@ function App() {
 								token={tokens.access}
 								recommendation={recommendation}
 								setRecommendation={setRecommendation}
+								setWorkout={setWorkout}
+								setWorkoutState={setWorkoutState}
 							/>
 						</ProtectedRoute>
 					}

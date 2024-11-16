@@ -71,11 +71,11 @@ class AppAPI {
 		id: 0,
 		user: "",
 		created: "",
-		length: "0",
-		difficulty: "",
-		workout_type: "",
+		length: 45,
+		difficulty: "Medium",
+		workout_type: "Weights",
 		target_area: "",
-		equipment_access: "",
+		equipment_access: "No Equipment",
 		included_exercises: "",
 		excluded_exercises: "",
 		other_workout_considerations: "",
@@ -177,7 +177,6 @@ class AppAPI {
 		if (!response.ok)
 			throw new Error(AppAPI.#formattedError("POST", response));
 		const jsonResponse = response.json();
-		console.log(jsonResponse);
 		return jsonResponse;
 	};
 
@@ -201,7 +200,6 @@ class AppAPI {
 		if (!response.ok)
 			throw new Error(AppAPI.#formattedError("PATCH", response));
 		const jsonResponse = response.json();
-		console.log(jsonResponse);
 		return jsonResponse;
 	};
 
@@ -280,7 +278,5 @@ class AppAPI {
 		// Parses each match into a JSON object
 		return matches ? matches.map((json) => JSON.parse(json)) : [];
 	}
-
-	constructor() {}
 }
 export default AppAPI;

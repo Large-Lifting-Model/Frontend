@@ -16,6 +16,8 @@
 	--color-light--3: #d6dee0;
 	--color-light--4: #ebeeef;
 	--color-red--1: #ff0000;
+	--form--max-width: 1000px;
+	--nav--max-width: 1300px;
 }
 
 * {
@@ -27,6 +29,15 @@
 html {
 	font-size: 62.5%;
 	box-sizing: border-box;
+}
+
+#root {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: stretch;
+	display: flex;
+	flex-direction: column;
 }
 
 body {
@@ -42,7 +53,7 @@ body {
 	background-size: cover;
 	background-position: center;
 	background-attachment: fixed;
-	padding: 10px;
+	width: 100%;
 }
 
 label {
@@ -82,8 +93,8 @@ input:focus {
 	margin-bottom: 1rem;
 }
 .cta:hover {
-    background-color: var(--color-brand--1);
-    color: var(--color-light--4); /* Change text color on hover */
+	background-color: var(--color-brand--1);
+	color: var(--color-light--4); /* Change text color on hover */
 }
 
 @media (max-width: 660px) {
