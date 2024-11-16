@@ -1,5 +1,4 @@
-.home section
-{
+.home section {
 	display: flex;
 	flex-direction: column;
 	height: 85%;
@@ -10,20 +9,22 @@
 }
 
 .links {
-    display: flex;
-    flex-direction: column;
-
-
+	display: flex;
+	flex-direction: column;
 }
 
 .suggestion {
 	padding: 1rem;
 	border-radius: 1rem;
-	background-color: #42484D;
+	background-color: #42484d;
 	/* Maybe should set a max width */
 }
 
+.suggestion:hover {
+	cursor: pointer;
+}
+
 .cta {
-    display: inline-block; /* Keep this if you prefer */
-    margin-bottom: 1rem; /* Adds space between links */
+	display: inline-block; /* Keep this if you prefer */
+	margin-bottom: 1rem; /* Adds space between links */
 }
