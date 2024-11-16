@@ -20,9 +20,9 @@ function FormHealthInfo({ user, setUser, healthInfo, setHealthInfo }) {
 				AppAPI.getDefaultHeaders(),
 				"profile/" + AppAPI.testUserID
 			);
+			setUser({ ...user, health_data: healthInfo, is_new: false });
+			navigate("../home");
 		});
-		setUser({ ...user, health_data: healthInfo, is_new: false });
-		navigate("../home");
 	};
 
 	return (
