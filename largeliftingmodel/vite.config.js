@@ -12,6 +12,11 @@ export default defineConfig(({ mode }) => {
 			outDir: "dist",
 			assetsDir: "assets",
 		},
+		server: {
+			headers: {
+				"Cross-Origin-Opener-Policy": "same-origin-allow-popups", // Allow window interactions
+			},
+		},
 		test: {
 			globals: true,
 			environment: "jsdom", // Required for DOM APIs in React tests
