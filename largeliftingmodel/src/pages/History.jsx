@@ -24,7 +24,10 @@ function History() {
 				} else {
 					const returnedDict = workoutList.reduce(
 						(acc, workoutListElement) => {
-							const createdYMD = workoutListElement.created.slice(0, 10);
+							const localDate = new Date(workoutListElement.created);
+							const createdYMD = `${localDate.getFullYear()}-${
+								localDate.getMonth() + 1
+							}-${localDate.getDate()}`;
 							if (!acc[createdYMD]) {
 								acc[createdYMD] = [workoutListElement];
 							} else {
@@ -64,8 +67,6 @@ function History() {
 		const day = selectedDay.getDate().toString().padStart(2, "0");
 		const formattedDate = `${year}-${month}-${day}`;
 
-		// alert(`The date you selected is: ${formattedDate}`);
-
 		const selectedWorkouts =
 			workoutDays.find(
 				(workoutDay) =>
@@ -73,8 +74,7 @@ function History() {
 					workoutDay.date.getMonth() === selectedDay.getMonth() &&
 					workoutDay.date.getDate() === selectedDay.getDate()
 			)?.workouts || [];
-
-		if (!selectedWorkouts.length === 0) {
+		if (selectedWorkouts.length > 0) {
 			navigate("../historyDay", {
 				state: { selectedDate: formattedDate, workouts: selectedWorkouts },
 			});
