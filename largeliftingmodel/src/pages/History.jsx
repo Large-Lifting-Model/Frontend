@@ -29,11 +29,10 @@ function History() {
 				console.info(
 					"workoutlist contains " + workoutList.length + " workouts"
 				);
-				//console.info(JSON.stringify(workoutList))
+				console.info(JSON.stringify(workoutList));
 				const returnedDict = workoutList.reduce(
 					(acc, workoutListElement) => {
 						const createdYMD = workoutListElement.created.slice(0, 10);
-						//console.info(createdYMD.toString())
 						if (!acc[createdYMD]) {
 							acc[createdYMD] = [workoutListElement];
 						} else {
@@ -44,15 +43,22 @@ function History() {
 					{}
 				);
 				const returnedWorkoutDays = Object.entries(returnedDict).map(
-					([key, value]) => ({
-						date: new Date(key),
-						workouts: value,
-					})
+					([key, value]) => {
+						const utcDate = new Date(`${key}T00:00:00Z`);
+						return {
+							date: new Date(
+								utcDate.getTime() + utcDate.getTimezoneOffset() * 60000
+							), // Adjust to local time
+							workouts: value,
+						};
+					}
 				);
 				console.info(
 					"workoutDays contains " + returnedWorkoutDays.length + " days"
 				);
 				setWorkoutDays(returnedWorkoutDays);
+				console.info("returnedWorkoutDays:", returnedWorkoutDays);
+				console.info("returnedDict:", returnedDict);
 			}
 		});
 	};
@@ -68,7 +74,9 @@ function History() {
 		const day = selectedDay.getDate().toString().padStart(2, "0");
 		const formattedDate = `${year}-${month}-${day}`;
 
-		//alert(`The date you selected is: ${formattedDate}`);
+		// alert(`The date you selected is: ${formattedDate}`);
+
+		console.info(`Formatted Date: ${formattedDate}`);
 
 		const selectedWorkouts =
 			workoutDays.find(
@@ -78,8 +86,11 @@ function History() {
 					workoutDay.date.getDate() === selectedDay.getDate()
 			)?.workouts || [];
 
+		console.info(workoutDays);
 		if (!selectedWorkouts.length == 0) {
-			//console.info("NavigatingToHistoryDayWith: " + formattedDate.toString())
+			console.info(
+				"NavigatingToHistoryDayWith: " + formattedDate.toString()
+			);
 			navigate("../historyDay", {
 				state: { selectedDate: formattedDate, workouts: selectedWorkouts },
 			});
@@ -115,30 +126,32 @@ function History() {
 	};
 
 	return (
-		<Loader error={error} isLoading={isLoading}>
+		<>
 			<AppNav />
-			<div className={styles.historyPage}>
-				<div className={styles.description}>Workout History</div>
-				<div className={styles.subDescription}>
-					Select a date to see the workout you did that day!
+			<Loader error={error} isLoading={isLoading}>
+				<div className={styles.historyPage}>
+					<div className={styles.description}>Workout History</div>
+					<div className={styles.subDescription}>
+						Select a date to see the workout you did that day!
+					</div>
+					<Calendar
+						className={styles.calendar}
+						onClickDay={handleClickDay}
+						tileClassName={({ date, view }) => {
+							if (view === "month") {
+								if (isToday(date)) return styles["current-day"];
+								if (isWorkoutDay(date)) return styles["workout-day"];
+								if (isPastDay(date)) return styles["past-day"];
+								if (isFutureDay(date)) return styles["future-day"];
+							}
+							return "";
+						}}
+						calendarType="gregory"
+						tileDisabled={({ date }) => isFutureDay(date)}
+					/>
 				</div>
-				<Calendar
-					className={styles.calendar}
-					onClickDay={handleClickDay}
-					tileClassName={({ date, view }) => {
-						if (view === "month") {
-							if (isToday(date)) return styles["current-day"];
-							if (isWorkoutDay(date)) return styles["workout-day"];
-							if (isPastDay(date)) return styles["past-day"];
-							if (isFutureDay(date)) return styles["future-day"];
-						}
-						return "";
-					}}
-					calendarType="gregory"
-					tileDisabled={({ date }) => isFutureDay(date)}
-				/>
-			</div>
-		</Loader>
+			</Loader>
+		</>
 	);
 }
 
