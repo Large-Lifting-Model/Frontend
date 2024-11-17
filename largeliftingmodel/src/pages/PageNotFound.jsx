@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import PageNav from "../components/PageNav";
 import styles from "./PageNotFound.module.css";
+import sorryImage from "../assets/sorry.jpeg";
 
 function PageNotFound({ token }) {
 	return (
@@ -8,7 +9,7 @@ function PageNotFound({ token }) {
 			<PageNav />
 			<section>
 				<img
-					src="/sorry.jpeg"
+					src={sorryImage}
 					alt="Sorry"
 					className={styles.pagenotfound}
 					data-style="sorryImage"
