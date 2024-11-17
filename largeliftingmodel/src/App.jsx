@@ -43,6 +43,11 @@ function App() {
 		"workout"
 	);
 
+	const [recommendation, setRecommendation] = useLocalStorageState(
+		"",
+		"recommendation"
+	);
+
 	const [user, setUser] = useLocalStorageState({}, "user");
 
 	const navigate = useNavigate();
@@ -170,7 +175,14 @@ function App() {
 					path="home"
 					element={
 						<ProtectedRoute token={tokens.google}>
-							<Home />
+							<Home
+								user={user}
+								token={tokens.access}
+								recommendation={recommendation}
+								setRecommendation={setRecommendation}
+								setWorkout={setWorkout}
+								setWorkoutState={setWorkoutState}
+							/>
 						</ProtectedRoute>
 					}
 				/>

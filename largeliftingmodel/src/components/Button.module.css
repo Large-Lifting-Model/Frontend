@@ -18,9 +18,9 @@
 	font-weight: 600;
 	padding: 1rem 3rem;
 	border-radius: 5px;
-	margin: 5px 0px;
 	width: 100%;
 	cursor: pointer;
+	margin: 10px 0px;
 }
 
 .primary:hover {
