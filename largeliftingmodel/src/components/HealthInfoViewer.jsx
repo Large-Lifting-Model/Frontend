@@ -3,9 +3,7 @@ import styles from "./Form.module.css";
 import { useEffect } from "react";
 
 const HealthInfo_Viewer = (props) => {
-	useEffect(() => {
-		//console.info(JSON.stringify(props))
-	}, []);
+	useEffect(() => {}, []);
 
 	return (
 		<div className={styles.view}>

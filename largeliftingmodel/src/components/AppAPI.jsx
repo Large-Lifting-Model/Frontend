@@ -119,7 +119,6 @@ class AppAPI {
 		} catch (error) {
 			// If it has been deleted, re-create it.
 			if (AppAPI.useTestServer === true) {
-				console.info("Creating Profile");
 				await AppAPI.post(
 					"",
 					AppAPI.testProfile,
@@ -204,7 +203,6 @@ class AppAPI {
 	};
 
 	static createWorkout = async (workoutData) => {
-		//console.info("CreatingWorkout" + JSON.stringify(workoutData))
 		return await AppAPI.post(
 			"workout/",
 			workoutData,
@@ -223,17 +221,14 @@ class AppAPI {
 
 	static refineWorkout = async (workoutData, refinement) => {
 		const initialRefinements = workoutData.llm_suggested_changes;
-		//console.info("InitialRefinements" + JSON.stringify(initialRefinements))
 		initialRefinements.push(refinement);
 		const refinedRefinements = { llm_suggested_changes: initialRefinements };
-		console.info("RefinedRefinements" + JSON.stringify(refinedRefinements));
 		const returnedData = await AppAPI.patch(
 			"workout/" + workoutData.id + "/",
 			refinedRefinements,
 			AppAPI.getDefaultHeaders(),
 			""
 		);
-		//console.info("RefinementReturnedData" + JSON.stringify(returnedData))
 		return returnedData;
 	};
 
@@ -248,14 +243,12 @@ class AppAPI {
 			workout_comments: workout_comments,
 			actual_length: actual_length,
 		};
-		console.info("WorkoutRating" + JSON.stringify(patchData));
 		const returnedData = await AppAPI.patch(
 			"workout/" + workoutData.id + "/",
 			patchData,
 			AppAPI.getDefaultHeaders(),
 			""
 		);
-		//console.info("RatingReturnedData" + JSON.stringify(returnedData))
 		return returnedData;
 	};
 
@@ -265,21 +258,15 @@ class AppAPI {
 			AppAPI.getDefaultHeaders(),
 			""
 		);
-		// if (!Object.keys(returnedData).length !== 0) {
-		// 	console.info("ListWorkouts_Returned_" + returnedData.length + "_Workouts" )
-		// }
 		return returnedData;
 	};
 
 	static parseSuggestedWorkout(workout) {
-		//console.info("TOPARSE" + JSON.stringify(workout))
 		const unparsed =
 			workout.llm_suggested_workout[
 				workout.llm_suggested_workout.length - 1
 			];
-		//console.info("PARSINGSUGGESTEDWORKOUT" + JSON.stringify(unparsed))
 		const parsed = AppAPI.extractJSON(unparsed);
-		//console.info("PARSINGRESULT" + JSON.stringify(parsed))
 		return parsed;
 	}
 

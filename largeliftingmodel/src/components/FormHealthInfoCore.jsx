@@ -3,9 +3,7 @@ import Select from "react-select";
 
 const FormHealthInfoCore = ({ health_data, setHealthData }) => {
 	const changeElement = (name, value) => {
-		console.info("Name:" + name + " Value: " + JSON.stringify(value));
 		const changed = { ...health_data, [name]: value };
-		console.info(JSON.stringify(changed));
 		setHealthData(changed);
 	};
 

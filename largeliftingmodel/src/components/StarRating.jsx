@@ -32,22 +32,18 @@ export default function StarRating({
 	messages = [],
 	defaultRating = 0,
 	ratingSetter = "",
-	onSetRating = (e) => (ratingSetter ? ratingSetter(e) : console.log(e)),
+	onSetRating = (e) => (ratingSetter ? ratingSetter(e) : e),
 }) {
 	const [rating, setRating] = useState(defaultRating);
 	const [tempRating, setTempRating] = useState(0);
 	const [touchEvent, setTouchEvent] = useState(false);
 
 	function handleRating(newRating) {
-		console.log(
-			`New Rating: ${newRating}, Old Rating: ${rating}, Touch Event: ${touchEvent}`
-		);
 		if (newRating === rating) {
 			if (touchEvent === true) {
 				setTouchEvent(false);
 				setTempRating(0);
 			}
-			// Check if the clicked rating is the same as the current rating
 			onSetRating(0);
 			setRating(0);
 		} else {

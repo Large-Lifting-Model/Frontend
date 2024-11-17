@@ -70,7 +70,6 @@ function App() {
 				""
 			);
 			if (res) {
-				console.log(res);
 				const tokenObj = {
 					...tokens,
 					access: res.access,
@@ -83,7 +82,6 @@ function App() {
 		} catch (error) {
 			console.error("Error during login");
 		}
-		console.log("refreshTokens() was called.");
 	}, [tokens, setTokens]);
 
 	// Determine when to refresh tokens
@@ -124,7 +122,6 @@ function App() {
 				""
 			);
 			if (res) {
-				console.log(res);
 				tokenObj = {
 					google: token,
 					access: res.access,
@@ -143,8 +140,7 @@ function App() {
 			const redirectTo = userProfile.is_new
 				? "/register"
 				: location.state?.from?.pathname || "/home";
-			console.log(tokenObj);
-			console.log(userProfile);
+
 			navigate(redirectTo, { replace: true });
 		} catch (error) {
 			console.error("Error during login");

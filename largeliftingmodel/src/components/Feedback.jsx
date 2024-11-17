@@ -3,13 +3,19 @@ import buttonStyles from "../components/Button.module.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import StarRating from "./StarRating";
-import AppAPI from "../components/AppAPI"
+import AppAPI from "../components/AppAPI";
 import Loader from "../components/Loader";
 import useLoader from "../hooks/useLoader";
-import { flushSync } from 'react-dom';
+import { flushSync } from "react-dom";
 
-
-function Feedback({ workoutState, setWorkoutState, workoutExists, setWorkoutExists, workout, setWorkout }) {
+function Feedback({
+	workoutState,
+	setWorkoutState,
+	workoutExists,
+	setWorkoutExists,
+	workout,
+	setWorkout,
+}) {
 	const { error, isLoading, withLoader } = useLoader();
 
 	const navigate = useNavigate();
@@ -18,19 +24,18 @@ function Feedback({ workoutState, setWorkoutState, workoutExists, setWorkoutExis
 	const [rating, setRating] = useState(0);
 
 	const handleSubmit = async () => {
-		console.log(rating);
 		await withLoader(async () => {
-			const rateReturn = await AppAPI.rateWorkout(workout, rating, feedback, howlong)
-			console.info("RateReturn" + JSON.stringify(rateReturn))
-			flushSync(() => { // To avoid race conditions with setWorkoutState
-				setWorkout(AppAPI.emptyWorkout)
+			await AppAPI.rateWorkout(workout, rating, feedback, howlong);
+			flushSync(() => {
+				// To avoid race conditions with setWorkoutState
+				setWorkout(AppAPI.emptyWorkout);
 				setWorkoutExists(false);
 				setFeedback(""); // Clear the input after submission
 				setHowlong("");
-			})
+			});
 			setWorkoutState(0);
 			navigate("/home");
-		})
+		});
 	};
 
 	return (

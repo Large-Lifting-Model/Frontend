@@ -30,8 +30,6 @@ function Home({
 				"/workout/recommendation",
 				AppAPI.getDefaultHeaders(token)
 			);
-			console.info("/workout/recommendation called.");
-			console.info("Before parsing:", recommendationData);
 
 			// Remove the code block markers and parse the JSON string
 			let recommendationString =
@@ -46,11 +44,9 @@ function Home({
 			try {
 				parsedRecommendation = JSON.parse(recommendationString);
 			} catch (error) {
-				console.error("Failed to parse recommendation:", error);
 				parsedRecommendation = {};
 			}
 
-			console.info("After parsing:", parsedRecommendation);
 			recommendationData = {
 				...recommendationData,
 				recommendation: parsedRecommendation,
@@ -88,7 +84,7 @@ function Home({
 				AppAPI.emptyWorkout.other_workout_considerations,
 		};
 		// Update all states in sequence
-		console.log(workoutSuggestionObj);
+
 		setWorkout(workoutSuggestionObj);
 		setWorkoutExists(false);
 		setWorkoutState(0);

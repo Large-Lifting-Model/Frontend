@@ -16,52 +16,42 @@ function History() {
 	const { error, isLoading, withLoader } = useLoader();
 
 	useEffect(() => {
-		getWorkoutDays();
-	}, []);
-
-	const getWorkoutDays = async () => {
-		await withLoader(async () => {
-			const workoutList = await AppAPI.getAllWorkouts();
-			if (Object.keys(workoutList).length === 0) {
-				console.info("returnedWorkoutList is empty");
-				setWorkoutDays([]);
-			} else {
-				console.info(
-					"workoutlist contains " + workoutList.length + " workouts"
-				);
-				console.info(JSON.stringify(workoutList));
-				const returnedDict = workoutList.reduce(
-					(acc, workoutListElement) => {
-						const createdYMD = workoutListElement.created.slice(0, 10);
-						if (!acc[createdYMD]) {
-							acc[createdYMD] = [workoutListElement];
-						} else {
-							acc[createdYMD].push(workoutListElement);
+		const getWorkoutDays = async () => {
+			await withLoader(async () => {
+				const workoutList = await AppAPI.getAllWorkouts();
+				if (Object.keys(workoutList).length === 0) {
+					setWorkoutDays([]);
+				} else {
+					const returnedDict = workoutList.reduce(
+						(acc, workoutListElement) => {
+							const createdYMD = workoutListElement.created.slice(0, 10);
+							if (!acc[createdYMD]) {
+								acc[createdYMD] = [workoutListElement];
+							} else {
+								acc[createdYMD].push(workoutListElement);
+							}
+							return acc;
+						},
+						{}
+					);
+					const returnedWorkoutDays = Object.entries(returnedDict).map(
+						([key, value]) => {
+							const utcDate = new Date(`${key}T00:00:00Z`);
+							return {
+								date: new Date(
+									utcDate.getTime() +
+										utcDate.getTimezoneOffset() * 60000
+								), // Adjust to local time
+								workouts: value,
+							};
 						}
-						return acc;
-					},
-					{}
-				);
-				const returnedWorkoutDays = Object.entries(returnedDict).map(
-					([key, value]) => {
-						const utcDate = new Date(`${key}T00:00:00Z`);
-						return {
-							date: new Date(
-								utcDate.getTime() + utcDate.getTimezoneOffset() * 60000
-							), // Adjust to local time
-							workouts: value,
-						};
-					}
-				);
-				console.info(
-					"workoutDays contains " + returnedWorkoutDays.length + " days"
-				);
-				setWorkoutDays(returnedWorkoutDays);
-				console.info("returnedWorkoutDays:", returnedWorkoutDays);
-				console.info("returnedDict:", returnedDict);
-			}
-		});
-	};
+					);
+					setWorkoutDays(returnedWorkoutDays);
+				}
+			});
+		};
+		getWorkoutDays();
+	}, [withLoader]);
 
 	const handleClickDay = (selectedDay) => {
 		const today = new Date();
@@ -76,8 +66,6 @@ function History() {
 
 		// alert(`The date you selected is: ${formattedDate}`);
 
-		console.info(`Formatted Date: ${formattedDate}`);
-
 		const selectedWorkouts =
 			workoutDays.find(
 				(workoutDay) =>
@@ -86,11 +74,7 @@ function History() {
 					workoutDay.date.getDate() === selectedDay.getDate()
 			)?.workouts || [];
 
-		console.info(workoutDays);
-		if (!selectedWorkouts.length == 0) {
-			console.info(
-				"NavigatingToHistoryDayWith: " + formattedDate.toString()
-			);
+		if (!selectedWorkouts.length === 0) {
 			navigate("../historyDay", {
 				state: { selectedDate: formattedDate, workouts: selectedWorkouts },
 			});
