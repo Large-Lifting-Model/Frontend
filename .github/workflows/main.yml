@@ -11,16 +11,21 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v4.1.7
+      uses: actions/checkout@v3
+
+    - name: Navigate to Project Directory
+      working-directory: largeliftingmodel
 
     - name: Install dependencies
       run: npm install
+      working-directory: largeliftingmodel
 
     - name: Build project
       run: npm run build
+      working-directory: largeliftingmodel
 
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: dist
+        publish_dir: largeliftingmodel/dist
