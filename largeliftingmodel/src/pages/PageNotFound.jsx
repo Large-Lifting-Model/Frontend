@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import PageNav from "../components/PageNav";
 import styles from "./PageNotFound.module.css";
-import sorryImage from "../../public/sorry.jpeg";
+import sorryImage from "/sorry.jpeg";
 
 function PageNotFound({ token }) {
 	return (
