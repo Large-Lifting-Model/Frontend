@@ -259,6 +259,18 @@ class AppAPI {
 		return returnedData;
 	};
 
+	static getAllWorkouts = async () => {
+		const returnedData = await AppAPI.get(
+			"workout/list/",
+			AppAPI.getDefaultHeaders(),
+			""
+		);
+		// if (!Object.keys(returnedData).length !== 0) {
+		// 	console.info("ListWorkouts_Returned_" + returnedData.length + "_Workouts" )
+		// }
+		return returnedData;
+	};
+
 	static parseSuggestedWorkout(workout) {
 		//console.info("TOPARSE" + JSON.stringify(workout))
 		const unparsed =
@@ -277,6 +289,16 @@ class AppAPI {
 
 		// Parses each match into a JSON object
 		return matches ? matches.map((json) => JSON.parse(json)) : [];
+	}
+
+	constructor() {}
+
+	static convertWorkoutToExercises(workout) {
+		const unparsed =
+			workout.llm_suggested_workout[
+				workout.llm_suggested_workout.length - 1
+			];
+		return AppAPI.extractJSON(unparsed);
 	}
 }
 export default AppAPI;
