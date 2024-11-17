@@ -7,7 +7,7 @@ export default defineConfig(({ mode }) => {
 	const isDev = mode === "development";
 	return {
 		plugins: [react(), eslint()],
-		base: isDev ? "/" : "/frontend",
+		base: isDev ? "/" : "/frontend/",
 		test: {
 			globals: true,
 			environment: "jsdom", // Required for DOM APIs in React tests
