@@ -8,6 +8,10 @@ export default defineConfig(({ mode }) => {
 	return {
 		plugins: [react(), eslint()],
 		base: isDev ? "/" : "/frontend/",
+		build: {
+			outDir: "dist",
+			assetsDir: "assets",
+		},
 		test: {
 			globals: true,
 			environment: "jsdom", // Required for DOM APIs in React tests
