@@ -31,6 +31,7 @@ function Home({
 				AppAPI.getDefaultHeaders(token)
 			);
 
+			console.log(recommendationData);
 			// Remove the code block markers and parse the JSON string
 			let recommendationString =
 				recommendationData.id === null
@@ -72,8 +73,7 @@ function Home({
 			return;
 		}
 		const workoutSuggestionObj = {
-			length:
-				recommendation?.recommendation?.parameters?.length.split(" ")[0],
+			length: recommendation?.recommendation?.parameters?.length,
 			difficulty: AppAPI.emptyWorkout.difficulty,
 			workout_type: recommendation?.recommendation?.parameters?.workout_type,
 			equipment_access: AppAPI.emptyWorkout.equipment_access,
