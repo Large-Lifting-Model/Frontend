@@ -10,19 +10,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4 # Update to the latest version (v4)
-
-    - name: Install dependencies
-      run: npm install
-      working-directory: largeliftingmodel
-
-    - name: Build project
-      run: npm run build
-      working-directory: largeliftingmodel
-
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '20.x'
+      - run: npm install
+        working-directory: largeliftingmodel
+      - run: npm run build
+        working-directory: largeliftingmodel
     - name: Deploy to GitHub Pages
-      uses: peaceiris/actions-gh-pages@v4 # Update to v4 for compatibility
+      uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: largeliftingmodel/dist
