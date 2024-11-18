@@ -3,6 +3,7 @@
 	justify-content: space-between;
 	width: 95%;
 	max-width: var(--nav--max-width);
+	margin-top: 10px;
 }
 
 .nav ul {

@@ -21,6 +21,7 @@
 	width: 100%;
 	cursor: pointer;
 	margin: 10px 0px;
+	max-width: var(--form--max-width);
 }
 
 .primary:hover {

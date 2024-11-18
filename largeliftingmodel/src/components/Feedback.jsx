@@ -20,7 +20,7 @@ function Feedback({
 
 	const navigate = useNavigate();
 	const [feedback, setFeedback] = useState("");
-	const [howlong, setHowlong] = useState("");
+	const [howlong, setHowlong] = useState(workout.length);
 	const [rating, setRating] = useState(0);
 
 	const handleSubmit = async () => {
