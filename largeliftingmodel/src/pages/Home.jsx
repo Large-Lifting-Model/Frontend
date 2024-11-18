@@ -30,8 +30,6 @@ function Home({
 				"workout/recommendation",
 				AppAPI.getDefaultHeaders(token)
 			);
-
-			console.log(recommendationData);
 			// Remove the code block markers and parse the JSON string
 			let recommendationString =
 				recommendationData.id === null
