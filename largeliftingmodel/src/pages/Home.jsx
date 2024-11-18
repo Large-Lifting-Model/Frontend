@@ -27,7 +27,7 @@ function Home({
 	useEffect(() => {
 		const fetchData = async () => {
 			let recommendationData = await AppAPI.get(
-				"/workout/recommendation",
+				"workout/recommendation",
 				AppAPI.getDefaultHeaders(token)
 			);
 
