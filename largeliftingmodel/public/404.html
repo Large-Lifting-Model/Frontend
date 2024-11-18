@@ -2,22 +2,21 @@
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
-		<link rel="icon" type="image/svg+xml" href="./vite.svg" />
+		<link rel="icon" type="image/svg+xml" href="/frontend/vite.svg" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Large Lifting Model</title>
 	</head>
 	<body>
 		<div id="root"></div>
-		<script type="module" src="./src/main.jsx"></script>
+		<script type="module" src="/frontend/src/main.jsx"></script>
 		<script>
 			(function () {
-				// Get the current pathname
+				const basePath = "/frontend";
 				const currentPath = window.location.pathname;
 
-				// Check if the current path starts with the correct base path
-				if (!currentPath.startsWith("/frontend/")) {
-					// Redirect to the correct base path, preserving the rest of the URL
-					window.location.replace("/frontend" + currentPath);
+				// Redirect only if the current path is outside the base path
+				if (!currentPath.startsWith(basePath)) {
+					window.location.replace(basePath + currentPath);
 				}
 			})();
 		</script>
