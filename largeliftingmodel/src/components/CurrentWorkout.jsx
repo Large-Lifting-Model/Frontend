@@ -8,7 +8,6 @@ import useLoader from "../hooks/useLoader";
 
 function CurrentWorkout({ setWorkoutState, workout, setWorkout }) {
 	const { error, isLoading, withLoader } = useLoader();
-
 	const [completionStatus, setCompletionStatus] = useLocalStorageState(
 		new Array(AppAPI.parseSuggestedWorkout(workout).length).fill(false),
 		"completionStatus"
@@ -141,7 +140,11 @@ function CurrentWorkout({ setWorkoutState, workout, setWorkout }) {
 									onChange={(e) => setRefinement(e.target.value)}
 									value={refinement}
 								/>
-								<button type="submit" className={buttonStyles.inline}>
+								<button
+									id="refineWorkout"
+									type="submit"
+									className={buttonStyles.inline}
+									disabled={!refinement}>
 									Submit
 								</button>
 							</div>

@@ -40,7 +40,7 @@
 	padding: 5px;
 	padding-left: 10px;
 	padding-right: 10px;
-	margin-bottom: 5px;
+	margin: 0px 15px 5px 15px;
 	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 	min-height: 40px;
 	height: 100%;
@@ -104,6 +104,11 @@ div a {
 	margin: 0px 10px 0px 0px;
 }
 
+#refineWorkout:disabled,
+button:disabled {
+	opacity: 0.5;
+}
+
 .form {
 	background-color: var(--color-dark--2);
 	border-radius: 7px;
@@ -133,11 +138,10 @@ div a {
 }
 
 @media (max-width: 600px) {
-	/* .exerciseCard,
+	.exerciseCard,
 	.checkboxContainer {
-		margin: 3px;
-		padding: 8px;
-	} */
+		margin: 0px 2px 5px 2px;
+	}
 
 	.exerciseList {
 		width: 70%;
