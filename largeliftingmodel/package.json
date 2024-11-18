@@ -3,6 +3,7 @@
 	"private": true,
 	"version": "0.0.0",
 	"type": "module",
+	"homepage": "https://large-lifting-model.github.io/frontend/",
 	"scripts": {
 		"dev": "cross-env VITE_USE_TEST_SERVER=0 vite --host",
 		"dev2testserver": "cross-env VITE_USE_TEST_SERVER=1 vite",

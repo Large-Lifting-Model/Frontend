@@ -11,7 +11,7 @@ const HealthInfo_Viewer = (props) => {
 				Health Information
 				<hr />
 			</div>
-			<div className={styles.row}>
+			<div className={styles.container}>
 				<div className={styles.container_inline}>
 					<label> Date of Birth </label>
 					<h2 className={styles.h2}> {props.health_data.dob} </h2>
