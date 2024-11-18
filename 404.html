@@ -10,9 +10,16 @@
 		<div id="root"></div>
 		<script type="module" src="./src/main.jsx"></script>
 		<script>
-			// Redirect to the base path of the SPA
-			const path = window.location.pathname.replace("/frontend", "");
-			window.location.replace("/frontend/" + (path || ""));
+			(function () {
+				// Get the current pathname
+				const currentPath = window.location.pathname;
+
+				// Check if the current path starts with the correct base path
+				if (!currentPath.startsWith("/frontend/")) {
+					// Redirect to the correct base path, preserving the rest of the URL
+					window.location.replace("/frontend" + currentPath);
+				}
+			})();
 		</script>
 	</body>
 </html>
