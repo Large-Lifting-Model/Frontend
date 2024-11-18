@@ -8,6 +8,7 @@ function AppNav() {
 	const navigate = useNavigate();
 	const handleLogout = () => {
 		localStorage.clear();
+		navigate("/");
 	};
 	useEffect(() => {
 		if (!localStorage.getItem("tokens")) {
