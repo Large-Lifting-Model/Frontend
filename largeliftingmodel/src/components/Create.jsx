@@ -8,6 +8,7 @@ import useLoader from "../hooks/useLoader";
 import { flushSync } from "react-dom";
 
 function Create({
+	workoutState,
 	setWorkoutState,
 	workoutExists,
 	setWorkoutExists,
@@ -15,22 +16,8 @@ function Create({
 	setWorkout,
 }) {
 	const { error, isLoading, withLoader } = useLoader();
-	const [otherWorkoutType, setOtherWorkoutType] = useState("");
-	const [otherEquipmentAccess, setOtherEquipmentAccess] = useState("");
 	const [showOtherWorkoutType, setShowOtherWorkoutType] = useState(false);
 	const [showOtherEquipment, setShowOtherEquipment] = useState(false);
-	// const [workoutDifficulty, setWorkoutDifficulty] = useState({
-	// 	value: workout.difficulty,
-	// 	label: workout.difficulty,
-	// });
-	// const [workoutType, setWorkoutType] = useState({
-	// 	value: workout.workout_type,
-	// 	label: workout.workout_type,
-	// });
-	// const [workoutEquipmentAccess, setWorkoutEquipmentAccess] = useState({
-	// 	value: workout.equipment_access,
-	// 	label: workout.equipment_access,
-	// });
 
 	const difficultyOptions = [
 		{ value: "Easy", label: "Easy" },
@@ -81,7 +68,7 @@ function Create({
 				other_workout_considerations: "",
 			});
 		}
-		if (storedWorkoutState) {
+		if (storedWorkoutState && workoutState === undefined) {
 			setWorkoutState(JSON.parse(storedWorkoutState));
 		}
 		if (storedWorkoutExists) {
@@ -113,7 +100,9 @@ function Create({
 				setWorkout(res);
 				setWorkoutExists(true);
 			});
-			setWorkoutState(1);
+			if (workoutState !== 1) {
+				setWorkoutState(1); // Only set if needed
+			}
 		});
 	};
 
@@ -138,7 +127,6 @@ function Create({
 	const handleWorkoutTypeChange = (selectedOption) => {
 		if (selectedOption.value === "other") {
 			setShowOtherWorkoutType(true);
-			setOtherWorkoutType("");
 		} else {
 			setShowOtherWorkoutType(false);
 			setWorkout({ ...workout, workout_type: selectedOption.value });
@@ -148,7 +136,6 @@ function Create({
 	const handleEquipmentAccessChange = (selectedOption) => {
 		if (selectedOption.value === "other") {
 			setShowOtherEquipment(true);
-			setOtherEquipmentAccess("");
 		} else {
 			setShowOtherEquipment(false);
 			setWorkout({ ...workout, equipment_access: selectedOption.value });
@@ -156,12 +143,10 @@ function Create({
 	};
 
 	const handleOtherWorkoutTypeChange = (e) => {
-		setOtherWorkoutType(e.target.value);
 		setWorkout({ ...workout, workout_type: e.target.value });
 	};
 
 	const handleOtherEquipmentAccessChange = (e) => {
-		setOtherEquipmentAccess(e.target.value);
 		setWorkout({ ...workout, equipment_access: e.target.value });
 	};
 

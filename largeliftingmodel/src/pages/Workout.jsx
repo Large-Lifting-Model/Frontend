@@ -17,15 +17,14 @@ function Workout({
 	setWorkout,
 }) {
 	const handleBack = () => {
-		workoutExists && workoutState > 0
-			? setWorkoutState(workoutState - 1)
-			: setWorkoutState(0);
+		setWorkoutState((prev) => {
+			return workoutExists && prev > 0 ? prev - 1 : 0;
+		});
 	};
-
 	const handleForward = () => {
-		workoutExists && workoutState < 2
-			? setWorkoutState(workoutState + 1)
-			: setWorkoutState(2);
+		setWorkoutState((prev) => {
+			return workoutExists && prev < 2 ? prev + 1 : 2;
+		});
 	};
 	return (
 		<>
@@ -35,9 +34,7 @@ function Workout({
 					{workoutState === 0 ? (
 						<></>
 					) : (
-						<button
-							className={buttonStyles.back}
-							onClick={() => handleBack()}>
+						<button className={buttonStyles.back} onClick={handleBack}>
 							&lt;&lt;
 						</button>
 					)}
@@ -56,7 +53,7 @@ function Workout({
 					{workoutState !== 2 && workoutExists ? (
 						<button
 							className={`${buttonStyles.back} ${styles.btnRight}`}
-							onClick={() => handleForward()}>
+							onClick={handleForward}>
 							&gt;&gt;
 						</button>
 					) : (
