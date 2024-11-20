@@ -4,10 +4,10 @@ import eslint from "vite-plugin-eslint";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
-	const isDev = mode === "development";
+	const isProd = mode === "production";
 	return {
 		plugins: [react(), eslint()],
-		base: isDev ? "/" : "/frontend/",
+		base: isProd ? "/frontend" : "/",
 		build: {
 			outDir: "dist",
 			assetsDir: "assets",

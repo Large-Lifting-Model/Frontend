@@ -151,10 +151,12 @@ function App() {
 		<Routes>
 			{/* Public Routes */}
 			<Route
+				exact
 				path="/"
 				element={tokens.google ? <Navigate to="/home" /> : <Landing />}
 			/>
 			<Route
+				exact
 				path="login"
 				element={
 					tokens.google ? (
@@ -168,7 +170,8 @@ function App() {
 			{/* Protected Routes */}
 			<>
 				<Route
-					path="home"
+					exact
+					path="/home"
 					element={
 						<ProtectedRoute token={tokens.google}>
 							<Home
@@ -183,7 +186,7 @@ function App() {
 					}
 				/>
 				<Route
-					path="workout"
+					path="/workout"
 					element={
 						<ProtectedRoute token={tokens.google}>
 							<Workout
@@ -199,7 +202,8 @@ function App() {
 					}
 				/>
 				<Route
-					path="history"
+					exact
+					path="/history"
 					element={
 						<ProtectedRoute token={tokens.google}>
 							<History />
@@ -207,7 +211,7 @@ function App() {
 					}
 				/>
 				<Route
-					path="historyDay"
+					path="/historyDay"
 					element={
 						<ProtectedRoute token={tokens.google}>
 							<HistoryDay />
@@ -215,7 +219,8 @@ function App() {
 					}
 				/>
 				<Route
-					path="profile"
+					exact
+					path="/profile"
 					element={
 						<ProtectedRoute token={tokens.google}>
 							<Profile user={user} setUser={setUser} />
@@ -223,8 +228,9 @@ function App() {
 					}
 				/>
 				<Route
-					path="register"
-					element={
+					exact
+					path="/register"
+					component={
 						<ProtectedRoute token={tokens.google}>
 							<Register user={user} setUser={setUser} />
 						</ProtectedRoute>

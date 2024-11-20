@@ -2,14 +2,14 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import App from "./App.jsx";
 import "./index.css";
-import { BrowserRouter } from "react-router-dom"; // Import BrowserRouter
+import { HashRouter } from "react-router-dom"; // Import HashRouter
 
-const basename = import.meta.env.MODE === "development" ? "/" : "/frontend/";
+// const basename = import.meta.env.MODE === "development" ? "/" : "/frontend/";
 
 createRoot(document.getElementById("root")).render(
 	<StrictMode>
-		<BrowserRouter basename={basename}>
+		<HashRouter>
 			<App />
-		</BrowserRouter>
+		</HashRouter>
 	</StrictMode>
 );
