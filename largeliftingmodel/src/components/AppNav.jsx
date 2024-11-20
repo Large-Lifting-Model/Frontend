@@ -7,6 +7,7 @@ import { useEffect } from "react";
 function AppNav() {
 	const navigate = useNavigate();
 	const handleLogout = () => {
+		navigate("/");
 		localStorage.clear();
 	};
 	useEffect(() => {
