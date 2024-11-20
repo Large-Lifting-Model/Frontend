@@ -134,6 +134,17 @@ function CurrentWorkout({ setWorkoutState, workout, setWorkout }) {
 							method="post"
 							onSubmit={handleSubmit}>
 							<label>Suggest Changes...</label>
+							<p style={{ opacity: 0.7, fontSize: "1.25rem" }}>
+								Make minor adjustments with short, specific statements
+								like &apos;swap crunches for bicycle kicks&apos;,
+								&apos;remove only squats&apos;, or &apos;give me only 5
+								exercises&apos;. <br />
+								<br />
+								<i>
+									Unspecific requests will result in very different
+									workouts.
+								</i>
+							</p>
 							<div className={styles.inlineInput}>
 								<input
 									name="refinementText"

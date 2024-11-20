@@ -135,12 +135,30 @@ button:disabled {
 .inlineInput {
 	display: grid;
 	grid-template-columns: 4fr 1fr;
+	justify-content: center;
+	display: flex;
 }
 
 @media (max-width: 600px) {
 	.exerciseCard,
 	.checkboxContainer {
-		margin: 0px 2px 5px 2px;
+		margin: 0 0.5rem 0.5rem 0.5rem;
+		padding: 2rem 0.5rem;
+	}
+
+	.inlineInput {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+	}
+
+	.inlineInput input {
+		margin-bottom: 1rem;
+	}
+
+	#refineWorkout {
+		width: 100%;
+		margin-top: 1.5rem;
 	}
 
 	.exerciseList {

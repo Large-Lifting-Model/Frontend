@@ -25,7 +25,7 @@ const FormHealthInfoCore = ({ health_data, setHealthData }) => {
 	];
 
 	const favouriteWorkoutTypeOptions = [
-		{ value: "Weights", label: "Weights" },
+		{ value: "Resistance Training", label: "Resistance Training" },
 		{ value: "Cardio", label: "Cardio" },
 		{ value: "Circuits", label: "Circuits" },
 		{ value: "Crossfit", label: "Crossfit" },

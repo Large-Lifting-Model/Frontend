@@ -27,12 +27,12 @@ function Create({
 	];
 
 	const workoutTypeOptions = [
-		{ value: "Weights", label: "Weights" },
+		{ value: "Resistance Training", label: "Resistance Training" },
 		{ value: "Cardio", label: "Cardio" },
 		{ value: "Circuits", label: "Circuits" },
 		{ value: "Crossfit", label: "Crossfit" },
 		{ value: "Yoga", label: "Yoga" },
-		{ value: "other", label: "Other" },
+		{ value: "Other", label: "Other" },
 	];
 
 	const equipmentAccessOptions = [
@@ -40,7 +40,7 @@ function Create({
 		{ value: "Dumbbells", label: "Dumbbells only" },
 		{ value: "Limited Gym", label: "Limited Gym" },
 		{ value: "Full Gym", label: "Full Gym" },
-		{ value: "other", label: "Other" },
+		{ value: "Other", label: "Other" },
 	];
 
 	const getOptionFromValue = (options, value) => {
