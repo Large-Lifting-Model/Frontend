@@ -14,6 +14,7 @@ function Create({
 	setWorkoutExists,
 	workout,
 	setWorkout,
+	user,
 }) {
 	const { error, isLoading, withLoader } = useLoader();
 	const [showOtherWorkoutType, setShowOtherWorkoutType] = useState(false);
@@ -35,10 +36,10 @@ function Create({
 	];
 
 	const equipmentAccessOptions = [
-		{ value: "Full Gym", label: "Full Gym" },
-		{ value: "Limited Gym", label: "Limited Gym" },
-		{ value: "Dumbbells", label: "Dumbbells only" },
 		{ value: "No Equipment", label: "No equipment" },
+		{ value: "Dumbbells", label: "Dumbbells only" },
+		{ value: "Limited Gym", label: "Limited Gym" },
+		{ value: "Full Gym", label: "Full Gym" },
 		{ value: "other", label: "Other" },
 	];
 
@@ -46,6 +47,8 @@ function Create({
 		const option = options.find((option) => option.value === value);
 		return option || { value, label: value };
 	};
+
+	const health_data = user.health_data;
 
 	useEffect(() => {
 		// Read state from local storage when the component mounts
@@ -79,18 +82,32 @@ function Create({
 	function getCreationWorkoutFromState() {
 		//:" + JSON.stringify(workout))
 		return {
-			length: workout.length,
-			difficulty: workout.difficulty,
-			workout_type: workout.workout_type,
-			target_area: workout.target_area,
-			equipment_access: workout.equipment_access,
-			included_exercises: workout.included_exercises,
-			excluded_exercises: workout.excluded_exercises,
-			other_workout_considerations: workout.other_workout_considerations,
+			...workout,
 		};
 	}
 
 	const handleCreate = async () => {
+		// Validate required fields
+		if (
+			!workout.length ||
+			isNaN(Number(workout.length)) ||
+			Number(workout.length) <= 0
+		) {
+			alert("Please provide a valid workout length in minutes.");
+			return;
+		}
+		if (!workout.difficulty) {
+			alert("Please select a difficulty level.");
+			return;
+		}
+		if (!workout.workout_type) {
+			alert("Please select a workout type.");
+			return;
+		}
+		if (!workout.equipment_access) {
+			alert("Please specify equipment access.");
+			return;
+		}
 		await withLoader(async () => {
 			const workoutToCreate = getCreationWorkoutFromState();
 			const res = await AppAPI.createWorkout(workoutToCreate);
@@ -155,7 +172,9 @@ function Create({
 			<Loader error={error} isLoading={isLoading}>
 				<form className={styles.form}>
 					<div className={styles.row}>
-						<label htmlFor="length">Length (minutes): </label>
+						<label htmlFor="length">
+							Length (minutes): <i style={{ opacity: 0.5 }}>required</i>
+						</label>
 						<input
 							id="length"
 							type="text"
@@ -167,7 +186,9 @@ function Create({
 						/>
 					</div>
 					<div className={styles.row}>
-						<label htmlFor="difficulty">Select difficulty: </label>
+						<label htmlFor="difficulty">
+							Select difficulty: <i style={{ opacity: 0.5 }}>required</i>
+						</label>
 						<Select
 							className={styles.dropdown}
 							options={difficultyOptions}
@@ -176,25 +197,47 @@ function Create({
 								getOptionFromValue(
 									difficultyOptions,
 									workout.difficulty
-								) || difficultyOptions[0]
+								).value === ""
+									? health_data?.workout_experience === "Expert"
+										? { label: "Hard", value: "Hard" }
+										: health_data?.workout_experience ===
+										  "Intermediate"
+										? { label: "Medium", value: "Medium" }
+										: { label: "Easy", value: "Easy" }
+									: getOptionFromValue(
+											difficultyOptions,
+											workout.difficulty
+									  )
 							}
 							isDisabled={workoutExists}
 						/>
 					</div>
 					<div className={styles.row}>
-						<label htmlFor="workoutType">Select workout type: </label>
+						<label htmlFor="workoutType">
+							Select workout type:{" "}
+							<i style={{ opacity: 0.5 }}>required</i>
+						</label>
 						<Select
 							className={styles.dropdown}
 							placeholder="Select Workout Type..."
 							options={workoutTypeOptions}
 							onChange={handleWorkoutTypeChange}
 							value={
-								showOtherWorkoutType
-									? { label: "Other", value: "other" }
+								getOptionFromValue(
+									workoutTypeOptions,
+									workout.workout_type
+								).value === ""
+									? health_data.favourite_workout_type !== null ||
+									  health_data?.favourite_workout_type !== undefined
+										? {
+												value: health_data.favourite_workout_type,
+												label: health_data.favourite_workout_type,
+										  }
+										: workoutTypeOptions[0]
 									: getOptionFromValue(
 											workoutTypeOptions,
 											workout.workout_type
-									  ) || workoutTypeOptions[0]
+									  )
 							}
 							isDisabled={workoutExists}
 						/>
@@ -208,7 +251,6 @@ function Create({
 								id="otherWorkoutType"
 								type="text"
 								onChange={handleOtherWorkoutTypeChange}
-								value={workout.workout_type || ""}
 								disabled={workoutExists}
 							/>
 						</div>
@@ -216,6 +258,7 @@ function Create({
 					<div className={styles.row}>
 						<label htmlFor="equipmentAccess">
 							What access to workout equipment do you have?{" "}
+							<i style={{ opacity: 0.5 }}>required</i>
 						</label>
 						<Select
 							className={styles.dropdown}
@@ -226,7 +269,12 @@ function Create({
 								getOptionFromValue(
 									equipmentAccessOptions,
 									workout.equipment_access
-								) || equipmentAccessOptions[0]
+								).value === ""
+									? equipmentAccessOptions[0]
+									: getOptionFromValue(
+											equipmentAccessOptions,
+											workout.equipment_access
+									  )
 							}
 							isDisabled={workoutExists}
 						/>

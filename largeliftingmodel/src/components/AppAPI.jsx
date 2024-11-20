@@ -1,5 +1,4 @@
 // import React from "react";
-
 class AppAPI {
 	static useTestServer = import.meta.env.VITE_USE_TEST_SERVER === "1";
 	static testUserID = "12903781273";
@@ -67,15 +66,18 @@ class AppAPI {
 		other_considerations: "",
 	};
 
+	static storedUser = JSON.parse(localStorage.getItem("user"));
+
 	static emptyWorkout = {
 		id: 0,
 		user: "",
 		created: "",
-		length: 45,
-		difficulty: "Medium",
-		workout_type: "Weights",
+
+		length: 30,
+		difficulty: "",
+		workout_type: "",
 		target_area: "",
-		equipment_access: "No Equipment",
+		equipment_access: "",
 		included_exercises: "",
 		excluded_exercises: "",
 		other_workout_considerations: "",

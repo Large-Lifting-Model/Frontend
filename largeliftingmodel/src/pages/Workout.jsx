@@ -15,6 +15,7 @@ function Workout({
 	setWorkoutExists,
 	workout,
 	setWorkout,
+	user,
 }) {
 	const handleBack = () => {
 		setWorkoutState((prev) => {
@@ -69,6 +70,7 @@ function Workout({
 					setWorkoutExists={setWorkoutExists}
 					workout={workout}
 					setWorkout={setWorkout}
+					user={user}
 				/>
 			) : workoutState === 1 ? (
 				<CurrentWorkout

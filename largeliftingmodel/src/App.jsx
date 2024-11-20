@@ -193,6 +193,7 @@ function App() {
 								setWorkoutExists={setWorkoutExists}
 								workout={workout}
 								setWorkout={setWorkout}
+								user={user}
 							/>
 						</ProtectedRoute>
 					}
