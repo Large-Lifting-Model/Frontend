@@ -2,23 +2,12 @@
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
-		<link rel="icon" type="image/svg+xml" href="/frontend/vite.svg" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Page Not Found - Large Lifting Model</title>
-	</head>
-	<body>
-		<div id="root"></div>
+		<title>Redirecting...</title>
 		<script>
-			(function () {
-				const basePath = "/frontend"; // Base path for your app
-				const currentPath = window.location.pathname;
-				const currentHash = window.location.hash;
-
-				// Redirect if the current path does not start with the basePath
-				if (!currentPath.startsWith(basePath)) {
-					window.location.replace(basePath + currentPath + currentHash);
-				}
-			})();
+			// Redirect to index.html with the original hash
+			window.location.replace("/frontend/#" + window.location.pathname);
 		</script>
-	</body>
+	</head>
+	<body></body>
 </html>
