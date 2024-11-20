@@ -176,3 +176,12 @@
 	color: black;
 	font-size: 1.5rem;
 }
+
+.instructions {
+	font-size: 2rem;
+	margin: 0 3rem;
+}
+
+.instructions a {
+	color: var(--color-brand--2);
+}
