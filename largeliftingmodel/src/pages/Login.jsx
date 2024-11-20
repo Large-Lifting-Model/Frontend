@@ -11,11 +11,6 @@ function Login({ token, handleLogin }) {
 				<h3>Can&apos;t login? Follow these steps:</h3>
 				<ol>
 					<li>
-						Change your browser settings to allow sites marked as not
-						secure
-					</li>
-					<li>Clear your browser&apos;s cache and cookies</li>
-					<li>
 						Navigate to the{" "}
 						<a
 							href="https://34.65.243.247:8000/"
@@ -23,11 +18,17 @@ function Login({ token, handleLogin }) {
 							rel="noopener noreferrer">
 							Large Lifting Model API Website,
 						</a>
-						and choose to &quot; to proceed to the unsafe site &quot;
+						and choose to &quot;proceed to the unsafe site&quot;
 					</li>
 					<li>
 						Close the API website and try to login again using the above
 						button.
+					</li>
+					<li>
+						If you are still unable to login, you may need to change your
+						browser settings to &quot;allow unsafe scripts&quot; or
+						&quot;allow unsafe content&quot;, and you may need to clear
+						your browser&apos;s cache and cookies.
 					</li>
 				</ol>
 			</div>
