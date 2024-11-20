@@ -80,7 +80,7 @@ function App() {
 				setTokens(tokenObj);
 			}
 		} catch (error) {
-			console.error("Error during login");
+			console.error("Error during login: ", error);
 		}
 	}, [tokens, setTokens]);
 
