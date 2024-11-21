@@ -230,7 +230,7 @@ function App() {
 				<Route
 					exact
 					path="/register"
-					component={
+					element={
 						<ProtectedRoute token={tokens.google}>
 							<Register user={user} setUser={setUser} />
 						</ProtectedRoute>
